@@ -8,12 +8,18 @@ import 'package:flutter_web3/ethers.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:web3dart/contracts/erc20.dart';
 import 'package:web3dart/web3dart.dart';
 import 'lat_lng.dart';
 import 'place.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart' as intl;
 import 'package:flutter/services.dart' show rootBundle;
+
+Client httpClient = Client();
+Web3Client ethClient = Web3Client(
+    "https://mainnet.infura.io/v3/6a64571b9f134bc1913c6c24d5698891",
+    httpClient);
 
 Future<String> getCurrentPrice() async {
   var response = await http.get(
@@ -89,14 +95,6 @@ Future<String> getCurrentCirculatingMcap() async {
 }
 
 Future<String> getCurrentTvl() async {
-  Client httpClient;
-  Web3Client ethClient;
-
-  httpClient = Client();
-  ethClient = Web3Client(
-      "https://mainnet.infura.io/v3/6a64571b9f134bc1913c6c24d5698891",
-      httpClient);
-
   final farmAbiCode = await rootBundle
       .loadString('assets/abi/0x7F4FE6776a9617847485d43db0d3A9b734e459C5.json');
 
@@ -166,26 +164,36 @@ Future<String> getUserAddress() async {
   return "";
 }
 
-String getTokensInWallet() {
+Future<String> getTokensInWallet(String address) async {
+  var ethAddress = EthereumAddress.fromHex(address);
+
+  var tokenContract =
+      EthereumAddress.fromHex("0xda0c94c73d127ee191955fb46bacd7ff999b2bcd");
+
+  var token = Erc20(address: tokenContract, client: ethClient);
+
+  var balance = await token.balanceOf(ethAddress);
+
+  return intl.NumberFormat.decimalPattern()
+      .format(balance.toDouble() / 1000000000000000000);
+}
+
+String getTokensInBONDFarm(String address) {
   return "to be implemented";
 }
 
-String getTokensInBONDFarm() {
+String getTokensInSWINGBYFarm(String address) {
   return "to be implemented";
 }
 
-String getTokensInSWINGBYFarm() {
+String getTokensInXYZFarm(String address) {
   return "to be implemented";
 }
 
-String getTokensInXYZFarm() {
+String getTokensInSLPFarm(String address) {
   return "to be implemented";
 }
 
-String getTokensInSLPFarm() {
-  return "to be implemented";
-}
-
-String getTokensStaked() {
+String getTokensStaked(String address) {
   return "to be implemented";
 }

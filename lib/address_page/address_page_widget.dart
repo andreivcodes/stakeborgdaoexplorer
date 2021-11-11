@@ -310,13 +310,47 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        functions.getTokensInWallet(),
+                      FutureBuilder<String>(
+                        future: functions.getTokensInWallet(
+                            widget.inputAddress), // async work
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return Text(
+                                'Loading...',
+                                style: FlutterFlowTheme.title3.override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.primaryColor,
+                                ),
+                              );
+                            default:
+                              if (snapshot.hasError)
+                                return Text(
+                                  'Error: ${snapshot.error}',
+                                  style: FlutterFlowTheme.title3.override(
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.primaryColor,
+                                  ),
+                                );
+                              else
+                                return Text(
+                                  '${snapshot.data}',
+                                  style: FlutterFlowTheme.title3.override(
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.primaryColor,
+                                  ),
+                                );
+                          }
+                        },
+                      ),
+                      /* Text(
+                        functions.getTokensInWallet(widget.inputAddress),
                         style: FlutterFlowTheme.title3.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.primaryColor,
                         ),
-                      ),
+                      ), */
                       Text(
                         ' tokens in ',
                         style: FlutterFlowTheme.bodyText1,
@@ -344,7 +378,7 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        functions.getTokensInBONDFarm(),
+                        functions.getTokensInBONDFarm(widget.inputAddress),
                         style: FlutterFlowTheme.title3.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.primaryColor,
@@ -377,7 +411,7 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        functions.getTokensInSWINGBYFarm(),
+                        functions.getTokensInSWINGBYFarm(widget.inputAddress),
                         style: FlutterFlowTheme.title3.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.primaryColor,
@@ -410,7 +444,7 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        functions.getTokensInXYZFarm(),
+                        functions.getTokensInXYZFarm(widget.inputAddress),
                         style: FlutterFlowTheme.title3.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.primaryColor,
@@ -443,7 +477,7 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        functions.getTokensInSLPFarm(),
+                        functions.getTokensInSLPFarm(widget.inputAddress),
                         style: FlutterFlowTheme.title3.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.primaryColor,
@@ -476,7 +510,7 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        functions.getTokensStaked(),
+                        functions.getTokensStaked(widget.inputAddress),
                         style: FlutterFlowTheme.title3.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.primaryColor,
