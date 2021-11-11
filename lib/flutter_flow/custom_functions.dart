@@ -163,4 +163,29 @@ Future<String> getUserAddress() async {
       print('User rejected the modal');
     }
   }
+  return "";
+}
+
+String getTokensInWallet() {
+  return "to be implemented";
+}
+
+String getTokensInBONDFarm() {
+  return "to be implemented";
+}
+
+String getTokensInSWINGBYFarm() {
+  return "to be implemented";
+}
+
+String getTokensInXYZFarm() {
+  return "to be implemented";
+}
+
+String getTokensInSLPFarm() {
+  return "to be implemented";
+}
+
+String getTokensStaked() {
+  return "to be implemented";
 }

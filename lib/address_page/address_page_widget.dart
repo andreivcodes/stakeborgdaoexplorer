@@ -37,7 +37,7 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.tertiaryColor,
+        backgroundColor: Color(0xFF3A4E86),
         automaticallyImplyLeading: true,
         actions: [],
         centerTitle: true,
@@ -271,6 +271,240 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                     )
                   ],
                 ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.ghostWhite,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    widget.inputAddress,
+                    style: FlutterFlowTheme.title3.override(
+                      fontFamily: 'Poppins',
+                      color: FlutterFlowTheme.primaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.primaryColor,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                      child: Text(
+                        'owns',
+                        style: FlutterFlowTheme.subtitle1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        functions.getTokensInWallet(),
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      ),
+                      Text(
+                        ' tokens in ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                          child: Text(
+                            'wallet',
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        functions.getTokensInBONDFarm(),
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      ),
+                      Text(
+                        ' BOND tokens in the ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                          child: Text(
+                            'BOND farm',
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        functions.getTokensInSWINGBYFarm(),
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      ),
+                      Text(
+                        ' SWINGBY tokens in the ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                          child: Text(
+                            'SWINGBY farm',
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        functions.getTokensInXYZFarm(),
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      ),
+                      Text(
+                        ' XYZ tokens in the ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                          child: Text(
+                            'XYZ farm',
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        functions.getTokensInSLPFarm(),
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      ),
+                      Text(
+                        ' SLP tokens in the ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                          child: Text(
+                            'STANDARD/USDC pool',
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        functions.getTokensStaked(),
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      ),
+                      Text(
+                        ' tokens staked in ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                          child: Text(
+                            'governance',
+                            style: FlutterFlowTheme.bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
               ),
             ),
             Padding(
