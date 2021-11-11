@@ -106,6 +106,43 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     color: FlutterFlowTheme.azure,
                                     fontWeight: FontWeight.normal,
                                   ),
+                                ),
+                                FutureBuilder<String>(
+                                  future:
+                                      functions.getUserAddress(), // async work
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                        return Text(
+                                          'Loading...',
+                                          style: FlutterFlowTheme.bodyText1
+                                              .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.white,
+                                          ),
+                                        );
+                                      default:
+                                        if (snapshot.hasError)
+                                          return Text(
+                                            'Error: ${snapshot.error}',
+                                            style: FlutterFlowTheme.bodyText1
+                                                .override(
+                                              fontFamily: 'Poppins',
+                                              color: FlutterFlowTheme.white,
+                                            ),
+                                          );
+                                        else
+                                          return Text(
+                                            '${snapshot.data}',
+                                            style: FlutterFlowTheme.bodyText1
+                                                .override(
+                                              fontFamily: 'Poppins',
+                                              color: FlutterFlowTheme.white,
+                                            ),
+                                          );
+                                    }
+                                  },
                                 )
                               ],
                             )
@@ -399,6 +436,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         )
                       ],
                     ),
+                    // Generated code for this Column Widget...
                     Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -407,7 +445,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
                           child: Container(
-                            height: 50,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.white,
                               boxShadow: [
@@ -420,62 +457,59 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             alignment: AlignmentDirectional(0, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Current price',
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF7D7D7D),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Current price',
+                                    style: FlutterFlowTheme.bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFF7D7D7D),
+                                    ),
                                   ),
-                                ),
-                                FutureBuilder<String>(
-                                  future:
-                                      functions.getCurrentPrice(), // async work
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<String> snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.waiting:
-                                        return Text(
-                                          'Loading....',
-                                          style: FlutterFlowTheme.bodyText1
-                                              .override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.azure,
-                                          ),
-                                        );
-                                      default:
-                                        if (snapshot.hasError)
+                                  FutureBuilder<String>(
+                                    future: functions
+                                        .getCurrentPrice(), // async work
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.waiting:
                                           return Text(
-                                            'Error: ${snapshot.error}',
+                                            'Loading...',
                                             style: FlutterFlowTheme.bodyText1
                                                 .override(
                                               fontFamily: 'Poppins',
                                               color: FlutterFlowTheme.azure,
                                             ),
                                           );
-                                        else
-                                          return Text(
-                                            '${snapshot.data} \$',
-                                            style: FlutterFlowTheme.bodyText1
-                                                .override(
-                                              fontFamily: 'Poppins',
-                                              color: FlutterFlowTheme.azure,
-                                            ),
-                                          );
-                                    }
-                                  },
-                                )
-                                /* Text(
-                                  functions.getCurrentPrice(),
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.azure,
-                                  ),
-                                ) */
-                              ],
+                                        default:
+                                          if (snapshot.hasError)
+                                            return Text(
+                                              'Error: ${snapshot.error}',
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                          else
+                                            return Text(
+                                              '${snapshot.data} \$',
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                      }
+                                    },
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -483,7 +517,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
                           child: Container(
-                            height: 50,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.white,
                               boxShadow: [
@@ -496,55 +529,59 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             alignment: AlignmentDirectional(0, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Current marketcap',
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF7D7D7D),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Current marketcap',
+                                    style: FlutterFlowTheme.bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFF7D7D7D),
+                                    ),
                                   ),
-                                ),
-                                FutureBuilder<String>(
-                                  future:
-                                      functions.getCurrentMcap(), // async work
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<String> snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.waiting:
-                                        return Text(
-                                          'Loading....',
-                                          style: FlutterFlowTheme.bodyText1
-                                              .override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.azure,
-                                          ),
-                                        );
-                                      default:
-                                        if (snapshot.hasError)
+                                  FutureBuilder<String>(
+                                    future: functions
+                                        .getCurrentMcap(), // async work
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.waiting:
                                           return Text(
-                                            'Error: ${snapshot.error}',
+                                            'Loading...',
                                             style: FlutterFlowTheme.bodyText1
                                                 .override(
                                               fontFamily: 'Poppins',
                                               color: FlutterFlowTheme.azure,
                                             ),
                                           );
-                                        else
-                                          return Text(
-                                            '${snapshot.data} \$',
-                                            style: FlutterFlowTheme.bodyText1
-                                                .override(
-                                              fontFamily: 'Poppins',
-                                              color: FlutterFlowTheme.azure,
-                                            ),
-                                          );
-                                    }
-                                  },
-                                )
-                              ],
+                                        default:
+                                          if (snapshot.hasError)
+                                            return Text(
+                                              'Error: ${snapshot.error}',
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                          else
+                                            return Text(
+                                              '${snapshot.data} \$',
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                      }
+                                    },
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -552,7 +589,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
                           child: Container(
-                            height: 50,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.white,
                               boxShadow: [
@@ -565,62 +601,59 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             alignment: AlignmentDirectional(0, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Circulating marketcap',
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF7D7D7D),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Circulating marketcap',
+                                    style: FlutterFlowTheme.bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFF7D7D7D),
+                                    ),
                                   ),
-                                ),
-                                FutureBuilder<String>(
-                                  future: functions
-                                      .getCurrentCirculatingMcap(), // async work
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<String> snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.waiting:
-                                        return Text(
-                                          'Loading....',
-                                          style: FlutterFlowTheme.bodyText1
-                                              .override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.azure,
-                                          ),
-                                        );
-                                      default:
-                                        if (snapshot.hasError)
+                                  FutureBuilder<String>(
+                                    future: functions
+                                        .getCurrentCirculatingMcap(), // async work
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.waiting:
                                           return Text(
-                                            'Error: ${snapshot.error}',
+                                            'Loading...',
                                             style: FlutterFlowTheme.bodyText1
                                                 .override(
                                               fontFamily: 'Poppins',
                                               color: FlutterFlowTheme.azure,
                                             ),
                                           );
-                                        else
-                                          return Text(
-                                            '${snapshot.data} \$',
-                                            style: FlutterFlowTheme.bodyText1
-                                                .override(
-                                              fontFamily: 'Poppins',
-                                              color: FlutterFlowTheme.azure,
-                                            ),
-                                          );
-                                    }
-                                  },
-                                )
-                                /* Text(
-                                  functions.getCurrentCirculatingMcap(),
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.azure,
-                                  ),
-                                ) */
-                              ],
+                                        default:
+                                          if (snapshot.hasError)
+                                            return Text(
+                                              'Error: ${snapshot.error}',
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                          else
+                                            return Text(
+                                              '${snapshot.data} \$',
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                      }
+                                    },
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -628,7 +661,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
                           child: Container(
-                            height: 50,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.white,
                               boxShadow: [
@@ -641,25 +673,60 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             alignment: AlignmentDirectional(0, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Current TVL',
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF7D7D7D),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Current TVL',
+                                    style: FlutterFlowTheme.bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(0xFF7D7D7D),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  functions.getCurrentTvl(),
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.azure,
-                                  ),
-                                )
-                              ],
+                                  FutureBuilder<String>(
+                                    future:
+                                        functions.getCurrentTvl(), // async work
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.waiting:
+                                          return Text(
+                                            'Loading...',
+                                            style: FlutterFlowTheme.bodyText1
+                                                .override(
+                                              fontFamily: 'Poppins',
+                                              color: FlutterFlowTheme.azure,
+                                            ),
+                                          );
+                                        default:
+                                          if (snapshot.hasError)
+                                            return Text(
+                                              'Error: ${snapshot.error}',
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                          else
+                                            return Text(
+                                              '${snapshot.data}',
+                                              textAlign: TextAlign.center,
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.azure,
+                                              ),
+                                            );
+                                      }
+                                    },
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         )
