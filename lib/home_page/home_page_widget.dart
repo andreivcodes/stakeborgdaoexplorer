@@ -1,3 +1,4 @@
+import '../address_page/address_page_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -188,7 +189,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                               child: TextFormField(
-                                onChanged: (_) => setState(() {}),
+                                onChanged: (_) => {},
+                                onFieldSubmitted: (_) async {
+                                  await Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.bottomToTop,
+                                      duration: Duration(milliseconds: 300),
+                                      reverseDuration:
+                                          Duration(milliseconds: 300),
+                                      child: AddressPageWidget(
+                                        inputAddress: textController.text,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 controller: textController,
                                 obscureText: false,
                                 decoration: InputDecoration(
