@@ -1,4 +1,4 @@
-# stakeborgdao_explorer
+# stakeborgdaoexplorer
 
 A new Flutter project.
 

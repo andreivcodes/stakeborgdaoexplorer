@@ -11,6 +11,8 @@ import 'package:lottie/lottie.dart';
 class HomePageWidget extends StatefulWidget {
   HomePageWidget({Key key}) : super(key: key);
 
+  bool donationHeart = false;
+
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
 }
@@ -447,7 +449,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       default:
                                         if (snapshot.hasError)
                                           return Text(
-                                              'Error: ${snapshot.error}',
+                                            'Error: ${snapshot.error}',
                                             style: FlutterFlowTheme.bodyText1
                                                 .override(
                                               fontFamily: 'Poppins',
@@ -456,7 +458,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           );
                                         else
                                           return Text(
-                                              'Result: ${snapshot.data}',
+                                            '${snapshot.data} \$',
                                             style: FlutterFlowTheme.bodyText1
                                                 .override(
                                               fontFamily: 'Poppins',
@@ -505,12 +507,42 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     color: Color(0xFF7D7D7D),
                                   ),
                                 ),
-                                Text(
-                                  functions.getCurrentMcap(),
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.azure,
-                                  ),
+                                FutureBuilder<String>(
+                                  future:
+                                      functions.getCurrentMcap(), // async work
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                        return Text(
+                                          'Loading....',
+                                          style: FlutterFlowTheme.bodyText1
+                                              .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.azure,
+                                          ),
+                                        );
+                                      default:
+                                        if (snapshot.hasError)
+                                          return Text(
+                                            'Error: ${snapshot.error}',
+                                            style: FlutterFlowTheme.bodyText1
+                                                .override(
+                                              fontFamily: 'Poppins',
+                                              color: FlutterFlowTheme.azure,
+                                            ),
+                                          );
+                                        else
+                                          return Text(
+                                            '${snapshot.data} \$',
+                                            style: FlutterFlowTheme.bodyText1
+                                                .override(
+                                              fontFamily: 'Poppins',
+                                              color: FlutterFlowTheme.azure,
+                                            ),
+                                          );
+                                    }
+                                  },
                                 )
                               ],
                             ),
@@ -544,13 +576,50 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     color: Color(0xFF7D7D7D),
                                   ),
                                 ),
-                                Text(
+                                FutureBuilder<String>(
+                                  future: functions
+                                      .getCurrentCirculatingMcap(), // async work
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                        return Text(
+                                          'Loading....',
+                                          style: FlutterFlowTheme.bodyText1
+                                              .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.azure,
+                                          ),
+                                        );
+                                      default:
+                                        if (snapshot.hasError)
+                                          return Text(
+                                            'Error: ${snapshot.error}',
+                                            style: FlutterFlowTheme.bodyText1
+                                                .override(
+                                              fontFamily: 'Poppins',
+                                              color: FlutterFlowTheme.azure,
+                                            ),
+                                          );
+                                        else
+                                          return Text(
+                                            '${snapshot.data} \$',
+                                            style: FlutterFlowTheme.bodyText1
+                                                .override(
+                                              fontFamily: 'Poppins',
+                                              color: FlutterFlowTheme.azure,
+                                            ),
+                                          );
+                                    }
+                                  },
+                                )
+                                /* Text(
                                   functions.getCurrentCirculatingMcap(),
                                   style: FlutterFlowTheme.bodyText1.override(
                                     fontFamily: 'Poppins',
                                     color: FlutterFlowTheme.azure,
                                   ),
-                                )
+                                ) */
                               ],
                             ),
                           ),
@@ -661,27 +730,30 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                         ),
-                        FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30,
-                          borderWidth: 1,
-                          buttonSize: 50,
-                          fillColor: Color(0xBE3B85EB),
-                          icon: Icon(
-                            Icons.content_copy,
-                            color: FlutterFlowTheme.white,
-                            size: 20,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
-                        ),
-                        Lottie.network(
-                          'https://assets6.lottiefiles.com/datafiles/nZgj7wTd56UtH6m/data.json',
-                          height: 50,
-                          fit: BoxFit.fill,
-                          animate: true,
-                        )
+                        !widget.donationHeart
+                            ? FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                borderWidth: 1,
+                                buttonSize: 50,
+                                fillColor: Color(0xBE3B85EB),
+                                icon: Icon(
+                                  Icons.content_copy,
+                                  color: FlutterFlowTheme.white,
+                                  size: 20,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    widget.donationHeart = true;
+                                  });
+                                },
+                              )
+                            : Lottie.network(
+                                'https://assets6.lottiefiles.com/datafiles/nZgj7wTd56UtH6m/data.json',
+                                height: 75,
+                                fit: BoxFit.fill,
+                                animate: true,
+                              )
                       ],
                     ),
                     Text(

@@ -1,6 +1,6 @@
 {
-    "name": "stakeborgdao_explorer",
-    "short_name": "stakeborgdao_explorer",
+    "name": "stakeborgdaoexplorer",
+    "short_name": "stakeborgdaoexplorer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
