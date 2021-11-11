@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../address_page/address_page_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -73,9 +75,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10, 10, 10, 10),
-                              child: SvgPicture.network(
-                                'https://www.stakeborgdao.com/wp-content/themes/stakeborgdao/assets/images/stakeborg-dark-bg.svg',
-                                fit: BoxFit.cover,
+                              child: SvgPicture.asset(
+                                'assets/images/stakeborg-dark-bg.svg',
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             Column(
@@ -806,7 +810,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                           child: Text(
-                            '0x7a3a59fc82ed8c2b1a4259f2dfa9a984527d8f04',
+                            '***REMOVED***',
                             style: FlutterFlowTheme.bodyText1.override(
                               fontFamily: 'Poppins',
                               color: FlutterFlowTheme.azure,
@@ -827,6 +831,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   size: 20,
                                 ),
                                 onPressed: () {
+                                  Clipboard.setData(ClipboardData(
+                                      text:
+                                          "***REMOVED***"));
                                   setState(() {
                                     widget.donationHeart = true;
                                   });
