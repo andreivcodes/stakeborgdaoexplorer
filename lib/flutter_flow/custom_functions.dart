@@ -197,3 +197,27 @@ String getTokensInSLPFarm(String address) {
 String getTokensStaked(String address) {
   return "to be implemented";
 }
+
+String getTokensInWalletValue(String address) {
+  return "to be implemented";
+}
+
+String getTokensInBONDFarmValue(String address) {
+  return "to be implemented";
+}
+
+String getTokensInSWINGBYFarmValue(String address) {
+  return "to be implemented";
+}
+
+String getTokensInXYZFarmValue(String address) {
+  return "to be implmeented";
+}
+
+String getTokensInSLPFarmValue(String address) {
+  return "to be implemented";
+}
+
+String getTokensStakedValue(String address) {
+  return "to be implemented";
+}

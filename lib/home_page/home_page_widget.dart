@@ -10,6 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class HomePageWidget extends StatefulWidget {
+  static const String route = '/overview';
+
   HomePageWidget({Key key}) : super(key: key);
 
   bool donationHeart = false;

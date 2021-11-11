@@ -10,6 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class AddressPageWidget extends StatefulWidget {
+  static const String route = '/address';
+
   AddressPageWidget({
     Key key,
     this.inputAddress,
@@ -370,6 +372,18 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                             ),
                           ),
                         ),
+                      ),
+                      Text(
+                        ' valued at ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Text(
+                        functions.getTokensInWalletValue(widget.inputAddress),
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                       )
                     ],
                   ),
@@ -402,6 +416,18 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                        ),
+                      ),
+                      Text(
+                        ' valued at ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Text(
+                        functions.getTokensInBONDFarmValue(widget.inputAddress),
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.azure,
+                          fontWeight: FontWeight.w600,
                         ),
                       )
                     ],
@@ -436,6 +462,19 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                             ),
                           ),
                         ),
+                      ),
+                      Text(
+                        ' valued at ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Text(
+                        functions
+                            .getTokensInSWINGBYFarmValue(widget.inputAddress),
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.azure,
+                          fontWeight: FontWeight.w600,
+                        ),
                       )
                     ],
                   ),
@@ -468,6 +507,18 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                        ),
+                      ),
+                      Text(
+                        ' valued at ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Text(
+                        functions.getTokensInXYZFarmValue(widget.inputAddress),
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.azure,
+                          fontWeight: FontWeight.w600,
                         ),
                       )
                     ],
@@ -502,6 +553,18 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                             ),
                           ),
                         ),
+                      ),
+                      Text(
+                        ' valued at ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Text(
+                        functions.getTokensInSLPFarmValue(widget.inputAddress),
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                       )
                     ],
                   ),
@@ -534,6 +597,18 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                        ),
+                      ),
+                      Text(
+                        ' valued at ',
+                        style: FlutterFlowTheme.bodyText1,
+                      ),
+                      Text(
+                        functions.getTokensStakedValue(widget.inputAddress),
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.azure,
+                          fontWeight: FontWeight.w600,
                         ),
                       )
                     ],
