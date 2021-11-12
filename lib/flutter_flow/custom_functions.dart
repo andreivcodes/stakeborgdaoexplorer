@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web3/ethereum.dart';
 import 'package:flutter_web3/ethers.dart';
 import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:web3dart/contracts/erc20.dart';
 import 'package:web3dart/web3dart.dart';
@@ -131,19 +130,45 @@ Future<String> getCurrentTvl() async {
   double BONDBalance = currentBalanceBOND[0].toDouble() / 1000000000000000000;
   String response = "BOND : " +
       intl.NumberFormat.decimalPattern().format(BONDBalance).toString() +
-      " \n";
+      "tokens \n";
 
   double SWINGBYBalance =
       currentBalanceSWINGBY[0].toDouble() / 1000000000000000000;
   response = response +
       "SWINGBY : " +
       intl.NumberFormat.decimalPattern().format(SWINGBYBalance).toString() +
-      " \n";
+      "tokens \n";
 
   double XYZBalance = currentBalanceXYZ[0].toDouble() / 1000000000000000000;
   response = response +
       "XYZ : " +
-      intl.NumberFormat.decimalPattern().format(XYZBalance).toString();
+      intl.NumberFormat.decimalPattern().format(XYZBalance).toString() +
+      "tokens \n";
+
+  final lpFarmAbiCode = await rootBundle
+      .loadString('assets/abi/0xf1e34d19f63b69eaa70952f2f64f735849959833.json');
+
+  var lpFarmContractAddress =
+      EthereumAddress.fromHex("0xf1e34d19f63b69eaa70952f2f64f735849959833");
+
+  final lpFarmContract = DeployedContract(
+      ContractAbi.fromJson(lpFarmAbiCode, 'LP Farm'), lpFarmContractAddress);
+
+  final getReserves = lpFarmContract.function('getReserves');
+  final totalSupply = lpFarmContract.function('totalSupply');
+
+  var reserves = await ethClient
+      .call(contract: lpFarmContract, function: getReserves, params: []);
+
+  var supply = await ethClient
+      .call(contract: lpFarmContract, function: totalSupply, params: []);
+
+  var mcap = reserves[0].toDouble() / 1000000 * 2;
+
+  response = response +
+      "SLP : " +
+      intl.NumberFormat.decimalPattern().format(mcap).toString() +
+      " \$";
 
   return response;
 }
@@ -174,50 +199,222 @@ Future<String> getTokensInWallet(String address) async {
 
   var balance = await token.balanceOf(ethAddress);
 
-  return intl.NumberFormat.decimalPattern()
-      .format(balance.toDouble() / 1000000000000000000);
+  return (balance.toDouble() / 1000000000000000000).toString();
 }
 
-String getTokensInBONDFarm(String address) {
-  return "to be implemented";
+Future<String> getTokensInBONDFarm(String address) async {
+  final farmAbiCode = await rootBundle
+      .loadString('assets/abi/0x7F4FE6776a9617847485d43db0d3A9b734e459C5.json');
+
+  var farmPoolAddress =
+      EthereumAddress.fromHex("0x7F4FE6776a9617847485d43db0d3A9b734e459C5");
+
+  var tokenAddress =
+      EthereumAddress.fromHex("0x0391D2021f89DC339F60Fff84546EA23E337750f");
+
+  var userAddress = EthereumAddress.fromHex(address);
+
+  final farmPoolContract = DeployedContract(
+      ContractAbi.fromJson(farmAbiCode, 'Farm Pool'), farmPoolAddress);
+
+  final balanceOf = farmPoolContract.function('balanceOf');
+
+  var BONDInFarm = await ethClient.call(
+      contract: farmPoolContract,
+      function: balanceOf,
+      params: [userAddress, tokenAddress]);
+
+  return (BONDInFarm[0].toDouble() / 1000000000000000000).toString();
 }
 
-String getTokensInSWINGBYFarm(String address) {
-  return "to be implemented";
+Future<String> getTokensInSWINGBYFarm(String address) async {
+  final farmAbiCode = await rootBundle
+      .loadString('assets/abi/0x7F4FE6776a9617847485d43db0d3A9b734e459C5.json');
+
+  var farmPoolAddress =
+      EthereumAddress.fromHex("0x7F4FE6776a9617847485d43db0d3A9b734e459C5");
+
+  var tokenAddress =
+      EthereumAddress.fromHex("0x8287c7b963b405b7b8d467db9d79eec40625b13a");
+
+  var userAddress = EthereumAddress.fromHex(address);
+
+  final farmPoolContract = DeployedContract(
+      ContractAbi.fromJson(farmAbiCode, 'Farm Pool'), farmPoolAddress);
+
+  final balanceOf = farmPoolContract.function('balanceOf');
+
+  var SWINGBYInFarm = await ethClient.call(
+      contract: farmPoolContract,
+      function: balanceOf,
+      params: [userAddress, tokenAddress]);
+
+  return (SWINGBYInFarm[0].toDouble() / 1000000000000000000).toString();
 }
 
-String getTokensInXYZFarm(String address) {
-  return "to be implemented";
+Future<String> getTokensInXYZFarm(String address) async {
+  final farmAbiCode = await rootBundle
+      .loadString('assets/abi/0x7F4FE6776a9617847485d43db0d3A9b734e459C5.json');
+
+  var farmPoolAddress =
+      EthereumAddress.fromHex("0x7F4FE6776a9617847485d43db0d3A9b734e459C5");
+
+  var tokenAddress =
+      EthereumAddress.fromHex("0x618679df9efcd19694bb1daa8d00718eacfa2883");
+
+  var userAddress = EthereumAddress.fromHex(address);
+
+  final farmPoolContract = DeployedContract(
+      ContractAbi.fromJson(farmAbiCode, 'Farm Pool'), farmPoolAddress);
+
+  final balanceOf = farmPoolContract.function('balanceOf');
+
+  var XYZInFarm = await ethClient.call(
+      contract: farmPoolContract,
+      function: balanceOf,
+      params: [userAddress, tokenAddress]);
+
+  return (XYZInFarm[0].toDouble() / 1000000000000000000).toString();
 }
 
-String getTokensInSLPFarm(String address) {
-  return "to be implemented";
+Future<String> getTokensInSLPFarm(String address) async {
+  final farmAbiCode = await rootBundle
+      .loadString('assets/abi/0x7F4FE6776a9617847485d43db0d3A9b734e459C5.json');
+
+  var farmPoolAddress =
+      EthereumAddress.fromHex("0x7F4FE6776a9617847485d43db0d3A9b734e459C5");
+
+  var tokenAddress =
+      EthereumAddress.fromHex("0xf1e34d19f63b69eaa70952f2f64f735849959833");
+
+  var userAddress = EthereumAddress.fromHex(address);
+
+  final farmPoolContract = DeployedContract(
+      ContractAbi.fromJson(farmAbiCode, 'Farm Pool'), farmPoolAddress);
+
+  final balanceOf = farmPoolContract.function('balanceOf');
+
+  var SLPInFarm = await ethClient.call(
+      contract: farmPoolContract,
+      function: balanceOf,
+      params: [userAddress, tokenAddress]);
+
+  return (SLPInFarm[0].toDouble() / 1000000000000000000).toString();
 }
 
-String getTokensStaked(String address) {
-  return "to be implemented";
+Future<String> getTokensStaked(String address) async {
+  final governanceAbiCode = await rootBundle
+      .loadString('assets/abi/0x42C4191B19eF315267c8B4A32ecc7618CD681AA9.json');
+
+  var governanceContractAddress =
+      EthereumAddress.fromHex("0xba319f6f6ac8f45e556918a0c9ecdde64335265c");
+
+  var userAddress = EthereumAddress.fromHex(address);
+
+  final governanceContract = DeployedContract(
+      ContractAbi.fromJson(governanceAbiCode, 'Governance'),
+      governanceContractAddress);
+
+  final balanceOf = governanceContract.function('balanceOf');
+
+  var tokensInGovernance = await ethClient.call(
+      contract: governanceContract, function: balanceOf, params: [userAddress]);
+
+  return (tokensInGovernance[0].toDouble() / 1000000000000000000).toString();
 }
 
-String getTokensInWalletValue(String address) {
-  return "to be implemented";
+Future<String> getTokensInWalletValue(String address) async {
+  var walletValue = double.parse(await getTokensInWallet(address)) *
+      double.parse(await getCurrentPrice());
+  return walletValue.toString();
 }
 
-String getTokensInBONDFarmValue(String address) {
-  return "to be implemented";
+Future<String> getTokensInBONDFarmValue(String address) async {
+  var numberOfTokens = await getTokensInBONDFarm(address);
+  var tokenPrice;
+  var response = await http.get(
+    Uri.parse(
+        "https://api.coingecko.com/api/v3/simple/price?ids=barnbridge&vs_currencies=USD"),
+  );
+
+  if (response.statusCode == 200) {
+    tokenPrice = (jsonDecode(response.body)['barnbridge']['usd'].toString());
+  }
+
+  var walletValue = double.parse(numberOfTokens) * double.parse(tokenPrice);
+
+  return walletValue.toString();
 }
 
-String getTokensInSWINGBYFarmValue(String address) {
-  return "to be implemented";
+Future<String> getTokensInSWINGBYFarmValue(String address) async {
+  var numberOfTokens = await getTokensInSWINGBYFarm(address);
+  var tokenPrice;
+  var response = await http.get(
+    Uri.parse(
+        "https://api.coingecko.com/api/v3/simple/price?ids=swingby&vs_currencies=USD"),
+  );
+
+  if (response.statusCode == 200) {
+    tokenPrice = (jsonDecode(response.body)['swingby']['usd'].toString());
+  }
+
+  var walletValue = double.parse(numberOfTokens) * double.parse(tokenPrice);
+
+  return walletValue.toString();
 }
 
-String getTokensInXYZFarmValue(String address) {
-  return "to be implmeented";
+Future<String> getTokensInXYZFarmValue(String address) async {
+  var numberOfTokens = await getTokensInXYZFarm(address);
+  var tokenPrice;
+  var response = await http.get(
+    Uri.parse(
+        "https://api.coingecko.com/api/v3/simple/price?ids=universe-xyz&vs_currencies=USD"),
+  );
+
+  if (response.statusCode == 200) {
+    tokenPrice = (jsonDecode(response.body)['universe-xyz']['usd'].toString());
+  }
+
+  var walletValue = double.parse(numberOfTokens) * double.parse(tokenPrice);
+
+  return walletValue.toString();
 }
 
-String getTokensInSLPFarmValue(String address) {
-  return "to be implemented";
+Future<String> getTokensInSLPFarmValue(String address) async {
+  final lpFarmAbiCode = await rootBundle
+      .loadString('assets/abi/0xf1e34d19f63b69eaa70952f2f64f735849959833.json');
+
+  var lpFarmContractAddress =
+      EthereumAddress.fromHex("0xf1e34d19f63b69eaa70952f2f64f735849959833");
+
+  final lpFarmContract = DeployedContract(
+      ContractAbi.fromJson(lpFarmAbiCode, 'LP Farm'), lpFarmContractAddress);
+
+  final getReserves = lpFarmContract.function('getReserves');
+  final totalSupply = lpFarmContract.function('totalSupply');
+
+  var reserves = await ethClient
+      .call(contract: lpFarmContract, function: getReserves, params: []);
+
+  var supply = await ethClient
+      .call(contract: lpFarmContract, function: totalSupply, params: []);
+
+  var mcap = reserves[0].toDouble() / 1000000 * 2;
+
+  var supplyNormalized = supply[0].toDouble() / 1000000000000000000;
+
+  var tokenPrice = mcap / supplyNormalized;
+
+  var numberOfTokens = await getTokensInSLPFarm(address);
+
+  var walletValue = double.parse(numberOfTokens) * tokenPrice;
+
+  return walletValue.toString();
 }
 
-String getTokensStakedValue(String address) {
-  return "to be implemented";
+Future<String> getTokensStakedValue(String address) async {
+  var walletValue = double.parse(await getTokensStaked(address)) *
+      double.parse(await getCurrentPrice());
+
+  return walletValue.toString();
 }

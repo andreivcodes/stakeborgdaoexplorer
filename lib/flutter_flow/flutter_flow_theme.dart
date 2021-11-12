@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class FlutterFlowTheme {
   static const Color primaryColor = Color(0xFF3B85EB);
   static const Color secondaryColor = Color(0xFFFAFCFF);
-  static const Color tertiaryColor = Color(0xFF222E50);
+  static const Color tertiaryColor = Color(0xFF303030);
 
   static const Color azure = Color(0xFF3B85EB);
   static const Color white = Color(0xFFFFFFFF);
