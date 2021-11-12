@@ -384,7 +384,10 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                       ), */
                         Text(
                           ' tokens in ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                           child: Padding(
@@ -395,13 +398,17 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                                 fontFamily: 'Poppins',
                                 color: FlutterFlowTheme.primaryColor,
                                 fontWeight: FontWeight.w600,
+                                fontSize: 18,
                               ),
                             ),
                           ),
                         ),
                         Text(
                           ' valued at ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                             decoration: BoxDecoration(
@@ -534,7 +541,10 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                       ), */
                         Text(
                           ' BOND tokens in the ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                           child: Padding(
@@ -545,13 +555,17 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                                 fontFamily: 'Poppins',
                                 color: FlutterFlowTheme.primaryColor,
                                 fontWeight: FontWeight.w600,
+                                fontSize: 18,
                               ),
                             ),
                           ),
                         ),
                         Text(
                           ' valued at ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                             decoration: BoxDecoration(
@@ -684,7 +698,10 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                       ), */
                         Text(
                           ' SWINGBY tokens in the ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                           child: Padding(
@@ -695,13 +712,17 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                                 fontFamily: 'Poppins',
                                 color: FlutterFlowTheme.primaryColor,
                                 fontWeight: FontWeight.w600,
+                                fontSize: 18,
                               ),
                             ),
                           ),
                         ),
                         Text(
                           ' valued at ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                             decoration: BoxDecoration(
@@ -835,7 +856,10 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                       ), */
                         Text(
                           ' XYZ tokens in the ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                           child: Padding(
@@ -846,13 +870,17 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                                 fontFamily: 'Poppins',
                                 color: FlutterFlowTheme.primaryColor,
                                 fontWeight: FontWeight.w600,
+                                fontSize: 18,
                               ),
                             ),
                           ),
                         ),
                         Text(
                           ' valued at ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                             decoration: BoxDecoration(
@@ -985,7 +1013,10 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                       ), */
                         Text(
                           ' SLP tokens in the ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                           child: Padding(
@@ -996,13 +1027,17 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                                 fontFamily: 'Poppins',
                                 color: FlutterFlowTheme.primaryColor,
                                 fontWeight: FontWeight.w600,
+                                fontSize: 18,
                               ),
                             ),
                           ),
                         ),
                         Text(
                           ' valued at ',
-                          style: FlutterFlowTheme.bodyText1,
+                          style: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                         ),
                         Container(
                             decoration: BoxDecoration(
@@ -1122,7 +1157,10 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                       ), */
                       Text(
                         ' tokens staked in ',
-                        style: FlutterFlowTheme.bodyText1,
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
                       ),
                       Container(
                         child: Padding(
@@ -1133,13 +1171,17 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                               fontFamily: 'Poppins',
                               color: FlutterFlowTheme.primaryColor,
                               fontWeight: FontWeight.w600,
+                              fontSize: 18,
                             ),
                           ),
                         ),
                       ),
                       Text(
                         ' valued at ',
-                        style: FlutterFlowTheme.bodyText1,
+                        style: FlutterFlowTheme.bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                        ),
                       ),
                       Container(
                           decoration: BoxDecoration(
