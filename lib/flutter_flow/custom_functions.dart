@@ -130,20 +130,20 @@ Future<String> getCurrentTvl() async {
   double BONDBalance = currentBalanceBOND[0].toDouble() / 1000000000000000000;
   String response = "BOND : " +
       intl.NumberFormat.decimalPattern().format(BONDBalance).toString() +
-      "tokens \n";
+      " tokens \n";
 
   double SWINGBYBalance =
       currentBalanceSWINGBY[0].toDouble() / 1000000000000000000;
   response = response +
       "SWINGBY : " +
       intl.NumberFormat.decimalPattern().format(SWINGBYBalance).toString() +
-      "tokens \n";
+      " tokens \n";
 
   double XYZBalance = currentBalanceXYZ[0].toDouble() / 1000000000000000000;
   response = response +
       "XYZ : " +
       intl.NumberFormat.decimalPattern().format(XYZBalance).toString() +
-      "tokens \n";
+      " tokens \n";
 
   final lpFarmAbiCode = await rootBundle
       .loadString('assets/abi/0xf1e34d19f63b69eaa70952f2f64f735849959833.json');
