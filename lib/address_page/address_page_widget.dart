@@ -342,9 +342,9 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                               'owns',
                               style: FlutterFlowTheme.subtitle1.override(
                                 fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.tertiaryColor,
+                                color: Color(0xFF303030),
                                 fontSize: 24,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w300,
                               ),
                             ),
                           ),
