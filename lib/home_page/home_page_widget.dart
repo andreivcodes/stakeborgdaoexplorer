@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:stakeborgdaoexplorer/components/footer_widget.dart';
+import 'package:stakeborgdaoexplorer/flutter_flow/flutter_flow_widgets.dart';
 
 import '../address_page/address_page_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -176,91 +177,130 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 2,
-                                  color: FlutterFlowTheme.tertiaryColor,
-                                  spreadRadius: 0.05,
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                              child: TextFormField(
-                                onChanged: (_) => {},
-                                onFieldSubmitted: (_) async {
-                                  await Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.bottomToTop,
-                                      duration: Duration(milliseconds: 300),
-                                      reverseDuration:
-                                          Duration(milliseconds: 300),
-                                      child: AddressPageWidget(
-                                        inputAddress: textController.text,
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 2,
+                                        color: FlutterFlowTheme.tertiaryColor,
+                                        spreadRadius: 0.05,
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        5, 0, 5, 0),
+                                    child: TextFormField(
+                                      onChanged: (_) => setState(() {}),
+                                      onFieldSubmitted: (_) async {
+                                        await Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type:
+                                                PageTransitionType.bottomToTop,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            reverseDuration:
+                                                Duration(milliseconds: 300),
+                                            child: AddressPageWidget(
+                                              inputAddress: textController.text,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      controller: textController,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: '0xDeAdBeEf...',
+                                        hintStyle:
+                                            FlutterFlowTheme.bodyText1.override(
+                                          fontFamily: 'Poppins',
+                                          color: Color(0xFF7D7D7D),
+                                        ),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
+                                        suffixIcon: textController
+                                                .text.isNotEmpty
+                                            ? InkWell(
+                                                onTap: () => setState(
+                                                  () => textController.clear(),
+                                                ),
+                                                child: Icon(
+                                                  Icons.clear,
+                                                  color: FlutterFlowTheme
+                                                      .primaryColor,
+                                                  size: 22,
+                                                ),
+                                              )
+                                            : null,
+                                      ),
+                                      style:
+                                          FlutterFlowTheme.bodyText1.override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.primaryColor,
                                       ),
                                     ),
-                                  );
-                                },
-                                controller: textController,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: '0xDeAdBeEf...',
-                                  hintStyle:
-                                      FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF7D7D7D),
                                   ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  suffixIcon: textController.text.isNotEmpty
-                                      ? InkWell(
-                                          onTap: () => setState(
-                                            () => textController.clear(),
-                                          ),
-                                          child: Icon(
-                                            Icons.clear,
-                                            color:
-                                                FlutterFlowTheme.primaryColor,
-                                            size: 22,
-                                          ),
-                                        )
-                                      : null,
-                                ),
-                                style: FlutterFlowTheme.bodyText1.override(
-                                  fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.primaryColor,
                                 ),
                               ),
                             ),
-                          ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() async {
+                                    textController.text =
+                                        await functions.getUserAddress();
+                                  });
+                                },
+                                text: 'My address',
+                                options: FFButtonOptions(
+                                  width: 130,
+                                  height: 40,
+                                  color: FlutterFlowTheme.primaryColor,
+                                  textStyle:
+                                      FlutterFlowTheme.subtitle2.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: 5,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
