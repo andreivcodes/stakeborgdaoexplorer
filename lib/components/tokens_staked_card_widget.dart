@@ -85,6 +85,7 @@ class _TokensStakedCardWidgetState extends State<TokensStakedCardWidget> {
               ' tokens in ',
               style: FlutterFlowTheme.bodyText1.override(
                 fontFamily: 'Poppins',
+                color: Color(0xFF7D7D7D),
                 fontSize: 14,
               ),
             ),
@@ -101,7 +102,11 @@ class _TokensStakedCardWidgetState extends State<TokensStakedCardWidget> {
             ),
             Text(
               ' valued at ',
-              style: FlutterFlowTheme.bodyText1,
+              style: FlutterFlowTheme.bodyText1.override(
+                fontFamily: 'Poppins',
+                color: Color(0xFF7D7D7D),
+                fontSize: 14,
+              ),
             ),
             FutureBuilder<String>(
               future:

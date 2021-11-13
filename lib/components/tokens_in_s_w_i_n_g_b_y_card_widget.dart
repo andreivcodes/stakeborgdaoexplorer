@@ -86,6 +86,7 @@ class _TokensInSWINGBYCardWidgetState extends State<TokensInSWINGBYCardWidget> {
               ' tokens in ',
               style: FlutterFlowTheme.bodyText1.override(
                 fontFamily: 'Poppins',
+                color: Color(0xFF7D7D7D),
                 fontSize: 14,
               ),
             ),
@@ -102,7 +103,11 @@ class _TokensInSWINGBYCardWidgetState extends State<TokensInSWINGBYCardWidget> {
             ),
             Text(
               ' valued at ',
-              style: FlutterFlowTheme.bodyText1,
+              style: FlutterFlowTheme.bodyText1.override(
+                fontFamily: 'Poppins',
+                color: Color(0xFF7D7D7D),
+                fontSize: 14,
+              ),
             ),
             FutureBuilder<String>(
               future: functions
