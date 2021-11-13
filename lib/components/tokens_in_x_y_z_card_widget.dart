@@ -38,49 +38,46 @@ class _TokensInXYZCardWidgetState extends State<TokensInXYZCardWidget> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                child: FutureBuilder<String>(
-                  future: functions
-                      .getTokensInXYZFarm(widget.address), // async work
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Text(
-                          'Loading...',
-                          style: FlutterFlowTheme.title3.override(
-                            fontFamily: 'Poppins',
-                            color: FlutterFlowTheme.primaryColor,
-                          ),
-                        );
-                      default:
-                        if (snapshot.hasError)
-                          return Text(
-                            'Error: ${snapshot.error}',
-                            style: FlutterFlowTheme.title3.override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.primaryColor,
-                            ),
-                          );
-                        else
-                          return Text(
-                            double.parse(snapshot.data).toStringAsFixed(3),
-                            style: FlutterFlowTheme.title3.override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.primaryColor,
-                            ),
-                          );
-                    }
-                  },
-                ) /* Text(
+            FutureBuilder<String>(
+              future:
+                  functions.getTokensInXYZFarm(widget.address), // async work
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Text(
+                      'Loading...',
+                      style: FlutterFlowTheme.title3.override(
+                        fontFamily: 'Poppins',
+                        color: FlutterFlowTheme.primaryColor,
+                      ),
+                    );
+                  default:
+                    if (snapshot.hasError)
+                      return Text(
+                        'Error: ${snapshot.error}',
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      );
+                    else
+                      return Text(
+                        double.parse(snapshot.data).toStringAsFixed(3),
+                        style: FlutterFlowTheme.title3.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.primaryColor,
+                        ),
+                      );
+                }
+              },
+            ) /* Text(
                 functions.getTokensInXYZFarm(widget.address),
                 style: FlutterFlowTheme.title3.override(
                   fontFamily: 'Poppins',
                   color: FlutterFlowTheme.primaryColor,
                 ),
               ), */
-                ),
+            ,
             Text(
               ' tokens in ',
               style: FlutterFlowTheme.bodyText1.override(
@@ -89,15 +86,12 @@ class _TokensInXYZCardWidgetState extends State<TokensInXYZCardWidget> {
                 fontSize: 14,
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-              child: Text(
-                'XYZ farm',
-                style: FlutterFlowTheme.bodyText1.override(
-                  fontFamily: 'Poppins',
-                  color: FlutterFlowTheme.primaryColor,
-                  fontWeight: FontWeight.w600,
-                ),
+            Text(
+              'XYZ farm',
+              style: FlutterFlowTheme.bodyText1.override(
+                fontFamily: 'Poppins',
+                color: FlutterFlowTheme.primaryColor,
+                fontWeight: FontWeight.w600,
               ),
             ),
             Text(
