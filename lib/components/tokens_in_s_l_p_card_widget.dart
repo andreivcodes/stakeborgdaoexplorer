@@ -85,7 +85,7 @@ class _TokensInSLPCardWidgetState extends State<TokensInSLPCardWidget> {
               ' tokens in ',
               style: FlutterFlowTheme.bodyText1.override(
                 fontFamily: 'Poppins',
-                fontSize: 18,
+                fontSize: 14,
               ),
             ),
             Padding(
@@ -129,7 +129,7 @@ class _TokensInSLPCardWidgetState extends State<TokensInSLPCardWidget> {
                       );
                     else
                       return Text(
-                        '${double.parse(snapshot.data).toStringAsFixed(3)} \$',
+                        '${double.parse(snapshot.data).toStringAsFixed(1)} \$',
                         style: FlutterFlowTheme.bodyText1.override(
                           fontFamily: 'Poppins',
                           color: FlutterFlowTheme.primaryColor,
