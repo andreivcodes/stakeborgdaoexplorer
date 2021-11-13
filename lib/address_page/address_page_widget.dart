@@ -1,4 +1,11 @@
 import 'package:flutter/services.dart';
+import 'package:stakeborgdaoexplorer/components/footer_widget.dart';
+import 'package:stakeborgdaoexplorer/components/tokens_in_b_o_n_d_card_widget.dart';
+import 'package:stakeborgdaoexplorer/components/tokens_in_s_l_p_card_widget.dart';
+import 'package:stakeborgdaoexplorer/components/tokens_in_s_w_i_n_g_b_y_card_widget.dart';
+import 'package:stakeborgdaoexplorer/components/tokens_in_wallet_card_widget.dart';
+import 'package:stakeborgdaoexplorer/components/tokens_in_x_y_z_card_widget.dart';
+import 'package:stakeborgdaoexplorer/components/tokens_staked_card_widget.dart';
 
 import '../address_page/address_page_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -21,7 +28,6 @@ class AddressPageWidget extends StatefulWidget {
   }) : super(key: key);
 
   final String inputAddress;
-  bool donationHeart = false;
 
   @override
   _AddressPageWidgetState createState() => _AddressPageWidgetState();
@@ -60,109 +66,253 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                   maxWidth: 500,
                 ),
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.ghostWhite,
+                  color: Color(0xFFEEEEEE),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 45, 0, 25),
+                    Align(
+                      alignment: AlignmentDirectional(0, 0),
                       child: Container(
-                        width: double.infinity,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.spaceCadet,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Colors.black,
-                              spreadRadius: 0.5,
-                            )
-                          ],
+                        constraints: BoxConstraints(
+                          maxWidth: 500,
                         ),
-                        child: Row(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.ghostWhite,
+                        ),
+                        child: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10, 10, 10, 10),
-                              child: SvgPicture.asset(
-                                'assets/images/stakeborg-dark-bg.svg',
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.fill,
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 45, 0, 25),
+                              child: Container(
+                                width: double.infinity,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.spaceCadet,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 5,
+                                      color: Colors.black,
+                                      spreadRadius: 0.5,
+                                    )
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 10, 10, 10),
+                                      child: SvgPicture.asset(
+                                        'assets/images/stakeborg-dark-bg.svg',
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              'Stakeborg',
+                                              style: FlutterFlowTheme.title1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme.white,
+                                              ),
+                                            ),
+                                            Text(
+                                              'DAO',
+                                              style: FlutterFlowTheme.title1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme
+                                                    .primaryColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          'Explorer',
+                                          style:
+                                              FlutterFlowTheme.title2.override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.azure,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                        FutureBuilder<String>(
+                                          future: functions
+                                              .getUserAddress(), // async work
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<String> snapshot) {
+                                            switch (snapshot.connectionState) {
+                                              case ConnectionState.waiting:
+                                                return Text(
+                                                  'Loading...',
+                                                  style: FlutterFlowTheme
+                                                      .bodyText1
+                                                      .override(
+                                                    fontFamily: 'Poppins',
+                                                    color:
+                                                        FlutterFlowTheme.white,
+                                                  ),
+                                                );
+                                              default:
+                                                if (snapshot.hasError)
+                                                  return Text(
+                                                    'Error: ${snapshot.error}',
+                                                    style: FlutterFlowTheme
+                                                        .bodyText1
+                                                        .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: FlutterFlowTheme
+                                                          .white,
+                                                    ),
+                                                  );
+                                                else
+                                                  return Text(
+                                                    '${snapshot.data}',
+                                                    style: FlutterFlowTheme
+                                                        .bodyText1
+                                                        .override(
+                                                      fontFamily: 'Poppins',
+                                                      color: FlutterFlowTheme
+                                                          .white,
+                                                    ),
+                                                  );
+                                            }
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                      'Stakeborg',
-                                      style: FlutterFlowTheme.title1.override(
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 12, 0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(),
+                                    child: Text(
+                                      'Search for an address to see information about it',
+                                      textAlign: TextAlign.start,
+                                      style:
+                                          FlutterFlowTheme.bodyText1.override(
                                         fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.white,
+                                        color: Color(0xFF222E50),
                                       ),
                                     ),
-                                    Text(
-                                      'DAO',
-                                      style: FlutterFlowTheme.title1.override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Text(
-                                  'Explorer',
-                                  style: FlutterFlowTheme.title2.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.azure,
-                                    fontWeight: FontWeight.normal,
                                   ),
                                 ),
-                                FutureBuilder<String>(
-                                  future:
-                                      functions.getUserAddress(), // async work
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<String> snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.waiting:
-                                        return Text(
-                                          'Loading...',
-                                          style: FlutterFlowTheme.bodyText1
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 10, 10, 10),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 2,
+                                          color: FlutterFlowTheme.tertiaryColor,
+                                          spreadRadius: 0.05,
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          5, 0, 5, 0),
+                                      child: TextFormField(
+                                        onChanged: (_) => {},
+                                        onFieldSubmitted: (_) async {
+                                          await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType
+                                                  .bottomToTop,
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              reverseDuration:
+                                                  Duration(milliseconds: 300),
+                                              child: AddressPageWidget(
+                                                inputAddress:
+                                                    textController.text,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        controller: textController,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          hintText: '0xDeAdBeEf...',
+                                          hintStyle: FlutterFlowTheme.bodyText1
                                               .override(
                                             fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
+                                            color: Color(0xFF7D7D7D),
                                           ),
-                                        );
-                                      default:
-                                        if (snapshot.hasError)
-                                          return Text(
-                                            'Error: ${snapshot.error}',
-                                            style: FlutterFlowTheme.bodyText1
-                                                .override(
-                                              fontFamily: 'Poppins',
-                                              color: FlutterFlowTheme.white,
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
                                             ),
-                                          );
-                                        else
-                                          return Text(
-                                            '${snapshot.data}',
-                                            style: FlutterFlowTheme.bodyText1
-                                                .override(
-                                              fontFamily: 'Poppins',
-                                              color: FlutterFlowTheme.white,
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
                                             ),
-                                          );
-                                    }
-                                  },
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          suffixIcon: textController
+                                                  .text.isNotEmpty
+                                              ? InkWell(
+                                                  onTap: () => setState(
+                                                    () =>
+                                                        textController.clear(),
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    color: FlutterFlowTheme
+                                                        .primaryColor,
+                                                    size: 22,
+                                                  ),
+                                                )
+                                              : null,
+                                        ),
+                                        style:
+                                            FlutterFlowTheme.bodyText1.override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 )
                               ],
                             )
@@ -170,1183 +320,78 @@ class _AddressPageWidgetState extends State<AddressPageWidget> {
                         ),
                       ),
                     ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(),
-                            child: Text(
-                              'Search for an address to see information about it',
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: Color(0xFF222E50),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 2,
-                                  color: FlutterFlowTheme.tertiaryColor,
-                                  spreadRadius: 0.05,
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                              child: TextFormField(
-                                onChanged: (_) => {},
-                                onFieldSubmitted: (_) async {
-                                  await Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.bottomToTop,
-                                      duration: Duration(milliseconds: 300),
-                                      reverseDuration:
-                                          Duration(milliseconds: 300),
-                                      child: AddressPageWidget(
-                                        inputAddress: textController.text,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                controller: textController,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: '0xDeAdBeEf...',
-                                  hintStyle:
-                                      FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFF7D7D7D),
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  suffixIcon: textController.text.isNotEmpty
-                                      ? InkWell(
-                                          onTap: () => setState(
-                                            () => textController.clear(),
-                                          ),
-                                          child: Icon(
-                                            Icons.clear,
-                                            color:
-                                                FlutterFlowTheme.primaryColor,
-                                            size: 22,
-                                          ),
-                                        )
-                                      : null,
-                                ),
-                                style: FlutterFlowTheme.bodyText1.override(
-                                  fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.ghostWhite,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    widget.inputAddress,
-                    style: FlutterFlowTheme.title3.override(
-                      fontFamily: 'Poppins',
-                      color: FlutterFlowTheme.primaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                    child: Container(
+                    Container(
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.white,
+                        color: FlutterFlowTheme.ghostWhite,
                       ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                        child: Text(
-                          'owns',
-                          style: FlutterFlowTheme.subtitle1.override(
-                            fontFamily: 'Poppins',
-                            color: FlutterFlowTheme.primaryColor,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInWallet(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          double.parse(snapshot.data)
-                                              .toStringAsFixed(3),
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions.getTokensInWallet(widget.inputAddress),
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
-                        ),
-                      ), */
-                        Text(
-                          ' tokens in ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                            child: Text(
-                              'wallet',
-                              style: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ' valued at ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInWalletValue(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          '${double.parse(snapshot.data).toStringAsFixed(3)} \$',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions.getTokensInWalletValue(widget.inputAddress),
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ) */
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInBONDFarm(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          double.parse(snapshot.data)
-                                              .toStringAsFixed(3),
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions.getTokensInBONDFarm(widget.inputAddress),
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
-                        ),
-                      ), */
-                        Text(
-                          ' BOND tokens in the ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                            child: Text(
-                              'BOND farm',
-                              style: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ' valued at ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInBONDFarmValue(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          '${double.parse(snapshot.data).toStringAsFixed(3)} \$',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /*  Text(
-                        functions.getTokensInBONDFarmValue(widget.inputAddress),
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.azure,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ) */
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInSWINGBYFarm(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          double.parse(snapshot.data)
-                                              .toStringAsFixed(3),
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions.getTokensInSWINGBYFarm(widget.inputAddress),
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
-                        ),
-                      ), */
-                        Text(
-                          ' SWINGBY tokens in the ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                            child: Text(
-                              'SWINGBY farm',
-                              style: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ' valued at ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInSWINGBYFarmValue(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          '${double.parse(snapshot.data).toStringAsFixed(3)} \$',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions
-                            .getTokensInSWINGBYFarmValue(widget.inputAddress),
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.azure,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ) */
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInXYZFarm(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          double.parse(snapshot.data)
-                                              .toStringAsFixed(3),
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions.getTokensInXYZFarm(widget.inputAddress),
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
-                        ),
-                      ), */
-                        Text(
-                          ' XYZ tokens in the ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                            child: Text(
-                              'XYZ farm',
-                              style: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ' valued at ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInXYZFarmValue(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          '${double.parse(snapshot.data).toStringAsFixed(3)} \$',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions.getTokensInXYZFarmValue(widget.inputAddress),
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.azure,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ) */
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInSLPFarm(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          double.parse(snapshot.data)
-                                              .toStringAsFixed(3),
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            )),
-                        /* Text(
-                        functions.getTokensInSLPFarm(widget.inputAddress),
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
-                        ),
-                      ), */
-                        Text(
-                          ' SLP tokens in the ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                            child: Text(
-                              'STANDARD/USDC pool',
-                              style: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ' valued at ',
-                          style: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                        Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.primaryColor,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Colors.black,
-                                  spreadRadius: 0.1,
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                              child: FutureBuilder<String>(
-                                future: functions.getTokensInSLPFarmValue(
-                                    widget.inputAddress), // async work
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return Text(
-                                        'Loading...',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    default:
-                                      if (snapshot.hasError)
-                                        return Text(
-                                          'Error: ${snapshot.error}',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      else {
-                                        return Text(
-                                          '${double.parse(snapshot.data).toStringAsFixed(3)} \$',
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.white,
-                                          ),
-                                        );
-                                      }
-                                  }
-                                },
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.primaryColor,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 3,
-                                color: Colors.black,
-                                spreadRadius: 0.1,
-                              )
-                            ],
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                            child: FutureBuilder<String>(
-                              future: functions.getTokensStaked(
-                                  widget.inputAddress), // async work
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<String> snapshot) {
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.waiting:
-                                    return Text(
-                                      'Loading...',
-                                      style: FlutterFlowTheme.title3.override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.white,
-                                      ),
-                                    );
-                                  default:
-                                    if (snapshot.hasError)
-                                      return Text(
-                                        'Error: ${snapshot.error}',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    else {
-                                      return Text(
-                                        double.parse(snapshot.data)
-                                            .toStringAsFixed(3),
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    }
-                                }
-                              },
-                            ),
-                          )),
-                      /* Text(
-                        functions.getTokensStaked(widget.inputAddress),
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.primaryColor,
-                        ),
-                      ), */
-                      Text(
-                        ' tokens staked in ',
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                        ),
-                      ),
-                      Container(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Text(
-                            'governance',
-                            style: FlutterFlowTheme.bodyText1.override(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            widget.inputAddress,
+                            style: FlutterFlowTheme.title3.override(
                               fontFamily: 'Poppins',
                               color: FlutterFlowTheme.primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
+                              fontSize: 20,
+                              fontWeight: FontWeight.normal,
                             ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                            child: Text(
+                              'owns',
+                              style: FlutterFlowTheme.subtitle1.override(
+                                fontFamily: 'Poppins',
+                                color: FlutterFlowTheme.tertiaryColor,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          TokensInWalletCardWidget(
+                            address: valueOrDefault<String>(
+                              widget.inputAddress,
+                              '0x000000000000000000000000000000000000dEaD',
+                            ),
+                          ),
+                          TokensInBONDCardWidget(
+                            address: valueOrDefault<String>(
+                              widget.inputAddress,
+                              '0x000000000000000000000000000000000000dEaD',
+                            ),
+                          ),
+                          TokensInSWINGBYCardWidget(
+                            address: valueOrDefault<String>(
+                              widget.inputAddress,
+                              '0x000000000000000000000000000000000000dEaD',
+                            ),
+                          ),
+                          TokensInXYZCardWidget(
+                            address: valueOrDefault<String>(
+                              widget.inputAddress,
+                              '0x000000000000000000000000000000000000dEaD',
+                            ),
+                          ),
+                          TokensInSLPCardWidget(
+                            address: valueOrDefault<String>(
+                              widget.inputAddress,
+                              '0x000000000000000000000000000000000000dEaD',
+                            ),
+                          ),
+                          TokensStakedCardWidget(
+                            address: valueOrDefault<String>(
+                              widget.inputAddress,
+                              '0x000000000000000000000000000000000000dEaD',
+                            ),
+                          )
+                        ],
                       ),
-                      Text(
-                        ' valued at ',
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
-                          fontSize: 18,
-                        ),
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.primaryColor,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 3,
-                                color: Colors.black,
-                                spreadRadius: 0.1,
-                              )
-                            ],
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(5, 1, 5, 1),
-                            child: FutureBuilder<String>(
-                              future: functions.getTokensStakedValue(
-                                  widget.inputAddress), // async work
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<String> snapshot) {
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.waiting:
-                                    return Text(
-                                      'Loading...',
-                                      style: FlutterFlowTheme.title3.override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.white,
-                                      ),
-                                    );
-                                  default:
-                                    if (snapshot.hasError)
-                                      return Text(
-                                        'Error: ${snapshot.error}',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    else {
-                                      return Text(
-                                        '${double.parse(snapshot.data).toStringAsFixed(3)} \$',
-                                        style: FlutterFlowTheme.title3.override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.white,
-                                        ),
-                                      );
-                                    }
-                                }
-                              },
-                            ),
-                          ))
-                      /* Text(
-                        functions.getTokensStakedValue(widget.inputAddress),
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
-                          color: FlutterFlowTheme.azure,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ) */
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: 700,
-                ),
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.ghostWhite,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Like this app? Consider supporting me at the address below. It will help improve this app and build more apps for the StakeborgDAO community. Thank you!  ❤️',
-                      style: FlutterFlowTheme.bodyText1,
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.network(
-                            'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
-                            width: 25,
-                            height: 25,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.network(
-                            'https://s2.coinmarketcap.com/static/img/coins/64x64/5805.png',
-                            width: 25,
-                            height: 25,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.network(
-                            'https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png',
-                            width: 25,
-                            height: 25,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                          child: Text(
-                            '***REMOVED***',
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.azure,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        !widget.donationHeart
-                            ? FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 50,
-                                fillColor: Color(0xBE3B85EB),
-                                icon: Icon(
-                                  Icons.content_copy,
-                                  color: FlutterFlowTheme.white,
-                                  size: 20,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    Clipboard.setData(ClipboardData(
-                                        text:
-                                            "***REMOVED***"));
-                                    widget.donationHeart = true;
-                                  });
-                                },
-                              )
-                            : Lottie.network(
-                                'https://assets6.lottiefiles.com/datafiles/nZgj7wTd56UtH6m/data.json',
-                                height: 75,
-                                fit: BoxFit.fill,
-                                animate: true,
-                              )
-                      ],
-                    ),
-                    Text(
-                      'Built using Flutter.',
-                      style: FlutterFlowTheme.bodyText1,
-                    ),
-                    Text(
-                      'Source code available at @andreivdev on github.',
-                      style: FlutterFlowTheme.bodyText1,
                     )
                   ],
                 ),
               ),
-            )
+            ),
+            FooterWidget()
           ],
         ),
       ),

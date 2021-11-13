@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:stakeborgdaoexplorer/components/footer_widget.dart';
 
 import '../address_page/address_page_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -757,108 +758,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: 700,
-                ),
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.ghostWhite,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Like this app? Consider supporting me at the address below. It will help improve this app and build more apps for the StakeborgDAO community. Thank you!  ❤️',
-                      style: FlutterFlowTheme.bodyText1,
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.network(
-                            'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
-                            width: 25,
-                            height: 25,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.network(
-                            'https://s2.coinmarketcap.com/static/img/coins/64x64/5805.png',
-                            width: 25,
-                            height: 25,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.network(
-                            'https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png',
-                            width: 25,
-                            height: 25,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                          child: Text(
-                            '***REMOVED***',
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.azure,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        !widget.donationHeart
-                            ? FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 50,
-                                fillColor: Color(0xBE3B85EB),
-                                icon: Icon(
-                                  Icons.content_copy,
-                                  color: FlutterFlowTheme.white,
-                                  size: 20,
-                                ),
-                                onPressed: () {
-                                  Clipboard.setData(ClipboardData(
-                                      text:
-                                          "***REMOVED***"));
-                                  setState(() {
-                                    widget.donationHeart = true;
-                                  });
-                                },
-                              )
-                            : Lottie.network(
-                                'https://assets6.lottiefiles.com/datafiles/nZgj7wTd56UtH6m/data.json',
-                                height: 75,
-                                fit: BoxFit.fill,
-                                animate: true,
-                              )
-                      ],
-                    ),
-                    Text(
-                      'Built using Flutter.',
-                      style: FlutterFlowTheme.bodyText1,
-                    ),
-                    Text(
-                      'Source code available at @andreivdev on github.',
-                      style: FlutterFlowTheme.bodyText1,
-                    )
-                  ],
-                ),
-              ),
-            )
+            FooterWidget()
           ],
         ),
       ),
