@@ -62,6 +62,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         height: 100,
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.spaceCadet,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: Image.asset(
+                              'assets/images/media-background-container.png',
+                            ).image,
+                          ),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
