@@ -9,10 +9,13 @@ import {
   useColorMode,
   Grid,
   GridItem,
+  Text,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import GitInfo from "react-git-info/macro";
 
 function Footer() {
+  const gitInfo = GitInfo();
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Box
@@ -24,7 +27,9 @@ function Footer() {
       px={{ base: "4", md: "8" }}
     >
       <Grid templateColumns="repeat(3,auto)">
-        <GridItem />
+        <GridItem alignSelf="end" justifySelf="start">
+          <Text fontSize="sm">build : {gitInfo.commit.hash.slice(-6)}</Text>
+        </GridItem>
         <GridItem>
           <Stat>
             <StatHelpText>
@@ -53,14 +58,11 @@ function Footer() {
             </Center>
           </Stat>
         </GridItem>
-        <Button
-          onClick={toggleColorMode}
-          maxW="3rem"
-          alignSelf="end"
-          justifySelf="end"
-        >
-          {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-        </Button>
+        <GridItem alignSelf="end" justifySelf="end">
+          <Button onClick={toggleColorMode} maxW="3rem">
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          </Button>
+        </GridItem>
       </Grid>
     </Box>
   );
