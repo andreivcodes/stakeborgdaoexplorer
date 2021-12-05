@@ -14,9 +14,13 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import lightLogo from "./../logo_light.png";
 import darkLogo from "./../logo_dark.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [value, setValue] = useState("");
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -97,7 +101,22 @@ export default function Header() {
           </HStack>
 
           <HStack>
-            <Input placeholder="0xdeadbeef" maxW="40rem" />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                navigate("/address/" + value);
+              }}
+            >
+              <Input
+                placeholder="0xdeadbeef"
+                maxW="40rem"
+                value={value}
+                onChange={(e) => {
+                  setValue(e.currentTarget.value);
+                }}
+              />
+              <button type="submit"></button>
+            </form>
           </HStack>
         </Flex>
         {isOpen ? (

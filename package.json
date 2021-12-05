@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "magic-snowflakes": "^6.0.0",
     "react": "^17.0.2",
@@ -18,6 +19,7 @@
     "react-git-info": "^2.0.0",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "surprise-santa": "^1.0.6",
     "web-vitals": "^1.1.2",
     "web3": "^1.6.1"
   },

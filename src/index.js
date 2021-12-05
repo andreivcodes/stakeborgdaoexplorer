@@ -9,15 +9,18 @@ import Address from "./pages/address";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import Snowflakes from "magic-snowflakes";
+import SurpriseSanta from "surprise-santa";
+
 const snowflakes = new Snowflakes({ color: "#a4e1f4", count: 25, maxSize: 15 });
 
 snowflakes.start();
 ReactDOM.render(
   <ChakraProvider>
+    <SurpriseSanta minTime={5} maxTime={25} />
     <HashRouter>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/address" element={<Address />} />
+        <Route path="/address/:addr" element={<Address />} />
         <Route path="/topholders" element={<Topholders />} />
         <Route path="/liquiditypools" element={<Liquiditypools />} />
         <Route path="/farmingpools" element={<Farmingpools />} />

@@ -10,8 +10,11 @@ import {
   StatNumber,
   StatHelpText,
 } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 
 function Address() {
+  const { addr } = useParams();
+
   return (
     <div className="App">
       <Header />
@@ -25,7 +28,7 @@ function Address() {
           <Box m="3">
             <Stat>
               <StatHelpText>Holdings of </StatHelpText>
-              <StatNumber>0xdeadbeef</StatNumber>
+              <StatNumber>{addr}</StatNumber>
               <StatLabel mt="2rem">Wallet</StatLabel>
               <StatNumber>123</StatNumber>
               <StatLabel>Governance staking</StatLabel>
