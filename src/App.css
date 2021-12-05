@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+.pageContainer {
+  margin-top: 1rem;
+}
+
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
