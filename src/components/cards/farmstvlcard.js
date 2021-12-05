@@ -66,21 +66,21 @@ export default function FarmsTVLCard() {
     >
       <Box m="3">
         <StatGroup>
-          <Stat>
+          <Stat p={4}>
             <StatLabel>BOND</StatLabel>
             <StatHelpText>epoch {epoch}</StatHelpText>
             <StatNumber>
               {new Intl.NumberFormat().format(bondTokens)}
             </StatNumber>
           </Stat>
-          <Stat>
+          <Stat p={4}>
             <StatLabel>SWINGBY</StatLabel>
             <StatHelpText>epoch {epoch}</StatHelpText>
             <StatNumber>
               {new Intl.NumberFormat().format(swingbyTokens)}
             </StatNumber>
           </Stat>
-          <Stat>
+          <Stat p={4}>
             <StatLabel>XYZ </StatLabel>
             <StatHelpText>epoch {epoch}</StatHelpText>
             <StatNumber>{new Intl.NumberFormat().format(xyzTokens)}</StatNumber>
