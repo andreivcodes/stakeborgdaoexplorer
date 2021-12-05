@@ -13,7 +13,7 @@ function Home() {
       <Header />
       <Container className="pageContainer" maxW="65vw">
         <Text fontSize="3xl" mt="5rem">
-          Statistics for $STANDARD token
+          Statistics for the $STANDARD token
         </Text>
         <Grid
           templateRows="repeat(3, 1fr)"

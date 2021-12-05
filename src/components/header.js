@@ -6,6 +6,7 @@ import {
   useColorModeValue,
   Input,
   Badge,
+  Image,
 } from "@chakra-ui/react";
 
 export default function Header() {
@@ -13,12 +14,19 @@ export default function Header() {
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <HStack spacing={8} alignItems={"center"}>
+          <HStack alignItems={"center"}>
+            <Box w="3rem">
+              <Image
+                src={useColorModeValue("./logo_light.png", "./logo_dark.png")}
+                alt="logo"
+              />
+            </Box>
             <Box>StakeborgDAO Explorer</Box>
             <HStack
               as={"nav"}
-              spacing={4}
+              spacing={2}
               display={{ base: "none", md: "flex" }}
+              px={8}
             >
               <Link
                 px={2}
