@@ -16,7 +16,7 @@ const snowflakes = new Snowflakes({ color: "#a4e1f4", count: 25, maxSize: 15 });
 snowflakes.start();
 ReactDOM.render(
   <ChakraProvider>
-    <SurpriseSanta minTime={5} maxTime={25} />
+    {/*  <SurpriseSanta minTime={15} maxTime={25} /> */}
     <HashRouter>
       <Routes>
         <Route exact path="/" element={<Home />} />
