@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/stakeborgdaoexplorer/static/css/main.74dfed0b.chunk.css",
-    "main.js": "/stakeborgdaoexplorer/static/js/main.05c981fb.chunk.js",
-    "main.js.map": "/stakeborgdaoexplorer/static/js/main.05c981fb.chunk.js.map",
+    "main.js": "/stakeborgdaoexplorer/static/js/main.79361d79.chunk.js",
+    "main.js.map": "/stakeborgdaoexplorer/static/js/main.79361d79.chunk.js.map",
     "runtime-main.js": "/stakeborgdaoexplorer/static/js/runtime-main.576a3bbd.js",
     "runtime-main.js.map": "/stakeborgdaoexplorer/static/js/runtime-main.576a3bbd.js.map",
-    "static/js/2.28b15d14.chunk.js": "/stakeborgdaoexplorer/static/js/2.28b15d14.chunk.js",
-    "static/js/2.28b15d14.chunk.js.map": "/stakeborgdaoexplorer/static/js/2.28b15d14.chunk.js.map",
+    "static/js/2.9b8a2bce.chunk.js": "/stakeborgdaoexplorer/static/js/2.9b8a2bce.chunk.js",
+    "static/js/2.9b8a2bce.chunk.js.map": "/stakeborgdaoexplorer/static/js/2.9b8a2bce.chunk.js.map",
     "index.html": "/stakeborgdaoexplorer/index.html",
     "static/css/main.74dfed0b.chunk.css.map": "/stakeborgdaoexplorer/static/css/main.74dfed0b.chunk.css.map",
-    "static/js/2.28b15d14.chunk.js.LICENSE.txt": "/stakeborgdaoexplorer/static/js/2.28b15d14.chunk.js.LICENSE.txt"
+    "static/js/2.9b8a2bce.chunk.js.LICENSE.txt": "/stakeborgdaoexplorer/static/js/2.9b8a2bce.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.576a3bbd.js",
-    "static/js/2.28b15d14.chunk.js",
+    "static/js/2.9b8a2bce.chunk.js",
     "static/css/main.74dfed0b.chunk.css",
-    "static/js/main.05c981fb.chunk.js"
+    "static/js/main.79361d79.chunk.js"
   ]
 }
