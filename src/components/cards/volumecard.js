@@ -2,13 +2,15 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  StatArrow,
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-export default function CirculatingCard() {
-  const [cirsupply, setCirsupply] = useState(0);
+export default function VolumeCard() {
+  const [volume, setVolume] = useState(0);
+
   useEffect(() => {
     async function fetchData() {
       let response = await (
@@ -16,7 +18,7 @@ export default function CirculatingCard() {
           "https://api.coingecko.com/api/v3/coins/stakeborg-dao?market_data=true"
         )
       ).json();
-      setCirsupply(response["market_data"]["circulating_supply"]);
+      setVolume(response["market_data"]["total_volume"]["usd"]);
     }
     fetchData();
   }, []);
@@ -29,9 +31,8 @@ export default function CirculatingCard() {
     >
       <Box m="3">
         <Stat>
-          <StatLabel>Circulating Supply</StatLabel>
-          <StatNumber>{new Intl.NumberFormat().format(cirsupply)}</StatNumber>
-          tokens
+          <StatLabel>24 Hours Volume</StatLabel>
+          <StatNumber>{new Intl.NumberFormat().format(volume)} $</StatNumber>
         </Stat>
       </Box>
     </Box>

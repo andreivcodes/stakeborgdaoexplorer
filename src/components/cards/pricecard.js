@@ -2,11 +2,30 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  StatArrow,
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 export default function PriceCard() {
+  const [price, setPrice] = useState(0);
+  const [priceChange, setPriceChange] = useState(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      let response = await (
+        await fetch(
+          "https://api.coingecko.com/api/v3/coins/stakeborg-dao?market_data=true"
+        )
+      ).json();
+      setPrice(response["market_data"]["current_price"]["usd"]);
+      setPriceChange(
+        response["market_data"]["price_change_percentage_1h_in_currency"]["usd"]
+      );
+    }
+    fetchData();
+  }, []);
   return (
     <Box
       h="full"
@@ -17,7 +36,13 @@ export default function PriceCard() {
       <Box m="3">
         <Stat>
           <StatLabel>Current Price</StatLabel>
-          <StatNumber>666666</StatNumber>
+          <StatNumber>{new Intl.NumberFormat().format(price)} $</StatNumber>
+          {priceChange > 0 ? (
+            <StatArrow type="increase" />
+          ) : (
+            <StatArrow type="decrease" />
+          )}
+          {priceChange} %
         </Stat>
       </Box>
     </Box>
