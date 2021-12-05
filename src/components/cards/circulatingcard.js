@@ -9,8 +9,7 @@ import {
 export default function CirculatingCard() {
   return (
     <Box
-      m="3"
-      //   maxW="20rem"
+      m="1"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
@@ -18,7 +17,7 @@ export default function CirculatingCard() {
     >
       <Box m="3">
         <Stat>
-          <StatLabel>Circulating Supply</StatLabel>
+          <StatLabel>Circ. Supply</StatLabel>
           <StatNumber>123</StatNumber>
         </Stat>
       </Box>

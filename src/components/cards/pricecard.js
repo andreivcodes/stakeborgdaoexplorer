@@ -9,8 +9,7 @@ import {
 export default function PriceCard() {
   return (
     <Box
-      m="3"
-      //  maxW="20rem"
+      m="1"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"

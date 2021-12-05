@@ -10,8 +10,7 @@ import {
 export default function FarmsTVLCard() {
   return (
     <Box
-      m="3"
-      //maxW="50rem"
+      m="1"
       textAlign="center"
       borderWidth="1px"
       borderRadius="lg"

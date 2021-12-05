@@ -25,19 +25,22 @@ function Footer() {
       mx="auto"
       py="6"
       px={{ base: "4", md: "8" }}
+      maxW="100vw"
     >
-      <Grid templateColumns="repeat(3,auto)">
-        <GridItem alignSelf="end" justifySelf="start">
+      <Grid templateRows="repeat(2,auto)" templateColumns="repeat(3,auto)">
+        <GridItem row="1" colSpan="3">
+          <Text fontSize="sm">***REMOVED***</Text>
+        </GridItem>
+        <GridItem row="2" column="1" alignSelf="end" justifySelf="start">
           <Text fontSize="sm">build : {gitInfo.commit.hash.slice(-6)}</Text>
         </GridItem>
-        <GridItem>
+        <GridItem row="2" column="2">
           <Stat>
-            <StatHelpText>
-              Like this app? Consider supporting me at the address bellow. It
+            <StatHelpText fontSize="sm">
+              Like this app? Consider supporting me at the address above. It
               will help improve this app and build other apps for the
               StakeborgDAO community.
             </StatHelpText>
-            <StatLabel>***REMOVED***</StatLabel>
 
             <Center>
               <Image
@@ -58,7 +61,7 @@ function Footer() {
             </Center>
           </Stat>
         </GridItem>
-        <GridItem alignSelf="end" justifySelf="end">
+        <GridItem row="2" column="3" alignSelf="end" justifySelf="end">
           <Button onClick={toggleColorMode} maxW="3rem">
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
