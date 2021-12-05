@@ -3,6 +3,7 @@ import {
   StatGroup,
   StatLabel,
   StatNumber,
+  StatHelpText,
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -19,14 +20,17 @@ export default function FarmsTVLCard() {
         <StatGroup>
           <Stat>
             <StatLabel>BOND</StatLabel>
+            <StatHelpText>tokens in farm</StatHelpText>
             <StatNumber>111</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>SWINGBY</StatLabel>
+            <StatHelpText>tokens in farm</StatHelpText>
             <StatNumber>222</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>XYZ </StatLabel>
+            <StatHelpText>tokens in farm</StatHelpText>
             <StatNumber>333</StatNumber>
           </Stat>
         </StatGroup>

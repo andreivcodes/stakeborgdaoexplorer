@@ -2,6 +2,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  StatHelpText,
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -17,6 +18,7 @@ export default function LPTVLCard() {
       <Box m="3">
         <Stat>
           <StatLabel>USDC LP</StatLabel>
+          <StatHelpText>total locked value</StatHelpText>
           <StatNumber>444</StatNumber>
         </Stat>
       </Box>
