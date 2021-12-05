@@ -8,7 +8,10 @@ import Farmingpools from "./pages/farmingpools";
 import Address from "./pages/address";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
+import Snowflakes from "magic-snowflakes";
+const snowflakes = new Snowflakes({ color: "#a4e1f4", count: 25, maxSize: 15 });
 
+snowflakes.start();
 ReactDOM.render(
   <ChakraProvider>
     <HashRouter>
