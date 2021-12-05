@@ -1,5 +1,6 @@
 {
   "name": "stakeborgdaoexplorer",
+  "homepage": "https://andreivdev.github.io/stakeborgdaoexplorer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
