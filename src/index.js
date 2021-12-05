@@ -6,21 +6,20 @@ import Topholders from "./pages/topholders";
 import Liquiditypools from "./pages/liquiditypools";
 import Farmingpools from "./pages/farmingpools";
 import Address from "./pages/address";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.render(
   <ChakraProvider>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="home" element={<Home />} />
-        <Route path="address" element={<Address />} />
-        <Route path="topholders" element={<Topholders />} />
-        <Route path="liquiditypools" element={<Liquiditypools />} />
-        <Route path="farmingpools" element={<Farmingpools />} />
+        <Route exact path="/" element={<Home />} />
+        <Route path="/address" element={<Address />} />
+        <Route path="/topholders" element={<Topholders />} />
+        <Route path="/liquiditypools" element={<Liquiditypools />} />
+        <Route path="/farmingpools" element={<Farmingpools />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </ChakraProvider>,
   document.getElementById("root")
 );

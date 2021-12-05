@@ -1,7 +1,7 @@
 import "./../App.css";
 import Header from "./../components/header";
 import Footer from "./../components/footer";
-import { ChakraProvider, Container } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 
 function Farmingpools() {
   return (

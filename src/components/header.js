@@ -28,7 +28,7 @@ export default function Header() {
                   textDecoration: "none",
                   bg: useColorModeValue("gray.200", "gray.700"),
                 }}
-                href={"/home"}
+                href={"#/"}
               >
                 Home
               </Link>
@@ -41,7 +41,7 @@ export default function Header() {
                   textDecoration: "none",
                   bg: useColorModeValue("gray.200", "gray.700"),
                 }}
-                href={"/topholders"}
+                href={"#/topholders"}
               >
                 Top Holders
               </Link>

@@ -3,13 +3,11 @@ import Header from "./../components/header";
 import Footer from "./../components/footer";
 import {
   Table,
-  TableCaption,
   Tr,
   Th,
   Thead,
   Tbody,
   Td,
-  Tfoot,
   Container,
   Box,
   useColorModeValue,
