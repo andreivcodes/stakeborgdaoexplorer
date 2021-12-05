@@ -39,7 +39,7 @@ function Topholders() {
   return (
     <div className="App">
       <Header />
-      <Container className="pageContainer" maxW="80vw">
+      <Container className="pageContainer" maxW="80rem">
         <Box
           w="100%"
           borderWidth="1px"

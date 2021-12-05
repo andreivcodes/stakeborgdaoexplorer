@@ -7,21 +7,41 @@ import {
   Input,
   Badge,
   Image,
+  useDisclosure,
+  IconButton,
+  Menu,
+  MenuButton,
+  Button,
+  MenuList,
+  MenuItem,
+  Stack,
 } from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 export default function Header() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          <IconButton
+            size={"md"}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            aria-label={"Open Menu"}
+            display={{ md: "none" }}
+            onClick={isOpen ? onClose : onOpen}
+          />
+
           <HStack alignItems={"center"}>
-            <Box w="3rem">
+            <Box w="2rem">
               <Image
                 src={useColorModeValue("./logo_light.png", "./logo_dark.png")}
                 alt="logo"
               />
             </Box>
-            <Box>StakeborgDAO Explorer</Box>
+            <Box display={{ base: "none", md: "flex" }}>
+              StakeborgDAO Explorer
+            </Box>
             <HStack
               as={"nav"}
               spacing={2}
@@ -86,6 +106,23 @@ export default function Header() {
             <Input placeholder="0xdeadbeef" maxW="40rem" />
           </HStack>
         </Flex>
+        {isOpen ? (
+          <Box pb={4} display={{ md: "none" }}>
+            <Stack as={"nav"} spacing={4}>
+              <Link href={"#/"}>Home</Link>
+
+              <Link href={"#/topholders"}>Top Holders</Link>
+
+              <Link /* href={"#/liquiditypools"} */>
+                Liquidity Pools <Badge colorScheme="green">Coming soon</Badge>
+              </Link>
+
+              <Link /* href={"#/farmingpools"} */>
+                Farming Pools <Badge colorScheme="green">Coming soon</Badge>
+              </Link>
+            </Stack>
+          </Box>
+        ) : null}
       </Box>
     </>
   );
