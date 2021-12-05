@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/stakeborgdaoexplorer/static/css/main.74dfed0b.chunk.css",
-    "main.js": "/stakeborgdaoexplorer/static/js/main.f6656ef6.chunk.js",
-    "main.js.map": "/stakeborgdaoexplorer/static/js/main.f6656ef6.chunk.js.map",
+    "main.js": "/stakeborgdaoexplorer/static/js/main.3e4a4e32.chunk.js",
+    "main.js.map": "/stakeborgdaoexplorer/static/js/main.3e4a4e32.chunk.js.map",
     "runtime-main.js": "/stakeborgdaoexplorer/static/js/runtime-main.576a3bbd.js",
     "runtime-main.js.map": "/stakeborgdaoexplorer/static/js/runtime-main.576a3bbd.js.map",
     "static/js/2.28b15d14.chunk.js": "/stakeborgdaoexplorer/static/js/2.28b15d14.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.576a3bbd.js",
     "static/js/2.28b15d14.chunk.js",
     "static/css/main.74dfed0b.chunk.css",
-    "static/js/main.f6656ef6.chunk.js"
+    "static/js/main.3e4a4e32.chunk.js"
   ]
 }
