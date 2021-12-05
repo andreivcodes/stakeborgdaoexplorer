@@ -11,7 +11,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Snowflakes from "magic-snowflakes";
 //import SurpriseSanta from "surprise-santa";
 
-const snowflakes = new Snowflakes({ color: "#a4e1f4", count: 25, maxSize: 15 });
+const snowflakes = new Snowflakes({ color: "#a4e1f4", count: 10, maxSize: 15 });
 
 snowflakes.start();
 ReactDOM.render(
