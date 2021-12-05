@@ -19,7 +19,6 @@
     "react-git-info": "^2.0.0",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
-    "surprise-santa": "^1.0.6",
     "web-vitals": "^1.1.2",
     "web3": "^1.6.1"
   },
