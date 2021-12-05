@@ -9,6 +9,8 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
+  Skeleton,
+  Center,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -87,11 +89,11 @@ const yield_unclaimed_xyz_contract = new web3.eth.Contract(
 );
 
 function Address() {
-  const [wallet, setWallet] = useState(0);
-  const [governanceStaking, setGovernanceStaking] = useState(0);
-  const [governanceUnclaimed, setGovernanceUnclaimed] = useState(0);
+  const [wallet, setWallet] = useState(null);
+  const [governanceStaking, setGovernanceStaking] = useState(null);
+  const [governanceUnclaimed, setGovernanceUnclaimed] = useState(null);
 
-  const [farmingUnclaimed, setFarmingUnclaimed] = useState(0);
+  const [farmingUnclaimed, setFarmingUnclaimed] = useState(null);
 
   const { addr } = useParams();
 
@@ -261,13 +263,25 @@ function Address() {
               <StatNumber>{addr}</StatNumber>
               <StatLabel mt="2rem">💳 Wallet 💳</StatLabel>
               <StatNumber>
-                {new Intl.NumberFormat().format(wallet / 1000000000000000000)}{" "}
+                {wallet ? (
+                  new Intl.NumberFormat().format(wallet / 1000000000000000000)
+                ) : (
+                  <Center>
+                    <Skeleton height="25px" width="20vw" />
+                  </Center>
+                )}{" "}
                 STANDARD{" "}
               </StatNumber>
               <StatLabel mt="2">⚖️ Governance staking ⚖️</StatLabel>
               <StatNumber>
-                {new Intl.NumberFormat().format(
-                  governanceStaking / 1000000000000000000
+                {governanceStaking ? (
+                  new Intl.NumberFormat().format(
+                    governanceStaking / 1000000000000000000
+                  )
+                ) : (
+                  <Center>
+                    <Skeleton height="25px" width="20vw" />
+                  </Center>
                 )}{" "}
                 STANDARD
               </StatNumber>
@@ -275,8 +289,14 @@ function Address() {
                 ⌛ ⚖️ Governance unclaimed rewards ⚖️ ⌛
               </StatLabel>
               <StatNumber>
-                {new Intl.NumberFormat().format(
-                  governanceUnclaimed / 1000000000000000000000000000000000000
+                {governanceUnclaimed ? (
+                  new Intl.NumberFormat().format(
+                    governanceUnclaimed / 1000000000000000000000000000000000000
+                  )
+                ) : (
+                  <Center>
+                    <Skeleton height="25px" width="20vw" />
+                  </Center>
                 )}{" "}
                 STANDARD
               </StatNumber>
@@ -284,7 +304,14 @@ function Address() {
                 ⌛ 🚜 Farming unclaimed rewards 🚜 ⌛
               </StatLabel>
               <StatNumber>
-                {new Intl.NumberFormat().format(farmingUnclaimed)} STANDARD
+                {farmingUnclaimed ? (
+                  new Intl.NumberFormat().format(farmingUnclaimed)
+                ) : (
+                  <Center>
+                    <Skeleton height="25px" width="20vw" />
+                  </Center>
+                )}{" "}
+                STANDARD
               </StatNumber>
               <StatLabel mt="2">
                 ⌛ ✈️ Airdrop unclaimed rewards ✈️ ⌛
