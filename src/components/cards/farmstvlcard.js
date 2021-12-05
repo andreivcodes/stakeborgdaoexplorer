@@ -10,11 +10,9 @@ import {
 export default function FarmsTVLCard() {
   return (
     <Box
-      m="1"
-      textAlign="center"
+      h="full"
       borderWidth="1px"
       borderRadius="lg"
-      overflow="hidden"
       bg={useColorModeValue("gray.50", "gray.900")}
     >
       <Box m="3">
