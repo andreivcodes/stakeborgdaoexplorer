@@ -1,6 +1,5 @@
 import {
   Stat,
-  StatLabel,
   StatHelpText,
   Image,
   Center,
@@ -25,7 +24,7 @@ function Footer() {
       mx="auto"
       py="6"
       px={{ base: "4", md: "8" }}
-      maxW="100vw"
+      minWidth="100vw"
     >
       <Grid templateRows="repeat(2,auto)" templateColumns="repeat(3,auto)">
         <GridItem row="1" colSpan="3">

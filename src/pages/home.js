@@ -12,10 +12,12 @@ function Home() {
     <Box className="App">
       <Header />
       <Container className="pageContainer" maxW="50rem">
-        <Text fontSize="3xl" mt="5rem">
-          Statistics for the $STANDARD token
-        </Text>
-        <Grid autof templateRows="repeat(3, 1fr)" mt="2rem">
+        <Text fontSize="3xl">Statistics for the $STANDARD token</Text>
+        <Grid
+          templateRows="repeat(3, 1fr)"
+          templateColumns="repeat(3, 1fr)"
+          mt="2rem"
+        >
           <GridItem row={1} col={1}>
             <PriceCard />
           </GridItem>

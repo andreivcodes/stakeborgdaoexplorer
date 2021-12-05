@@ -17,7 +17,7 @@ export default function CirculatingCard() {
     >
       <Box m="3">
         <Stat>
-          <StatLabel>Circ. Supply</StatLabel>
+          <StatLabel>Circulating Supply</StatLabel>
           <StatNumber>123</StatNumber>
         </Stat>
       </Box>

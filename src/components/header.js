@@ -9,14 +9,11 @@ import {
   Image,
   useDisclosure,
   IconButton,
-  Menu,
-  MenuButton,
-  Button,
-  MenuList,
-  MenuItem,
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import lightLogo from "./../logo_light.png";
+import darkLogo from "./../logo_dark.png";
 
 export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,10 +31,7 @@ export default function Header() {
 
           <HStack alignItems={"center"}>
             <Box w="2rem">
-              <Image
-                src={useColorModeValue("./logo_light.png", "./logo_dark.png")}
-                alt="logo"
-              />
+              <Image src={useColorModeValue(lightLogo, darkLogo)} alt="logo" />
             </Box>
             <Box display={{ base: "none", md: "flex" }}>
               StakeborgDAO Explorer
