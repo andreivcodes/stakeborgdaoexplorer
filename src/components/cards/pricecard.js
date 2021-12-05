@@ -42,7 +42,7 @@ export default function PriceCard() {
           ) : (
             <StatArrow type="decrease" />
           )}
-          {priceChange} %
+          {new Intl.NumberFormat().format(priceChange)} %
         </Stat>
       </Box>
     </Box>

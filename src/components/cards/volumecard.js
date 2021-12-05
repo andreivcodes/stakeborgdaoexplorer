@@ -2,7 +2,6 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  StatArrow,
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";

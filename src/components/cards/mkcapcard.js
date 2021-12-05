@@ -43,7 +43,7 @@ export default function MarketcapCard() {
           ) : (
             <StatArrow type="decrease" />
           )}
-          {mkcapchange} %
+          {new Intl.NumberFormat().format(mkcapchange)} %
         </Stat>
       </Box>
     </Box>
