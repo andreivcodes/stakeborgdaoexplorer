@@ -34,7 +34,7 @@ function Footer() {
           <Stat>
             <StatHelpText>
               Like this app? Consider supporting me at the address bellow. It
-              will help improve this appand build other apps for the
+              will help improve this app and build other apps for the
               StakeborgDAO community.
             </StatHelpText>
             <StatLabel>***REMOVED***</StatLabel>
