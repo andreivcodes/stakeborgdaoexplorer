@@ -168,6 +168,23 @@ function Address() {
         );
       }
 
+      await yield_unclaimed_bond_contract
+        .getPastEvents("MassHarvest", {
+          filter: {
+            user: addr,
+          }, // Using an array means OR: e.g. 20 or 23
+          fromBlock: 0,
+          toBlock: "latest",
+        })
+        .then(function (events) {
+          if (events.length) {
+            events.forEach((event) => {
+              total_pending_farm -= event.returnValues[2] / 1000000000000000000;
+            });
+          }
+          console.log(events); // same results as the optional callback above
+        });
+
       for (let epoch = 1; epoch <= currentEpoch; epoch++) {
         let totalDistributedAmount =
           await yield_unclaimed_swingby_contract.methods.totalDistributedAmount
@@ -205,6 +222,23 @@ function Address() {
         );
       }
 
+      await yield_unclaimed_swingby_contract
+        .getPastEvents("MassHarvest", {
+          filter: {
+            user: addr,
+          }, // Using an array means OR: e.g. 20 or 23
+          fromBlock: 0,
+          toBlock: "latest",
+        })
+        .then(function (events) {
+          if (events.length) {
+            events.forEach((event) => {
+              total_pending_farm -= event.returnValues[2] / 1000000000000000000;
+            });
+          }
+          console.log(events); // same results as the optional callback above
+        });
+
       for (let epoch = 1; epoch <= currentEpoch; epoch++) {
         let totalDistributedAmount =
           await yield_unclaimed_xyz_contract.methods.totalDistributedAmount
@@ -241,6 +275,23 @@ function Address() {
               1000000000000000000
         );
       }
+
+      await yield_unclaimed_xyz_contract
+        .getPastEvents("MassHarvest", {
+          filter: {
+            user: addr,
+          }, // Using an array means OR: e.g. 20 or 23
+          fromBlock: 0,
+          toBlock: "latest",
+        })
+        .then(function (events) {
+          if (events.length) {
+            events.forEach((event) => {
+              total_pending_farm -= event.returnValues[2] / 1000000000000000000;
+            });
+          }
+          console.log(events); // same results as the optional callback above
+        });
 
       setFarmingUnclaimed(total_pending_farm);
     }
