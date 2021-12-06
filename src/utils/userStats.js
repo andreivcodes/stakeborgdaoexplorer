@@ -264,12 +264,23 @@ export async function getAirdopUnclaimedTokens(addr) {
 }
 
 export async function getUserTokens(addr) {
+  let _wallet = await getWalletTokens(addr);
+  let _governanceStaking = await getGovernanceStakedTokens(addr);
+  let _governanceUnclaimed = await getGovernanceUnclaimedTokens(addr);
+  let _farmingUnclaimed = await getFarmingUnclaimedTokens(addr);
+  let _airdropUnclaimed = await getAirdopUnclaimedTokens(addr);
   let user = {
-    wallet: await getWalletTokens(addr),
-    governanceStaking: await getGovernanceStakedTokens(addr),
-    governanceUnclaimed: await getGovernanceUnclaimedTokens(addr),
-    farmingUnclaimed: await getFarmingUnclaimedTokens(addr),
-    airdropUnclaimed: await getAirdopUnclaimedTokens(addr),
+    wallet: _wallet,
+    governanceStaking: _governanceStaking,
+    governanceUnclaimed: _governanceUnclaimed,
+    farmingUnclaimed: _farmingUnclaimed,
+    airdropUnclaimed: _airdropUnclaimed,
+    total:
+      _wallet +
+      _governanceStaking +
+      _governanceUnclaimed +
+      _farmingUnclaimed +
+      _airdropUnclaimed,
   };
   return user;
 }

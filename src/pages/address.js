@@ -40,6 +40,11 @@ function Address() {
   const { addr } = useParams();
 
   useEffect(() => {
+    setWalletLoaded(false);
+    setGovernanceStakingLoaded(false);
+    setGovernanceUnclaimedLoaded(false);
+    setFarmingUnclaimedLoaded(false);
+    setAirdropUnclaimedLoaded(false);
     async function fetchData() {
       setWallet(await getWalletTokens(addr));
       setGovernanceStaking(await getGovernanceStakedTokens(addr));
