@@ -9,7 +9,7 @@ import yieldstaking_abi from "./../abi/yieldstaking.json";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://mainnet.infura.io/v3/6a64571b9f134bc1913c6c24d5698891"
+    "https://eth-mainnet.alchemyapi.io/v2/-aaxRLLOCgK1aAZx2rY0iu72c0TUFZdC"
   )
 );
 
@@ -264,23 +264,167 @@ export async function getAirdopUnclaimedTokens(addr) {
 }
 
 export async function getUserTokens(addr) {
-  let _wallet = await getWalletTokens(addr);
-  let _governanceStaking = await getGovernanceStakedTokens(addr);
-  let _governanceUnclaimed = await getGovernanceUnclaimedTokens(addr);
-  let _farmingUnclaimed = await getFarmingUnclaimedTokens(addr);
-  let _airdropUnclaimed = await getAirdopUnclaimedTokens(addr);
+  let _wallet = Number((await getWalletTokens(addr)) / 1000000000000000000);
+  let _governanceStaking = Number(
+    (await getGovernanceStakedTokens(addr)) / 1000000000000000000
+  );
+  let _governanceUnclaimed = Number(
+    (await getGovernanceUnclaimedTokens(addr)) /
+      1000000000000000000000000000000000000
+  );
+  let _farmingUnclaimed = Number(
+    (await getFarmingUnclaimedTokens(addr)) / 1000000000000000000
+  );
+  let _airdropUnclaimed = Number(
+    (await getAirdopUnclaimedTokens(addr)) / 1000000000000000000
+  );
   let user = {
-    wallet: _wallet,
-    governanceStaking: _governanceStaking,
-    governanceUnclaimed: _governanceUnclaimed,
-    farmingUnclaimed: _farmingUnclaimed,
-    airdropUnclaimed: _airdropUnclaimed,
-    total:
+    wallet: new Intl.NumberFormat().format(_wallet),
+    governanceStaking: new Intl.NumberFormat().format(_governanceStaking),
+    governanceUnclaimed: new Intl.NumberFormat().format(_governanceUnclaimed),
+    farmingUnclaimed: new Intl.NumberFormat().format(_farmingUnclaimed),
+    airdropUnclaimed: new Intl.NumberFormat().format(_airdropUnclaimed),
+    total: new Intl.NumberFormat().format(
       _wallet +
-      _governanceStaking +
-      _governanceUnclaimed +
-      _farmingUnclaimed +
-      _airdropUnclaimed,
+        _governanceStaking +
+        _governanceUnclaimed +
+        _farmingUnclaimed +
+        _airdropUnclaimed
+    ),
   };
   return user;
+}
+
+export async function getAllHolders() {
+  let allUsers = [];
+  await yield_unclaimed_bond_contract
+    .getPastEvents("allEvents", {
+      fromBlock: 0,
+      toBlock: "latest",
+    })
+    .then(function (events) {
+      if (events.length) {
+        events.forEach((event) => {
+          if (allUsers.indexOf(event.returnValues.user) === -1) {
+            allUsers.push(event.returnValues.user);
+          }
+        });
+      }
+    });
+
+  await yield_unclaimed_swingby_contract
+    .getPastEvents("allEvents", {
+      fromBlock: 0,
+      toBlock: "latest",
+    })
+    .then(function (events) {
+      if (events.length) {
+        events.forEach((event) => {
+          if (allUsers.indexOf(event.returnValues.user) === -1) {
+            allUsers.push(event.returnValues.user);
+          }
+        });
+      }
+    });
+
+  await yield_unclaimed_xyz_contract
+    .getPastEvents("allEvents", {
+      fromBlock: 0,
+      toBlock: "latest",
+    })
+    .then(function (events) {
+      if (events.length) {
+        events.forEach((event) => {
+          if (allUsers.indexOf(event.returnValues.user) === -1) {
+            allUsers.push(event.returnValues.user);
+          }
+        });
+      }
+    });
+
+  await governance_rewards_contract
+    .getPastEvents("allEvents", {
+      fromBlock: 0,
+      toBlock: "latest",
+    })
+    .then(function (events) {
+      if (events.length) {
+        events.forEach((event) => {
+          if (allUsers.indexOf(event.returnValues.user) === -1) {
+            allUsers.push(event.returnValues.user);
+          }
+        });
+      }
+    });
+
+  await governance_staking_contract
+    .getPastEvents("allEvents", {
+      fromBlock: 0,
+      toBlock: "latest",
+    })
+    .then(function (events) {
+      if (events.length) {
+        events.forEach((event) => {
+          if (allUsers.indexOf(event.returnValues.user) === -1) {
+            allUsers.push(event.returnValues.user);
+          }
+        });
+      }
+    });
+
+  await yield_staking_contract
+    .getPastEvents("allEvents", {
+      fromBlock: 0,
+      toBlock: "latest",
+    })
+    .then(function (events) {
+      if (events.length) {
+        events.forEach((event) => {
+          if (allUsers.indexOf(event.returnValues.user) === -1) {
+            allUsers.push(event.returnValues.user);
+          }
+        });
+      }
+    });
+
+  await standard_contract
+    .getPastEvents("allEvents", {
+      fromBlock: 0,
+      toBlock: "latest",
+    })
+    .then(function (events) {
+      if (events.length) {
+        events.forEach((event) => {
+          if (allUsers.indexOf(event.returnValues.user) === -1) {
+            allUsers.push(event.returnValues.user);
+          }
+        });
+      }
+    });
+
+  return allUsers;
+}
+
+export async function getAllHoldersData() {
+  let data = [];
+  let holders = await getAllHolders();
+
+  let slicedHolders = holders.slice(0, 5);
+
+  await Promise.all(
+    slicedHolders.map(async (holder) => {
+      let holderData = await getUserTokens(holder);
+
+      data.push({
+        address: holder,
+        wallet: holderData.wallet,
+        governanceStaking: holderData.governanceStaking,
+        governanceUnclaimed: holderData.governanceUnclaimed,
+        farmingUnclaimed: holderData.farmingUnclaimed,
+        airdropUnclaimed: holderData.airdropUnclaimed,
+        total: holderData.total,
+      });
+    })
+  );
+  return data;
 }

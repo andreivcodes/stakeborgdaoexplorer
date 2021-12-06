@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws/web3-http-provider": "^1.0.1",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.2",
     "@emotion/react": "^11.7.0",
@@ -14,11 +15,13 @@
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "magic-snowflakes": "^6.0.0",
+    "namor": "^2.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-git-info": "^2.0.0",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "react-table": "^7.7.0",
     "web-vitals": "^1.1.2",
     "web3": "^1.6.1"
   },
