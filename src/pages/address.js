@@ -45,31 +45,21 @@ function Address() {
     setGovernanceUnclaimedLoaded(false);
     setFarmingUnclaimedLoaded(false);
     setAirdropUnclaimedLoaded(false);
+
     async function fetchData() {
       setWallet(await getWalletTokens(addr));
+      setWalletLoaded(true);
       setGovernanceStaking(await getGovernanceStakedTokens(addr));
+      setGovernanceStakingLoaded(true);
       setGovernanceUnclaimed(await getGovernanceUnclaimedTokens(addr));
+      setGovernanceUnclaimedLoaded(true);
       setFarmingUnclaimed(await getFarmingUnclaimedTokens(addr));
+      setFarmingUnclaimedLoaded(true);
       setAirdropUnclaimed(await getAirdopUnclaimedTokens(addr));
+      setAirdropUnclaimedLoaded(true);
     }
     fetchData();
   }, [addr]);
-
-  useEffect(() => {
-    if (wallet != null) setWalletLoaded(true);
-  }, [wallet]);
-  useEffect(() => {
-    if (governanceStaking != null) setGovernanceStakingLoaded(true);
-  }, [governanceStaking]);
-  useEffect(() => {
-    if (governanceUnclaimed != null) setGovernanceUnclaimedLoaded(true);
-  }, [governanceUnclaimed]);
-  useEffect(() => {
-    if (farmingUnclaimed != null) setFarmingUnclaimedLoaded(true);
-  }, [farmingUnclaimed]);
-  useEffect(() => {
-    if (airdropUnclaimed != null) setAirdropUnclaimedLoaded(true);
-  }, [airdropUnclaimed]);
 
   return (
     <div className="App">
