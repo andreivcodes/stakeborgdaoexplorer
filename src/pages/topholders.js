@@ -190,10 +190,7 @@ function Topholders() {
         <Text>
           This pages uses on-chain data fetched directly from an Ethereum node
         </Text>
-        <Text>
-          Since there is no caching and all the data is live, the response time
-          can be slower
-        </Text>
+        <Text>Since there is no caching, the response time can be slower</Text>
         <Box
           mt="1rem"
           w="100%"
