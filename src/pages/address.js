@@ -146,13 +146,23 @@ function Address() {
               </StatNumber>
               <StatLabel mt="2rem">Total</StatLabel>
               <StatNumber>
-                {new Intl.NumberFormat().format(
-                  wallet / 1000000000000000000 +
-                    governanceStaking / 1000000000000000000 +
-                    governanceUnclaimed /
-                      1000000000000000000000000000000000000 +
-                    farmingUnclaimed / 1000000000000000000 +
-                    airdropUnclaimed / 1000000000000000000
+                {walletLoaded &&
+                governanceStakingLoaded &&
+                governanceUnclaimedLoaded &&
+                farmingUnclaimedLoaded &&
+                airdropUnclaimedLoaded ? (
+                  new Intl.NumberFormat().format(
+                    wallet / 1000000000000000000 +
+                      governanceStaking / 1000000000000000000 +
+                      governanceUnclaimed /
+                        1000000000000000000000000000000000000 +
+                      farmingUnclaimed / 1000000000000000000 +
+                      airdropUnclaimed / 1000000000000000000
+                  )
+                ) : (
+                  <Center>
+                    <Skeleton height="25px" width="20vw" />
+                  </Center>
                 )}{" "}
                 STANDARD
               </StatNumber>
