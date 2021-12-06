@@ -133,16 +133,16 @@ function Address() {
                 ⌛ ✈️ Airdrop unclaimed rewards ✈️ ⌛
               </StatLabel>
               <StatNumber>
-                {airdropUnclaimedLoaded ? (
+                {/* {airdropUnclaimedLoaded ? (
                   new Intl.NumberFormat().format(
                     airdropUnclaimed / 1000000000000000000
                   )
-                ) : (
-                  <Center>
-                    {/* <Skeleton height="25px" width="20vw" /> */}
-                    <Badge colorScheme="red">Not implemented</Badge>
-                  </Center>
-                )}
+                ) : ( */}
+                <Center>
+                  {/* <Skeleton height="25px" width="20vw" /> */}
+                  <Badge colorScheme="red">Not implemented</Badge>
+                </Center>
+                {/* )} */}
               </StatNumber>
               <StatLabel mt="2rem">Total</StatLabel>
               <StatNumber>
