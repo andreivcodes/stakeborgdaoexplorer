@@ -27,20 +27,20 @@ function Address() {
   const [wallet, setWallet] = useState(null);
   const [governanceStaking, setGovernanceStaking] = useState(null);
   const [governanceUnclaimed, setGovernanceUnclaimed] = useState(null);
-
   const [farmingUnclaimed, setFarmingUnclaimed] = useState(null);
+  const [airdropUnclaimed, setAirdropUnclaimed] = useState(null);
 
-  const [airdropUnclaimed, setAirdropUnclaimed] = useState(0);
+  const [walletLoaded, setWalletLoaded] = useState(false);
+  const [governanceStakingLoaded, setGovernanceStakingLoaded] = useState(false);
+  const [governanceUnclaimedLoaded, setGovernanceUnclaimedLoaded] =
+    useState(false);
+  const [farmingUnclaimedLoaded, setFarmingUnclaimedLoaded] = useState(false);
+  const [airdropUnclaimedLoaded, setAirdropUnclaimedLoaded] = useState(false);
 
   const { addr } = useParams();
 
   useEffect(() => {
     async function fetchData() {
-      setWallet(0);
-      setGovernanceStaking(0);
-      setGovernanceUnclaimed(0);
-      setFarmingUnclaimed(0);
-
       setWallet(await getWalletTokens(addr));
       setGovernanceStaking(await getGovernanceStakedTokens(addr));
       setGovernanceUnclaimed(await getGovernanceUnclaimedTokens(addr));
@@ -49,6 +49,22 @@ function Address() {
     }
     fetchData();
   }, [addr]);
+
+  useEffect(() => {
+    if (wallet != null) setWalletLoaded(true);
+  }, [wallet]);
+  useEffect(() => {
+    if (governanceStaking != null) setGovernanceStakingLoaded(true);
+  }, [governanceStaking]);
+  useEffect(() => {
+    if (governanceUnclaimed != null) setGovernanceUnclaimedLoaded(true);
+  }, [governanceUnclaimed]);
+  useEffect(() => {
+    if (farmingUnclaimed != null) setFarmingUnclaimedLoaded(true);
+  }, [farmingUnclaimed]);
+  useEffect(() => {
+    if (airdropUnclaimed != null) setAirdropUnclaimedLoaded(true);
+  }, [airdropUnclaimed]);
 
   return (
     <div className="App">
@@ -66,7 +82,7 @@ function Address() {
               <StatNumber>{addr}</StatNumber>
               <StatLabel mt="2rem">💳 Wallet 💳</StatLabel>
               <StatNumber>
-                {wallet ? (
+                {walletLoaded ? (
                   new Intl.NumberFormat().format(wallet / 1000000000000000000)
                 ) : (
                   <Center>
@@ -77,7 +93,7 @@ function Address() {
               </StatNumber>
               <StatLabel mt="2">⚖️ Governance staking ⚖️</StatLabel>
               <StatNumber>
-                {governanceStaking ? (
+                {governanceStakingLoaded ? (
                   new Intl.NumberFormat().format(
                     governanceStaking / 1000000000000000000
                   )
@@ -92,7 +108,7 @@ function Address() {
                 ⌛ ⚖️ Governance unclaimed rewards ⚖️ ⌛
               </StatLabel>
               <StatNumber>
-                {governanceUnclaimed ? (
+                {governanceUnclaimedLoaded ? (
                   new Intl.NumberFormat().format(
                     governanceUnclaimed / 1000000000000000000000000000000000000
                   )
@@ -107,7 +123,7 @@ function Address() {
                 ⌛ 🚜 Farming unclaimed rewards 🚜 ⌛
               </StatLabel>
               <StatNumber>
-                {farmingUnclaimed ? (
+                {farmingUnclaimedLoaded ? (
                   new Intl.NumberFormat().format(
                     farmingUnclaimed / 1000000000000000000
                   )
@@ -122,7 +138,7 @@ function Address() {
                 ⌛ ✈️ Airdrop unclaimed rewards ✈️ ⌛
               </StatLabel>
               <StatNumber>
-                {airdropUnclaimed ? (
+                {airdropUnclaimedLoaded ? (
                   new Intl.NumberFormat().format(
                     airdropUnclaimed / 1000000000000000000
                   )
