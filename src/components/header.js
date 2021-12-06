@@ -109,7 +109,8 @@ export default function Header() {
             >
               <Input
                 placeholder="0xdeadbeef"
-                maxW="60rem"
+                maxW="30vw"
+                w="30vw"
                 value={value}
                 onChange={(e) => {
                   setValue(e.currentTarget.value);
