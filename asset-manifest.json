@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/stakeborgdaoexplorer/static/css/main.5f1bed44.chunk.css",
-    "main.js": "/stakeborgdaoexplorer/static/js/main.88b914a3.chunk.js",
-    "main.js.map": "/stakeborgdaoexplorer/static/js/main.88b914a3.chunk.js.map",
+    "main.js": "/stakeborgdaoexplorer/static/js/main.4f0a94f9.chunk.js",
+    "main.js.map": "/stakeborgdaoexplorer/static/js/main.4f0a94f9.chunk.js.map",
     "runtime-main.js": "/stakeborgdaoexplorer/static/js/runtime-main.576a3bbd.js",
     "runtime-main.js.map": "/stakeborgdaoexplorer/static/js/runtime-main.576a3bbd.js.map",
-    "static/js/2.baa747da.chunk.js": "/stakeborgdaoexplorer/static/js/2.baa747da.chunk.js",
-    "static/js/2.baa747da.chunk.js.map": "/stakeborgdaoexplorer/static/js/2.baa747da.chunk.js.map",
+    "static/js/2.f2b779d4.chunk.js": "/stakeborgdaoexplorer/static/js/2.f2b779d4.chunk.js",
+    "static/js/2.f2b779d4.chunk.js.map": "/stakeborgdaoexplorer/static/js/2.f2b779d4.chunk.js.map",
     "index.html": "/stakeborgdaoexplorer/index.html",
     "static/css/main.5f1bed44.chunk.css.map": "/stakeborgdaoexplorer/static/css/main.5f1bed44.chunk.css.map",
-    "static/js/2.baa747da.chunk.js.LICENSE.txt": "/stakeborgdaoexplorer/static/js/2.baa747da.chunk.js.LICENSE.txt",
+    "static/js/2.f2b779d4.chunk.js.LICENSE.txt": "/stakeborgdaoexplorer/static/js/2.f2b779d4.chunk.js.LICENSE.txt",
     "static/media/logo_dark.0ca420e1.png": "/stakeborgdaoexplorer/static/media/logo_dark.0ca420e1.png",
     "static/media/logo_light.5fb59b75.png": "/stakeborgdaoexplorer/static/media/logo_light.5fb59b75.png"
   },
   "entrypoints": [
     "static/js/runtime-main.576a3bbd.js",
-    "static/js/2.baa747da.chunk.js",
+    "static/js/2.f2b779d4.chunk.js",
     "static/css/main.5f1bed44.chunk.css",
-    "static/js/main.88b914a3.chunk.js"
+    "static/js/main.4f0a94f9.chunk.js"
   ]
 }
