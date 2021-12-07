@@ -23,6 +23,7 @@ export default function VolumeCard() {
   }, []);
   return (
     <Box
+      boxShadow="base"
       h="full"
       borderWidth="1px"
       borderRadius="lg"

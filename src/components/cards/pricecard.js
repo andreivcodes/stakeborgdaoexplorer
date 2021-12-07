@@ -28,6 +28,7 @@ export default function PriceCard() {
   }, []);
   return (
     <Box
+      boxShadow="base"
       h="full"
       borderWidth="1px"
       borderRadius="lg"

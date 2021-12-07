@@ -29,6 +29,7 @@ export default function MarketcapCard() {
   }, []);
   return (
     <Box
+      boxShadow="base"
       h="full"
       borderWidth="1px"
       borderRadius="lg"

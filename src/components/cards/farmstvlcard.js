@@ -59,6 +59,7 @@ export default function FarmsTVLCard() {
   }, []);
   return (
     <Box
+      boxShadow="base"
       h="full"
       borderWidth="1px"
       borderRadius="lg"
@@ -72,6 +73,7 @@ export default function FarmsTVLCard() {
             <StatNumber>
               {new Intl.NumberFormat().format(bondTokens)}
             </StatNumber>
+            tokens
           </Stat>
           <Stat p={4}>
             <StatLabel>SWINGBY</StatLabel>
@@ -79,11 +81,13 @@ export default function FarmsTVLCard() {
             <StatNumber>
               {new Intl.NumberFormat().format(swingbyTokens)}
             </StatNumber>
+            tokens
           </Stat>
           <Stat p={4}>
             <StatLabel>XYZ </StatLabel>
             <StatHelpText>epoch {epoch}</StatHelpText>
             <StatNumber>{new Intl.NumberFormat().format(xyzTokens)}</StatNumber>
+            tokens
           </Stat>
         </StatGroup>
       </Box>

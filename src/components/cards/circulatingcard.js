@@ -22,6 +22,7 @@ export default function CirculatingCard() {
   }, []);
   return (
     <Box
+      boxShadow="base"
       h="full"
       borderWidth="1px"
       borderRadius="lg"

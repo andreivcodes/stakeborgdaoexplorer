@@ -97,6 +97,30 @@ export default function Header() {
               >
                 Farming Pools <Badge colorScheme="green">Coming soon</Badge>
               </Link>
+              <Link
+                px={2}
+                py={1}
+                rounded={"md"}
+                _hover={{
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
+                }}
+                //href={"/farmingpools"}
+              >
+                Governance <Badge colorScheme="green">Coming soon</Badge>
+              </Link>
+              <Link
+                px={2}
+                py={1}
+                rounded={"md"}
+                _hover={{
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
+                }}
+                href={"#/fees"}
+              >
+                Gas fees estimation
+              </Link>
             </HStack>
           </HStack>
 
@@ -134,6 +158,10 @@ export default function Header() {
               <Link /* href={"#/farmingpools"} */>
                 Farming Pools <Badge colorScheme="green">Coming soon</Badge>
               </Link>
+              <Link /* href={"#/farmingpools"} */>
+                Governance <Badge colorScheme="green">Coming soon</Badge>
+              </Link>
+              <Link href={"#/fees"}>Gas fees estimation</Link>
             </Stack>
           </Box>
         ) : null}

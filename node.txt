@@ -1,0 +1,1 @@
+./openethereum --jsonrpc-hosts all --jsonrpc-port=8555  --jsonrpc-interface=all --no-ancient-blocks --jsonrpc-apis traces,web3,eth,net,parity --jsonrpc-cors=all --chain mainnet --pruning=fast --pruning-memory=1024 --warp-barrier=13467000 --tracing=off

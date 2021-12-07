@@ -22,8 +22,8 @@ import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 
 import { getAllHoldersData } from "./../utils/userStats";
-
-import makeData from "./makeData.js";
+/* 
+import makeData from "./makeData.js"; */
 
 function CustomTable({ columns, data }) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -83,39 +83,25 @@ function CustomTable({ columns, data }) {
           ) : (
             <Tr>
               <Td>
-                <Center>
-                  <Skeleton height="25px" width="5vw" />
-                </Center>
+                <Skeleton height="25px" width="5vw" />
               </Td>
               <Td>
-                <Center>
-                  <Skeleton height="25px" width="5vw" />
-                </Center>
+                <Skeleton height="25px" width="5vw" />
               </Td>
               <Td>
-                <Center>
-                  <Skeleton height="25px" width="5vw" />
-                </Center>
+                <Skeleton height="25px" width="5vw" />
               </Td>
               <Td>
-                <Center>
-                  <Skeleton height="25px" width="5vw" />
-                </Center>
+                <Skeleton height="25px" width="5vw" />
               </Td>
               <Td>
-                <Center>
-                  <Skeleton height="25px" width="5vw" />
-                </Center>
+                <Skeleton height="25px" width="5vw" />
               </Td>
               <Td>
-                <Center>
-                  <Skeleton height="25px" width="5vw" />
-                </Center>
+                <Skeleton height="25px" width="5vw" />
               </Td>
               <Td>
-                <Center>
-                  <Skeleton height="25px" width="5vw" />
-                </Center>
+                <Skeleton height="25px" width="5vw" />
               </Td>
             </Tr>
           )}
@@ -188,10 +174,11 @@ function Topholders() {
       <Header />
       <Container className="pageContainer" maxW="90vw">
         <Text>
-          This pages uses on-chain data fetched directly from an Ethereum node
+          This page uses on-chain data fetched directly from an Ethereum node
         </Text>
         <Text>Since there is no caching, the response time can be slower</Text>
         <Box
+          boxShadow="base"
           mt="1rem"
           w="100%"
           borderWidth="1px"

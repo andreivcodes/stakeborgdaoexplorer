@@ -38,6 +38,7 @@ export default function LPTVLCard() {
 
   return (
     <Box
+      boxShadow="base"
       h="full"
       borderWidth="1px"
       borderRadius="lg"

@@ -9,7 +9,7 @@ import yieldstaking_abi from "./../abi/yieldstaking.json";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://ec2-3-10-205-8.eu-west-2.compute.amazonaws.com"
+    "http://ec2-18-194-175-102.eu-central-1.compute.amazonaws.com:8555"
   )
 );
 
@@ -22,7 +22,7 @@ const XYZ_contract_address = "0x618679df9efcd19694bb1daa8d00718eacfa2883";
 const governance_staking_dao_contract_adress =
   "0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C";
 const governance_rewards_contract_address =
-  "0xF6b67E11A8B9844937700c0BAadC460DCD074802";
+  "0x1fC8EfDb15FD5f9250077dD820C201B36bBc1f0B";
 
 const yield_staking_contract_address =
   "0x7f4fe6776a9617847485d43db0d3a9b734e459c5";
@@ -72,18 +72,21 @@ const yield_unclaimed_xyz_contract = new web3.eth.Contract(
 );
 
 export async function getWalletTokens(addr) {
+  if (!web3.utils.isAddress(addr)) return 0;
   let wallet = 0;
   wallet = await standard_contract.methods.balanceOf(addr).call();
   return wallet;
 }
 
 export async function getGovernanceStakedTokens(addr) {
+  if (!web3.utils.isAddress(addr)) return 0;
   let govstake = 0;
   govstake = await governance_staking_contract.methods.balanceOf(addr).call();
   return govstake;
 }
 
 export async function getGovernanceUnclaimedTokens(addr) {
+  if (!web3.utils.isAddress(addr)) return 0;
   let pendingRewardsGov = 0;
   let userMultiplierGov = await governance_rewards_contract.methods
     .userMultiplier(addr)
@@ -103,6 +106,7 @@ export async function getGovernanceUnclaimedTokens(addr) {
 }
 
 export async function getFarmingUnclaimedTokens(addr) {
+  if (!web3.utils.isAddress(addr)) return 0;
   let total_pending_farm = 0;
 
   let currentEpoch = await await yield_staking_contract.methods
@@ -120,6 +124,7 @@ export async function getFarmingUnclaimedTokens(addr) {
 }
 
 export async function getFarmingUnclaimedTokensBOND(addr, currentEpoch) {
+  if (!web3.utils.isAddress(addr)) return 0;
   let pending_farm = 0;
 
   for (let epoch = 1; epoch <= currentEpoch; epoch++) {
@@ -152,7 +157,7 @@ export async function getFarmingUnclaimedTokensBOND(addr, currentEpoch) {
       filter: {
         user: addr,
       }, // Using an array means OR: e.g. 20 or 23
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -166,6 +171,7 @@ export async function getFarmingUnclaimedTokensBOND(addr, currentEpoch) {
 }
 
 export async function getFarmingUnclaimedTokensSWINGBY(addr, currentEpoch) {
+  if (!web3.utils.isAddress(addr)) return 0;
   let pending_farm = 0;
 
   for (let epoch = 1; epoch <= currentEpoch; epoch++) {
@@ -200,7 +206,7 @@ export async function getFarmingUnclaimedTokensSWINGBY(addr, currentEpoch) {
       filter: {
         user: addr,
       }, // Using an array means OR: e.g. 20 or 23
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -214,6 +220,7 @@ export async function getFarmingUnclaimedTokensSWINGBY(addr, currentEpoch) {
 }
 
 export async function getFarmingUnclaimedTokensXYZ(addr, currentEpoch) {
+  if (!web3.utils.isAddress(addr)) return 0;
   let pending_farm = 0;
 
   for (let epoch = 1; epoch <= currentEpoch; epoch++) {
@@ -246,7 +253,7 @@ export async function getFarmingUnclaimedTokensXYZ(addr, currentEpoch) {
       filter: {
         user: addr,
       }, // Using an array means OR: e.g. 20 or 23
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -299,7 +306,7 @@ export async function getAllHolders() {
   let allUsers = [];
   await yield_unclaimed_bond_contract
     .getPastEvents("allEvents", {
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -314,7 +321,7 @@ export async function getAllHolders() {
 
   await yield_unclaimed_swingby_contract
     .getPastEvents("allEvents", {
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -329,7 +336,7 @@ export async function getAllHolders() {
 
   await yield_unclaimed_xyz_contract
     .getPastEvents("allEvents", {
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -344,7 +351,7 @@ export async function getAllHolders() {
 
   await governance_rewards_contract
     .getPastEvents("allEvents", {
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -359,7 +366,7 @@ export async function getAllHolders() {
 
   await governance_staking_contract
     .getPastEvents("allEvents", {
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -374,7 +381,7 @@ export async function getAllHolders() {
 
   await yield_staking_contract
     .getPastEvents("allEvents", {
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -389,7 +396,7 @@ export async function getAllHolders() {
 
   await standard_contract
     .getPastEvents("allEvents", {
-      fromBlock: 0,
+      fromBlock: 10467072,
       toBlock: "latest",
     })
     .then(function (events) {
@@ -406,20 +413,16 @@ export async function getAllHolders() {
 }
 
 export async function getAllHoldersData() {
-  web3.eth.net
-    .isListening()
-    .then(() => console.log("is connected"))
-    .catch((e) => console.log("Wow. Something went wrong: " + e));
-
   let data = [];
   let holders = await getAllHolders();
 
-  let slicedHolders = holders.slice(0, 5);
+  console.log(holders);
 
   await Promise.all(
-    slicedHolders.map(async (holder) => {
+    holders.map(async (holder) => {
+      await sleep(200);
       let holderData = await getUserTokens(holder);
-
+      console.log(holderData);
       data.push({
         address: holder,
         wallet: holderData.wallet,
@@ -432,4 +435,8 @@ export async function getAllHoldersData() {
     })
   );
   return data;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
