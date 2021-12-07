@@ -15,7 +15,6 @@ import {
   Box,
   useColorModeValue,
   Text,
-  Center,
   Skeleton,
 } from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";

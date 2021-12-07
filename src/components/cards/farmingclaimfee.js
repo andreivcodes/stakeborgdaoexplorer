@@ -4,8 +4,6 @@ import {
   StatNumber,
   Box,
   useColorModeValue,
-  StatHelpText,
-  Divider,
 } from "@chakra-ui/react";
 
 export default function FarmingClaimFee(props) {
