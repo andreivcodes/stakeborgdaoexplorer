@@ -9,7 +9,7 @@ import yieldstaking_abi from "./../abi/yieldstaking.json";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "http://ec2-3-10-205-8.eu-west-2.compute.amazonaws.com"
+    "https://ec2-3-10-205-8.eu-west-2.compute.amazonaws.com"
   )
 );
 
