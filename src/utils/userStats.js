@@ -9,7 +9,7 @@ import yieldstaking_abi from "./../abi/yieldstaking.json";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://eth-mainnet.alchemyapi.io/v2/-aaxRLLOCgK1aAZx2rY0iu72c0TUFZdC"
+    "http://ec2-3-10-205-8.eu-west-2.compute.amazonaws.com"
   )
 );
 
@@ -406,6 +406,11 @@ export async function getAllHolders() {
 }
 
 export async function getAllHoldersData() {
+  web3.eth.net
+    .isListening()
+    .then(() => console.log("is connected"))
+    .catch((e) => console.log("Wow. Something went wrong: " + e));
+
   let data = [];
   let holders = await getAllHolders();
 
