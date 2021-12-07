@@ -15,9 +15,9 @@ import Snowflakes from "magic-snowflakes";
 const snowflakes = new Snowflakes({
   color: "#a4e1f4",
   count: 10,
-  maxSize: 10,
+  maxSize: 25,
   minOpacity: 0.1,
-  maxOpacity: 0.95,
+  maxOpacity: 0.75,
   rotation: true,
   zIndex: -100,
 });
