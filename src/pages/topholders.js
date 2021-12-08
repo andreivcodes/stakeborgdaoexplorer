@@ -158,12 +158,9 @@ function Topholders() {
   const [holdersData, setHoldersData] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      //setHoldersData(makeData(2));
-      //console.log(makeData(2));
-      //console.log(await getAllHoldersData());
       setHoldersData(await getAllHoldersData());
     }
-    fetchData();
+    fetchData().catch((error) => alert(error.message));
   }, []);
 
   const data = React.useMemo(() => holdersData, [holdersData]);

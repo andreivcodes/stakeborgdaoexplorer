@@ -52,10 +52,8 @@ function Address() {
       setFarmingUnclaimedLoaded(true);
       setAirdropUnclaimed(user.airdropUnclaimed);
       setAirdropUnclaimedLoaded(true);
-
-      console.log(user);
     }
-    fetchData();
+    fetchData().catch((error) => alert(error.message));
   }, [addr]);
 
   return (

@@ -53,7 +53,7 @@ export default function FarmsTVLCard() {
 
       setXyzTokens(xyzAmount / 1000000000000000000);
     }
-    fetchData();
+    fetchData().catch((error) => alert(error.message));
   }, []);
   return (
     <Box
