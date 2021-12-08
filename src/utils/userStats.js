@@ -195,7 +195,7 @@ export async function getFarmingUnclaimedTokensSWINGBY(addr, currentEpoch) {
     );
   }
 
-  const harvestedSwingby = Moralis.Object.extend("YieldFarmSWINBYHarvest");
+  const harvestedSwingby = Moralis.Object.extend("YieldFarmSWINGBYHarvest");
   const query = new Moralis.Query(harvestedSwingby);
   query.equalTo("user", addr.toLowerCase());
   await query.find().then(function (events) {
