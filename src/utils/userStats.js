@@ -9,7 +9,9 @@ import Web3 from "web3";
 
 const Moralis = require("moralis");
 
-let web3;
+const web3 = new Web3(
+  new Web3.providers.HttpProvider(process.env.REACT_APP_INFURA)
+);
 
 const standard_contract_address = "0xda0c94c73d127ee191955fb46bacd7ff999b2bcd";
 
@@ -43,9 +45,6 @@ let yield_unclaimed_swingby_contract;
 let yield_unclaimed_xyz_contract;
 
 async function init() {
-  web3 = web3 = new Web3(
-    new Web3.providers.HttpProvider(process.env.REACT_APP_INFURA)
-  );
   standard_contract = new web3.eth.Contract(
     standard_token_abi,
     standard_contract_address
