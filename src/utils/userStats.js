@@ -1,4 +1,3 @@
-import Web3 from "web3";
 import standard_token_abi from "./../abi/standard_token.json";
 import governance_staking_abi from "./../abi/governance_staking.json";
 import governance_rewards_abi from "./../abi/governance_rewards.json";
@@ -6,12 +5,11 @@ import yieldfarmtoken_bond_abi from "./../abi/yieldfarmtoken_bond.json";
 import yieldfarmtoken_swingby_abi from "./../abi/yieldfarmtoken_swingby.json";
 import yieldfarmtoken_xyz_abi from "./../abi/yieldfarmtoken_xyz.json";
 import yieldstaking_abi from "./../abi/yieldstaking.json";
+import Web3 from "web3";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(
-    "http://ec2-18-194-175-102.eu-central-1.compute.amazonaws.com:8555"
-  )
-);
+const Moralis = require("moralis");
+
+let web3;
 
 const standard_contract_address = "0xda0c94c73d127ee191955fb46bacd7ff999b2bcd";
 
@@ -36,40 +34,47 @@ const yield_farm_swingby_contract_address =
 const yield_farm_xyz_contract_address =
   "0x2b89b42a95676dc74013ece6c07a760df5709c5c";
 
-const standard_contract = new web3.eth.Contract(
-  standard_token_abi,
-  standard_contract_address
-);
+let standard_contract;
+let governance_staking_contract;
+let governance_rewards_contract;
+let yield_staking_contract;
+let yield_unclaimed_bond_contract;
+let yield_unclaimed_swingby_contract;
+let yield_unclaimed_xyz_contract;
 
-const governance_staking_contract = new web3.eth.Contract(
-  governance_staking_abi,
-  governance_staking_dao_contract_adress
-);
-
-const governance_rewards_contract = new web3.eth.Contract(
-  governance_rewards_abi,
-  governance_rewards_contract_address
-);
-
-const yield_staking_contract = new web3.eth.Contract(
-  yieldstaking_abi,
-  yield_staking_contract_address
-);
-
-const yield_unclaimed_bond_contract = new web3.eth.Contract(
-  yieldfarmtoken_bond_abi,
-  yield_farm_bond_contract_address
-);
-
-const yield_unclaimed_swingby_contract = new web3.eth.Contract(
-  yieldfarmtoken_swingby_abi,
-  yield_farm_swingby_contract_address
-);
-
-const yield_unclaimed_xyz_contract = new web3.eth.Contract(
-  yieldfarmtoken_xyz_abi,
-  yield_farm_xyz_contract_address
-);
+async function init() {
+  web3 = web3 = new Web3(
+    new Web3.providers.HttpProvider(process.env.REACT_APP_INFURA)
+  );
+  standard_contract = new web3.eth.Contract(
+    standard_token_abi,
+    standard_contract_address
+  );
+  governance_staking_contract = new web3.eth.Contract(
+    governance_staking_abi,
+    governance_staking_dao_contract_adress
+  );
+  governance_rewards_contract = new web3.eth.Contract(
+    governance_rewards_abi,
+    governance_rewards_contract_address
+  );
+  yield_staking_contract = new web3.eth.Contract(
+    yieldstaking_abi,
+    yield_staking_contract_address
+  );
+  yield_unclaimed_bond_contract = new web3.eth.Contract(
+    yieldfarmtoken_bond_abi,
+    yield_farm_bond_contract_address
+  );
+  yield_unclaimed_swingby_contract = new web3.eth.Contract(
+    yieldfarmtoken_swingby_abi,
+    yield_farm_swingby_contract_address
+  );
+  yield_unclaimed_xyz_contract = new web3.eth.Contract(
+    yieldfarmtoken_xyz_abi,
+    yield_farm_xyz_contract_address
+  );
+}
 
 export async function getWalletTokens(addr) {
   if (!web3.utils.isAddress(addr)) return 0;
@@ -127,23 +132,21 @@ export async function getFarmingUnclaimedTokensBOND(addr, currentEpoch) {
   if (!web3.utils.isAddress(addr)) return 0;
   let pending_farm = 0;
 
+  let numberOfEpochs =
+    await yield_unclaimed_bond_contract.methods.numberOfEpochs.call().call();
+
+  let totalDistributedAmount =
+    await yield_unclaimed_bond_contract.methods.totalDistributedAmount
+      .call()
+      .call();
+
   for (let epoch = 1; epoch <= currentEpoch; epoch++) {
-    let totalDistributedAmount =
-      await yield_unclaimed_bond_contract.methods.totalDistributedAmount
-        .call()
-        .call();
-
-    let numberOfEpochs =
-      await yield_unclaimed_bond_contract.methods.numberOfEpochs.call().call();
-
-    let currentEpoch = epoch;
-
     let getEpochUserBalance = await yield_staking_contract.methods
-      .getEpochUserBalance(addr, BOND_contract_address, currentEpoch)
+      .getEpochUserBalance(addr, BOND_contract_address, epoch)
       .call();
 
     let getEpochPoolSize = await yield_staking_contract.methods
-      .getEpochPoolSize(BOND_contract_address, currentEpoch)
+      .getEpochPoolSize(BOND_contract_address, epoch)
       .call();
 
     pending_farm += Number(
@@ -152,21 +155,17 @@ export async function getFarmingUnclaimedTokensBOND(addr, currentEpoch) {
     );
   }
 
-  await yield_unclaimed_bond_contract
-    .getPastEvents("MassHarvest", {
-      filter: {
-        user: addr,
-      }, // Using an array means OR: e.g. 20 or 23
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          pending_farm -= event.returnValues[2];
-        });
-      }
-    });
+  const harvestedBond = Moralis.Object.extend("YieldFarmBONDHarvest");
+  const query = new Moralis.Query(harvestedBond);
+  query.equalTo("user", addr.toLowerCase());
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        pending_farm -= event.attributes.totalValue;
+      });
+    }
+  });
+
   return pending_farm;
 }
 
@@ -174,25 +173,21 @@ export async function getFarmingUnclaimedTokensSWINGBY(addr, currentEpoch) {
   if (!web3.utils.isAddress(addr)) return 0;
   let pending_farm = 0;
 
+  let numberOfEpochs =
+    await yield_unclaimed_swingby_contract.methods.numberOfEpochs.call().call();
+
+  let totalDistributedAmount =
+    await yield_unclaimed_swingby_contract.methods.totalDistributedAmount
+      .call()
+      .call();
+
   for (let epoch = 1; epoch <= currentEpoch; epoch++) {
-    let totalDistributedAmount =
-      await yield_unclaimed_swingby_contract.methods.totalDistributedAmount
-        .call()
-        .call();
-
-    let numberOfEpochs =
-      await yield_unclaimed_swingby_contract.methods.numberOfEpochs
-        .call()
-        .call();
-
-    let currentEpoch = epoch;
-
     let getEpochUserBalance = await yield_staking_contract.methods
-      .getEpochUserBalance(addr, SWINGBY_contract_address, currentEpoch)
+      .getEpochUserBalance(addr, SWINGBY_contract_address, epoch)
       .call();
 
     let getEpochPoolSize = await yield_staking_contract.methods
-      .getEpochPoolSize(SWINGBY_contract_address, currentEpoch)
+      .getEpochPoolSize(SWINGBY_contract_address, epoch)
       .call();
 
     pending_farm += Number(
@@ -201,21 +196,17 @@ export async function getFarmingUnclaimedTokensSWINGBY(addr, currentEpoch) {
     );
   }
 
-  await yield_unclaimed_swingby_contract
-    .getPastEvents("MassHarvest", {
-      filter: {
-        user: addr,
-      }, // Using an array means OR: e.g. 20 or 23
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          pending_farm -= event.returnValues[2];
-        });
-      }
-    });
+  const harvestedSwingby = Moralis.Object.extend("YieldFarmSWINBYHarvest");
+  const query = new Moralis.Query(harvestedSwingby);
+  query.equalTo("user", addr.toLowerCase());
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        pending_farm -= event.attributes.totalValue;
+      });
+    }
+  });
+
   return pending_farm;
 }
 
@@ -223,23 +214,22 @@ export async function getFarmingUnclaimedTokensXYZ(addr, currentEpoch) {
   if (!web3.utils.isAddress(addr)) return 0;
   let pending_farm = 0;
 
+  let numberOfEpochs = await yield_unclaimed_xyz_contract.methods.numberOfEpochs
+    .call()
+    .call();
+
+  let totalDistributedAmount =
+    await yield_unclaimed_xyz_contract.methods.totalDistributedAmount
+      .call()
+      .call();
+
   for (let epoch = 1; epoch <= currentEpoch; epoch++) {
-    let totalDistributedAmount =
-      await yield_unclaimed_xyz_contract.methods.totalDistributedAmount
-        .call()
-        .call();
-
-    let numberOfEpochs =
-      await yield_unclaimed_xyz_contract.methods.numberOfEpochs.call().call();
-
-    let currentEpoch = epoch;
-
     let getEpochUserBalance = await yield_staking_contract.methods
-      .getEpochUserBalance(addr, XYZ_contract_address, currentEpoch)
+      .getEpochUserBalance(addr, XYZ_contract_address, epoch)
       .call();
 
     let getEpochPoolSize = await yield_staking_contract.methods
-      .getEpochPoolSize(XYZ_contract_address, currentEpoch)
+      .getEpochPoolSize(XYZ_contract_address, epoch)
       .call();
 
     pending_farm += Number(
@@ -248,21 +238,17 @@ export async function getFarmingUnclaimedTokensXYZ(addr, currentEpoch) {
     );
   }
 
-  await yield_unclaimed_xyz_contract
-    .getPastEvents("MassHarvest", {
-      filter: {
-        user: addr,
-      }, // Using an array means OR: e.g. 20 or 23
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          pending_farm -= event.returnValues[2];
-        });
-      }
-    });
+  const harvestedXyz = Moralis.Object.extend("YieldFarmXYZHarvest");
+  const query = new Moralis.Query(harvestedXyz);
+  query.equalTo("user", addr.toLowerCase());
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        pending_farm -= event.attributes.totalValue;
+      });
+    }
+  });
+
   return pending_farm;
 }
 
@@ -271,6 +257,7 @@ export async function getAirdopUnclaimedTokens(addr) {
 }
 
 export async function getUserTokens(addr) {
+  await init();
   let _wallet = Number((await getWalletTokens(addr)) / 1000000000000000000);
   let _governanceStaking = Number(
     (await getGovernanceStakedTokens(addr)) / 1000000000000000000
@@ -304,123 +291,91 @@ export async function getUserTokens(addr) {
 
 export async function getAllHolders() {
   let allUsers = [];
-  await yield_unclaimed_bond_contract
-    .getPastEvents("allEvents", {
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          if (allUsers.indexOf(event.returnValues.user) === -1) {
-            allUsers.push(event.returnValues.user);
-          }
-        });
-      }
-    });
 
-  await yield_unclaimed_swingby_contract
-    .getPastEvents("allEvents", {
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          if (allUsers.indexOf(event.returnValues.user) === -1) {
-            allUsers.push(event.returnValues.user);
-          }
-        });
-      }
-    });
+  const bondHarvesters = Moralis.Object.extend("YieldFarmBONDHarvest");
+  let query = new Moralis.Query(bondHarvesters);
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        if (allUsers.indexOf(event.attributes.user) === -1) {
+          allUsers.push(event.attributes.user);
+        }
+      });
+    }
+  });
+  const swingbyHarvesters = Moralis.Object.extend("YieldFarmSWINGBYHarvest");
+  query = new Moralis.Query(swingbyHarvesters);
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        if (allUsers.indexOf(event.attributes.user) === -1) {
+          allUsers.push(event.attributes.user);
+        }
+      });
+    }
+  });
+  const xyzHarvesters = Moralis.Object.extend("YieldFarmXYZHarvest");
+  query = new Moralis.Query(xyzHarvesters);
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        if (allUsers.indexOf(event.attributes.user) === -1) {
+          allUsers.push(event.attributes.user);
+        }
+      });
+    }
+  });
 
-  await yield_unclaimed_xyz_contract
-    .getPastEvents("allEvents", {
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          if (allUsers.indexOf(event.returnValues.user) === -1) {
-            allUsers.push(event.returnValues.user);
-          }
-        });
-      }
-    });
+  const standardTokenUsers = Moralis.Object.extend("STANDARDTokenApproval");
+  query = new Moralis.Query(standardTokenUsers);
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        if (allUsers.indexOf(event.attributes.spender) === -1) {
+          allUsers.push(event.attributes.spender);
+        }
+      });
+    }
+  });
 
-  await governance_rewards_contract
-    .getPastEvents("allEvents", {
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          if (allUsers.indexOf(event.returnValues.user) === -1) {
-            allUsers.push(event.returnValues.user);
-          }
-        });
-      }
-    });
+  const governanceStakers = Moralis.Object.extend("GovernanceStakingDeposit");
+  query = new Moralis.Query(governanceStakers);
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        if (allUsers.indexOf(event.attributes.user) === -1) {
+          allUsers.push(event.attributes.user);
+        }
+      });
+    }
+  });
 
-  await governance_staking_contract
-    .getPastEvents("allEvents", {
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          if (allUsers.indexOf(event.returnValues.user) === -1) {
-            allUsers.push(event.returnValues.user);
-          }
-        });
-      }
-    });
-
-  await yield_staking_contract
-    .getPastEvents("allEvents", {
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          if (allUsers.indexOf(event.returnValues.user) === -1) {
-            allUsers.push(event.returnValues.user);
-          }
-        });
-      }
-    });
-
-  await standard_contract
-    .getPastEvents("allEvents", {
-      fromBlock: 10467072,
-      toBlock: "latest",
-    })
-    .then(function (events) {
-      if (events.length) {
-        events.forEach((event) => {
-          if (allUsers.indexOf(event.returnValues.user) === -1) {
-            allUsers.push(event.returnValues.user);
-          }
-        });
-      }
-    });
+  const farmStakers = Moralis.Object.extend("YieldFarmStakingDeposit");
+  query = new Moralis.Query(farmStakers);
+  await query.find().then(function (events) {
+    if (events.length) {
+      events.forEach((event) => {
+        if (allUsers.indexOf(event.attributes.user) === -1) {
+          allUsers.push(event.attributes.user);
+        }
+      });
+    }
+  });
 
   return allUsers;
 }
 
 export async function getAllHoldersData() {
+  await init();
   let data = [];
   let holders = await getAllHolders();
+
+  holders = holders.slice(1, 10);
 
   console.log(holders);
 
   await Promise.all(
     holders.map(async (holder) => {
-      await sleep(200);
       let holderData = await getUserTokens(holder);
       console.log(holderData);
       data.push({
@@ -435,8 +390,4 @@ export async function getAllHoldersData() {
     })
   );
   return data;
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

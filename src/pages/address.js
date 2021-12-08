@@ -15,13 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  getWalletTokens,
-  getGovernanceStakedTokens,
-  getGovernanceUnclaimedTokens,
-  getFarmingUnclaimedTokens,
-  getAirdopUnclaimedTokens,
-} from "./../utils/userStats";
+import { getUserTokens } from "./../utils/userStats";
 
 function Address() {
   const [wallet, setWallet] = useState(null);
@@ -47,15 +41,16 @@ function Address() {
     setAirdropUnclaimedLoaded(false);
 
     async function fetchData() {
-      setWallet(await getWalletTokens(addr));
+      let user = await getUserTokens(addr);
+      setWallet(user.wallet);
       setWalletLoaded(true);
-      setGovernanceStaking(await getGovernanceStakedTokens(addr));
+      setGovernanceStaking(user.governanceStaking);
       setGovernanceStakingLoaded(true);
-      setGovernanceUnclaimed(await getGovernanceUnclaimedTokens(addr));
+      setGovernanceUnclaimed(user.governanceUnclaimed);
       setGovernanceUnclaimedLoaded(true);
-      setFarmingUnclaimed(await getFarmingUnclaimedTokens(addr));
+      setFarmingUnclaimed(user.farmingUnclaimed);
       setFarmingUnclaimedLoaded(true);
-      setAirdropUnclaimed(await getAirdopUnclaimedTokens(addr));
+      setAirdropUnclaimed(user.airdropUnclaimed);
       setAirdropUnclaimedLoaded(true);
     }
     fetchData();

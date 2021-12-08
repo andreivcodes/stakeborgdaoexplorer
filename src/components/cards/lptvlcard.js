@@ -12,7 +12,7 @@ import Web3 from "web3";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://mainnet.infura.io/v3/6a64571b9f134bc1913c6c24d5698891"
+    "https://mainnet.infura.io/v3/7708c241bf3c4502b4a6fc342f016045"
   )
 );
 
