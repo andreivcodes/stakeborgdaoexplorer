@@ -11,9 +11,7 @@ import usdc_contract_abi from "./../../abi/usdc.json";
 import Web3 from "web3";
 
 const web3 = new Web3(
-  new Web3.providers.HttpProvider(
-    "https://mainnet.infura.io/v3/7708c241bf3c4502b4a6fc342f016045"
-  )
+  new Web3.providers.HttpProvider(process.env.REACT_APP_INFURA)
 );
 
 const slp_contract_address = "0xf1e34d19f63b69eaa70952f2f64f735849959833";

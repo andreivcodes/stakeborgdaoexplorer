@@ -52,6 +52,8 @@ function Address() {
       setFarmingUnclaimedLoaded(true);
       setAirdropUnclaimed(user.airdropUnclaimed);
       setAirdropUnclaimedLoaded(true);
+
+      console.log(user);
     }
     fetchData();
   }, [addr]);
@@ -73,7 +75,7 @@ function Address() {
               <StatLabel mt="2rem">💳 Wallet 💳</StatLabel>
               <StatNumber>
                 {walletLoaded ? (
-                  new Intl.NumberFormat().format(wallet / 1000000000000000000)
+                  new Intl.NumberFormat().format(wallet)
                 ) : (
                   <Center>
                     <Skeleton height="25px" width="20vw" />
@@ -84,9 +86,7 @@ function Address() {
               <StatLabel mt="2">⚖️ Governance staking ⚖️</StatLabel>
               <StatNumber>
                 {governanceStakingLoaded ? (
-                  new Intl.NumberFormat().format(
-                    governanceStaking / 1000000000000000000
-                  )
+                  new Intl.NumberFormat().format(governanceStaking)
                 ) : (
                   <Center>
                     <Skeleton height="25px" width="20vw" />
@@ -99,9 +99,7 @@ function Address() {
               </StatLabel>
               <StatNumber>
                 {governanceUnclaimedLoaded ? (
-                  new Intl.NumberFormat().format(
-                    governanceUnclaimed / 1000000000000000000000000000000000000
-                  )
+                  new Intl.NumberFormat().format(governanceUnclaimed)
                 ) : (
                   <Center>
                     <Skeleton height="25px" width="20vw" />
@@ -114,9 +112,7 @@ function Address() {
               </StatLabel>
               <StatNumber>
                 {farmingUnclaimedLoaded ? (
-                  new Intl.NumberFormat().format(
-                    farmingUnclaimed / 1000000000000000000
-                  )
+                  new Intl.NumberFormat().format(farmingUnclaimed)
                 ) : (
                   <Center>
                     <Skeleton height="25px" width="20vw" />
@@ -147,12 +143,11 @@ function Address() {
                 farmingUnclaimedLoaded &&
                 airdropUnclaimedLoaded ? (
                   new Intl.NumberFormat().format(
-                    wallet / 1000000000000000000 +
-                      governanceStaking / 1000000000000000000 +
-                      governanceUnclaimed /
-                        1000000000000000000000000000000000000 +
-                      farmingUnclaimed / 1000000000000000000 +
-                      airdropUnclaimed / 1000000000000000000
+                    wallet +
+                      governanceStaking +
+                      governanceUnclaimed +
+                      farmingUnclaimed +
+                      airdropUnclaimed
                   )
                 ) : (
                   <Center>

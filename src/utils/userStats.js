@@ -272,19 +272,20 @@ export async function getUserTokens(addr) {
   let _airdropUnclaimed = Number(
     (await getAirdopUnclaimedTokens(addr)) / 1000000000000000000
   );
+
   let user = {
-    wallet: new Intl.NumberFormat().format(_wallet),
-    governanceStaking: new Intl.NumberFormat().format(_governanceStaking),
-    governanceUnclaimed: new Intl.NumberFormat().format(_governanceUnclaimed),
-    farmingUnclaimed: new Intl.NumberFormat().format(_farmingUnclaimed),
-    airdropUnclaimed: new Intl.NumberFormat().format(_airdropUnclaimed),
-    total: new Intl.NumberFormat().format(
+    wallet: _wallet.toFixed(2),
+    governanceStaking: _governanceStaking.toFixed(2),
+    governanceUnclaimed: _governanceUnclaimed.toFixed(2),
+    farmingUnclaimed: _farmingUnclaimed.toFixed(2),
+    airdropUnclaimed: _airdropUnclaimed.toFixed(2),
+    total: (
       _wallet +
-        _governanceStaking +
-        _governanceUnclaimed +
-        _farmingUnclaimed +
-        _airdropUnclaimed
-    ),
+      _governanceStaking +
+      _governanceUnclaimed +
+      _farmingUnclaimed +
+      _airdropUnclaimed
+    ).toFixed(2),
   };
   return user;
 }
@@ -370,14 +371,11 @@ export async function getAllHoldersData() {
   let data = [];
   let holders = await getAllHolders();
 
-  holders = holders.slice(1, 10);
-
-  console.log(holders);
+  // holders = holders.slice(1, 10);
 
   await Promise.all(
     holders.map(async (holder) => {
       let holderData = await getUserTokens(holder);
-      console.log(holderData);
       data.push({
         address: holder,
         wallet: holderData.wallet,

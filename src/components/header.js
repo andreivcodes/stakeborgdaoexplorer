@@ -24,12 +24,12 @@ export default function Header() {
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+        <Flex p="2" alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={"Open Menu"}
-            display={{ md: "none" }}
+            display={{ lg: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
 
@@ -37,13 +37,13 @@ export default function Header() {
             <Box w="2rem">
               <Image src={useColorModeValue(lightLogo, darkLogo)} alt="logo" />
             </Box>
-            <Box display={{ base: "none", md: "flex" }}>
+            <Box display={{ base: "none", lg: "flex" }}>
               StakeborgDAO Explorer
             </Box>
             <HStack
               as={"nav"}
               spacing={2}
-              display={{ base: "none", md: "flex" }}
+              display={{ base: "none", lg: "flex" }}
               px={8}
             >
               <Link
@@ -69,7 +69,7 @@ export default function Header() {
                 }}
                 href={"#/topholders"}
               >
-                Top Holders
+                Top Holders<Badge colorScheme="green">New</Badge>
               </Link>
 
               <Link
@@ -82,7 +82,7 @@ export default function Header() {
                 }}
                 //href={"/liquiditypools"}
               >
-                Liquidity Pools <Badge colorScheme="green">Coming soon</Badge>
+                Liquidity Pools <Badge colorScheme="red">Coming soon</Badge>
               </Link>
 
               <Link
@@ -95,7 +95,7 @@ export default function Header() {
                 }}
                 //href={"/farmingpools"}
               >
-                Farming Pools <Badge colorScheme="green">Coming soon</Badge>
+                Farming Pools <Badge colorScheme="red">Coming soon</Badge>
               </Link>
               <Link
                 px={2}
@@ -107,7 +107,7 @@ export default function Header() {
                 }}
                 //href={"/farmingpools"}
               >
-                Governance <Badge colorScheme="green">Coming soon</Badge>
+                Governance <Badge colorScheme="red">Coming soon</Badge>
               </Link>
               <Link
                 px={2}
@@ -119,7 +119,7 @@ export default function Header() {
                 }}
                 href={"#/fees"}
               >
-                Gas fees estimation
+                Gas fees estimation <Badge colorScheme="green">New</Badge>
               </Link>
             </HStack>
           </HStack>
@@ -145,23 +145,28 @@ export default function Header() {
           </HStack>
         </Flex>
         {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
+          <Box pb={4} display={{ lg: "none" }}>
             <Stack as={"nav"} spacing={4}>
               <Link href={"#/"}>Home</Link>
 
-              <Link href={"#/topholders"}>Top Holders</Link>
+              <Link href={"#/topholders"}>
+                Top Holders<Badge colorScheme="green">New</Badge>
+              </Link>
 
               <Link /* href={"#/liquiditypools"} */>
-                Liquidity Pools <Badge colorScheme="green">Coming soon</Badge>
+                Liquidity Pools <Badge colorScheme="red">Coming soon</Badge>
               </Link>
 
               <Link /* href={"#/farmingpools"} */>
-                Farming Pools <Badge colorScheme="green">Coming soon</Badge>
+                Farming Pools <Badge colorScheme="red">Coming soon</Badge>
               </Link>
               <Link /* href={"#/farmingpools"} */>
-                Governance <Badge colorScheme="green">Coming soon</Badge>
+                Governance <Badge colorScheme="red">Coming soon</Badge>
               </Link>
-              <Link href={"#/fees"}>Gas fees estimation</Link>
+              <Link href={"#/fees"}>
+                Gas fees estimation
+                <Badge colorScheme="green">New</Badge>
+              </Link>
             </Stack>
           </Box>
         ) : null}
