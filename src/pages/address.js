@@ -23,6 +23,7 @@ function Address() {
   const [governanceUnclaimed, setGovernanceUnclaimed] = useState(null);
   const [farmingUnclaimed, setFarmingUnclaimed] = useState(null);
   const [airdropUnclaimed, setAirdropUnclaimed] = useState(null);
+  const [total, setTotal] = useState(null);
 
   const [walletLoaded, setWalletLoaded] = useState(false);
   const [governanceStakingLoaded, setGovernanceStakingLoaded] = useState(false);
@@ -30,6 +31,7 @@ function Address() {
     useState(false);
   const [farmingUnclaimedLoaded, setFarmingUnclaimedLoaded] = useState(false);
   const [airdropUnclaimedLoaded, setAirdropUnclaimedLoaded] = useState(false);
+  const [totalLoaded, setTotalLoaded] = useState(false);
 
   const { addr } = useParams();
 
@@ -39,6 +41,7 @@ function Address() {
     setGovernanceUnclaimedLoaded(false);
     setFarmingUnclaimedLoaded(false);
     setAirdropUnclaimedLoaded(false);
+    setTotal(false);
 
     async function fetchData() {
       let user = await getUserTokens(addr);
@@ -52,6 +55,8 @@ function Address() {
       setFarmingUnclaimedLoaded(true);
       setAirdropUnclaimed(user.airdropUnclaimed);
       setAirdropUnclaimedLoaded(true);
+      setTotal(user.total);
+      setTotalLoaded(true);
     }
     fetchData().catch((error) => alert(error.message));
   }, [addr]);
@@ -135,18 +140,8 @@ function Address() {
               </StatNumber>
               <StatLabel mt="2rem">Total</StatLabel>
               <StatNumber>
-                {walletLoaded &&
-                governanceStakingLoaded &&
-                governanceUnclaimedLoaded &&
-                farmingUnclaimedLoaded &&
-                airdropUnclaimedLoaded ? (
-                  new Intl.NumberFormat().format(
-                    wallet +
-                      governanceStaking +
-                      governanceUnclaimed +
-                      farmingUnclaimed +
-                      airdropUnclaimed
-                  )
+                {totalLoaded ? (
+                  new Intl.NumberFormat().format(total)
                 ) : (
                   <Center>
                     <Skeleton height="25px" width="20vw" />

@@ -37,21 +37,47 @@ export default function FarmsTVLCard() {
 
       setEpoch(currentEpoch);
 
-      const bondAmount = await farmsContract.methods
-        .getEpochPoolSize(BOND_contract_address, currentEpoch)
-        .call();
-      const swingbyAmount = await farmsContract.methods
-        .getEpochPoolSize(SWINGBY_contract_address, currentEpoch)
-        .call();
-      const xyzAmount = await farmsContract.methods
-        .getEpochPoolSize(XYZ_contract_address, currentEpoch)
-        .call();
+      const batch = new web3.BatchRequest();
 
-      setBondTokens(bondAmount / 1000000000000000000);
+      let promise1 = new Promise((resolve, rej) => {
+        batch.add(
+          farmsContract.methods
+            .getEpochPoolSize(BOND_contract_address, currentEpoch)
+            .call.request(null, (err, res) => {
+              resolve(res);
+            })
+        );
+      });
 
-      setSwingbyToken(swingbyAmount / 1000000000000000000);
+      let promise2 = new Promise((resolve, rej) => {
+        batch.add(
+          farmsContract.methods
+            .getEpochPoolSize(SWINGBY_contract_address, currentEpoch)
+            .call.request(null, (err, res) => {
+              resolve(res);
+            })
+        );
+      });
 
-      setXyzTokens(xyzAmount / 1000000000000000000);
+      let promise3 = new Promise((resolve, rej) => {
+        batch.add(
+          farmsContract.methods
+            .getEpochPoolSize(XYZ_contract_address, currentEpoch)
+            .call.request(null, (err, res) => {
+              resolve(res);
+            })
+        );
+      });
+
+      batch.execute();
+
+      return Promise.all([promise1, promise2, promise3]).then((res) => {
+        const [bondAmount, swingbyAmount, xyzAmount] = res;
+
+        setBondTokens(bondAmount / 1000000000000000000);
+        setSwingbyToken(swingbyAmount / 1000000000000000000);
+        setXyzTokens(xyzAmount / 1000000000000000000);
+      });
     }
     fetchData().catch((error) => alert(error.message));
   }, []);

@@ -92,69 +92,109 @@ export async function getGovernanceStakedTokens(addr) {
 export async function getGovernanceUnclaimedTokens(addr) {
   if (!web3.utils.isAddress(addr)) return 0;
   let pendingRewardsGov = 0;
-  let userMultiplierGov = await governance_rewards_contract.methods
-    .userMultiplier(addr)
-    .call();
+  const batch = new web3.BatchRequest();
 
-  let currentMultiplierGov = await governance_rewards_contract.methods
-    .currentMultiplier()
-    .call();
+  let promise1 = new Promise((resolve, rej) => {
+    batch.add(
+      governance_rewards_contract.methods
+        .userMultiplier(addr)
+        .call.request(null, (err, res) => {
+          resolve(res);
+        })
+    );
+  });
 
-  let multiplier = currentMultiplierGov - userMultiplierGov;
+  let promise2 = new Promise((resolve, rej) => {
+    batch.add(
+      governance_rewards_contract.methods
+        .currentMultiplier()
+        .call.request(null, (err, res) => {
+          resolve(res);
+        })
+    );
+  });
 
-  pendingRewardsGov =
-    (await governance_staking_contract.methods.balanceOf(addr).call()) *
-    multiplier;
+  let promise3 = new Promise((resolve, rej) => {
+    batch.add(
+      governance_staking_contract.methods
+        .balanceOf(addr)
+        .call.request(null, (err, res) => {
+          resolve(res);
+        })
+    );
+  });
 
-  return pendingRewardsGov;
+  batch.execute();
+
+  return Promise.all([promise1, promise2, promise3]).then((res) => {
+    const [userMultiplierGov, currentMultiplierGov, balance] = res;
+    let multiplier = currentMultiplierGov - userMultiplierGov;
+
+    pendingRewardsGov = balance * multiplier;
+
+    return pendingRewardsGov;
+  });
 }
-
-export async function getFarmingUnclaimedTokens(addr) {
-  if (!web3.utils.isAddress(addr)) return 0;
-  let total_pending_farm = 0;
-
-  let currentEpoch = await await yield_staking_contract.methods
-    .getCurrentEpoch()
-    .call();
-
-  total_pending_farm += await getFarmingUnclaimedTokensBOND(addr, currentEpoch);
-  total_pending_farm += await getFarmingUnclaimedTokensSWINGBY(
-    addr,
-    currentEpoch
-  );
-  total_pending_farm += await getFarmingUnclaimedTokensXYZ(addr, currentEpoch);
-
-  return total_pending_farm;
-}
-
-export async function getFarmingUnclaimedTokensBOND(addr, currentEpoch) {
+export async function getFarmingUnclaimedTokensForYieldFarm(
+  addr,
+  currentEpoch,
+  yieldContract,
+  tokenContract,
+  db
+) {
   if (!web3.utils.isAddress(addr)) return 0;
   let pending_farm = 0;
 
-  let numberOfEpochs =
-    await yield_unclaimed_bond_contract.methods.numberOfEpochs.call().call();
+  let numberOfEpochs = await yieldContract.methods.numberOfEpochs.call().call();
 
   let totalDistributedAmount =
-    await yield_unclaimed_bond_contract.methods.totalDistributedAmount
-      .call()
-      .call();
+    await yieldContract.methods.totalDistributedAmount.call().call();
 
+  const batch = new web3.BatchRequest();
+  let promises = [];
   for (let epoch = 1; epoch <= currentEpoch; epoch++) {
-    let getEpochUserBalance = await yield_staking_contract.methods
-      .getEpochUserBalance(addr, BOND_contract_address, epoch)
-      .call();
-
-    let getEpochPoolSize = await yield_staking_contract.methods
-      .getEpochPoolSize(BOND_contract_address, epoch)
-      .call();
-
-    pending_farm += Number(
-      ((totalDistributedAmount / numberOfEpochs) * getEpochUserBalance) /
-        getEpochPoolSize
+    promises.push(
+      // eslint-disable-next-line no-loop-func
+      new Promise((resolve, rej) => {
+        batch.add(
+          yield_staking_contract.methods
+            .getEpochUserBalance(addr, tokenContract, epoch)
+            .call.request(null, (err, res) => {
+              resolve(res);
+            })
+        );
+      })
+    );
+  }
+  for (let epoch = 1; epoch <= currentEpoch; epoch++) {
+    promises.push(
+      // eslint-disable-next-line no-loop-func
+      new Promise((resolve, rej) => {
+        batch.add(
+          yield_staking_contract.methods
+            .getEpochPoolSize(tokenContract, epoch)
+            .call.request(null, (err, res) => {
+              resolve(res);
+            })
+        );
+      })
     );
   }
 
-  const harvestedBond = Moralis.Object.extend("YieldFarmBONDHarvest");
+  batch.execute();
+
+  await Promise.all(promises).then((res) => {
+    const firstBatch = res.slice(0, currentEpoch);
+    const secondBatch = res.slice(currentEpoch);
+
+    for (let i = 0; i < currentEpoch; i++) {
+      pending_farm +=
+        ((totalDistributedAmount / numberOfEpochs) * firstBatch[i]) /
+        secondBatch[i];
+    }
+  });
+
+  const harvestedBond = Moralis.Object.extend(db);
   const query = new Moralis.Query(harvestedBond);
   query.equalTo("user", addr.toLowerCase());
   await query.find().then(function (events) {
@@ -168,87 +208,37 @@ export async function getFarmingUnclaimedTokensBOND(addr, currentEpoch) {
   return pending_farm;
 }
 
-export async function getFarmingUnclaimedTokensSWINGBY(addr, currentEpoch) {
+export async function getFarmingUnclaimedTokens(addr) {
   if (!web3.utils.isAddress(addr)) return 0;
-  let pending_farm = 0;
+  let total_pending_farm = 0;
 
-  let numberOfEpochs =
-    await yield_unclaimed_swingby_contract.methods.numberOfEpochs.call().call();
-
-  let totalDistributedAmount =
-    await yield_unclaimed_swingby_contract.methods.totalDistributedAmount
-      .call()
-      .call();
-
-  for (let epoch = 1; epoch <= currentEpoch; epoch++) {
-    let getEpochUserBalance = await yield_staking_contract.methods
-      .getEpochUserBalance(addr, SWINGBY_contract_address, epoch)
-      .call();
-
-    let getEpochPoolSize = await yield_staking_contract.methods
-      .getEpochPoolSize(SWINGBY_contract_address, epoch)
-      .call();
-
-    pending_farm += Number(
-      ((totalDistributedAmount / numberOfEpochs) * getEpochUserBalance) /
-        getEpochPoolSize
-    );
-  }
-
-  const harvestedSwingby = Moralis.Object.extend("YieldFarmSWINGBYHarvest");
-  const query = new Moralis.Query(harvestedSwingby);
-  query.equalTo("user", addr.toLowerCase());
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        pending_farm -= event.attributes.totalValue;
-      });
-    }
-  });
-
-  return pending_farm;
-}
-
-export async function getFarmingUnclaimedTokensXYZ(addr, currentEpoch) {
-  if (!web3.utils.isAddress(addr)) return 0;
-  let pending_farm = 0;
-
-  let numberOfEpochs = await yield_unclaimed_xyz_contract.methods.numberOfEpochs
-    .call()
+  let currentEpoch = await await yield_staking_contract.methods
+    .getCurrentEpoch()
     .call();
 
-  let totalDistributedAmount =
-    await yield_unclaimed_xyz_contract.methods.totalDistributedAmount
-      .call()
-      .call();
+  total_pending_farm += await getFarmingUnclaimedTokensForYieldFarm(
+    addr,
+    currentEpoch,
+    yield_unclaimed_bond_contract,
+    BOND_contract_address,
+    "YieldFarmBONDHarvest"
+  );
+  total_pending_farm += await getFarmingUnclaimedTokensForYieldFarm(
+    addr,
+    currentEpoch,
+    yield_unclaimed_swingby_contract,
+    SWINGBY_contract_address,
+    "YieldFarmSWINGBYHarvest"
+  );
+  total_pending_farm += await getFarmingUnclaimedTokensForYieldFarm(
+    addr,
+    currentEpoch,
+    yield_unclaimed_xyz_contract,
+    XYZ_contract_address,
+    "YieldFarmXYZHarvest"
+  );
 
-  for (let epoch = 1; epoch <= currentEpoch; epoch++) {
-    let getEpochUserBalance = await yield_staking_contract.methods
-      .getEpochUserBalance(addr, XYZ_contract_address, epoch)
-      .call();
-
-    let getEpochPoolSize = await yield_staking_contract.methods
-      .getEpochPoolSize(XYZ_contract_address, epoch)
-      .call();
-
-    pending_farm += Number(
-      ((totalDistributedAmount / numberOfEpochs) * getEpochUserBalance) /
-        getEpochPoolSize
-    );
-  }
-
-  const harvestedXyz = Moralis.Object.extend("YieldFarmXYZHarvest");
-  const query = new Moralis.Query(harvestedXyz);
-  query.equalTo("user", addr.toLowerCase());
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        pending_farm -= event.attributes.totalValue;
-      });
-    }
-  });
-
-  return pending_farm;
+  return total_pending_farm;
 }
 
 export async function getAirdopUnclaimedTokens(addr) {
@@ -292,76 +282,43 @@ export async function getUserTokens(addr) {
 export async function getAllHolders() {
   let allUsers = [];
 
-  const bondHarvesters = Moralis.Object.extend("YieldFarmBONDHarvest");
-  let query = new Moralis.Query(bondHarvesters);
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        if (allUsers.indexOf(event.attributes.user) === -1) {
-          allUsers.push(event.attributes.user);
-        }
-      });
-    }
-  });
-  const swingbyHarvesters = Moralis.Object.extend("YieldFarmSWINGBYHarvest");
-  query = new Moralis.Query(swingbyHarvesters);
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        if (allUsers.indexOf(event.attributes.user) === -1) {
-          allUsers.push(event.attributes.user);
-        }
-      });
-    }
-  });
-  const xyzHarvesters = Moralis.Object.extend("YieldFarmXYZHarvest");
-  query = new Moralis.Query(xyzHarvesters);
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        if (allUsers.indexOf(event.attributes.user) === -1) {
-          allUsers.push(event.attributes.user);
-        }
-      });
-    }
-  });
+  let dataOrigins = [
+    "YieldFarmBONDHarvest",
+    "YieldFarmSWINGBYHarvest",
+    "YieldFarmXYZHarvest",
+    "STANDARDTokenApproval",
+    "GovernanceStakingDeposit",
+    "YieldFarmStakingDeposit",
+  ];
 
-  const standardTokenUsers = Moralis.Object.extend("STANDARDTokenApproval");
-  query = new Moralis.Query(standardTokenUsers);
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        if (allUsers.indexOf(event.attributes.spender) === -1) {
-          allUsers.push(event.attributes.spender);
-        }
-      });
-    }
-  });
+  let dataOriginColumn = ["user", "user", "user", "spender", "user", "user"];
 
-  const governanceStakers = Moralis.Object.extend("GovernanceStakingDeposit");
-  query = new Moralis.Query(governanceStakers);
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        if (allUsers.indexOf(event.attributes.user) === -1) {
-          allUsers.push(event.attributes.user);
-        }
-      });
-    }
-  });
+  let data, query, count, cnt;
 
-  const farmStakers = Moralis.Object.extend("YieldFarmStakingDeposit");
-  query = new Moralis.Query(farmStakers);
-  await query.find().then(function (events) {
-    if (events.length) {
-      events.forEach((event) => {
-        if (allUsers.indexOf(event.attributes.user) === -1) {
-          allUsers.push(event.attributes.user);
-        }
-      });
-    }
-  });
+  for (let i = 0; i < dataOrigins.length; i++) {
+    data = Moralis.Object.extend(dataOrigins[i]);
+    query = new Moralis.Query(data);
+    count = await query.count();
 
+    cnt = 0;
+    while (cnt < count) {
+      await query
+        .skip(cnt)
+        .find()
+        .then(function (events) {
+          if (events.length) {
+            events.forEach((event) => {
+              if (
+                allUsers.indexOf(event.attributes[dataOriginColumn[i]]) === -1
+              ) {
+                allUsers.push(event.attributes[dataOriginColumn[i]]);
+              }
+            });
+          }
+        });
+      cnt += 100;
+    }
+  }
   return allUsers;
 }
 
@@ -369,8 +326,6 @@ export async function getAllHoldersData() {
   await init();
   let data = [];
   let holders = await getAllHolders();
-
-  // holders = holders.slice(1, 10);
 
   await Promise.all(
     holders.map(async (holder) => {

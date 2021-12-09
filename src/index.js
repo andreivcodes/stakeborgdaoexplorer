@@ -26,10 +26,10 @@ const snowflakes = new Snowflakes({
 
 const APP_ID = process.env.REACT_APP_MORALIS_APP;
 const SERVER_URL = process.env.REACT_APP_MORALIS_SERVER;
-
+const MASTER = process.env.REACT_APP_MORALIS_MASTER;
 snowflakes.start();
 ReactDOM.render(
-  <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
+  <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL} masterKey={MASTER}>
     <ChakraProvider>
       {/*  <SurpriseSanta minTime={15} maxTime={25} /> */}
       <HashRouter>
