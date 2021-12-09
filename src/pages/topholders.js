@@ -99,9 +99,6 @@ function CustomTable({ columns, data }) {
               <Td>
                 <Skeleton height="25px" width="5vw" />
               </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
             </Tr>
           )}
         </Tbody>
