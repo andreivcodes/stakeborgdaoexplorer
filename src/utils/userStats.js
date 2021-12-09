@@ -4,6 +4,7 @@ import governance_rewards_abi from "./../abi/governance_rewards.json";
 import yieldfarmtoken_bond_abi from "./../abi/yieldfarmtoken_bond.json";
 import yieldfarmtoken_swingby_abi from "./../abi/yieldfarmtoken_swingby.json";
 import yieldfarmtoken_xyz_abi from "./../abi/yieldfarmtoken_xyz.json";
+import yieldfarmtoken_usdc_lp_abi from "./../abi/yieldfarmtoken_usdc_lp.json";
 import yieldstaking_abi from "./../abi/yieldstaking.json";
 import Web3 from "web3";
 
@@ -18,6 +19,7 @@ const standard_contract_address = "0xda0c94c73d127ee191955fb46bacd7ff999b2bcd";
 const BOND_contract_address = "0x0391D2021f89DC339F60Fff84546EA23E337750f";
 const SWINGBY_contract_address = "0x8287c7b963b405b7b8d467db9d79eec40625b13a";
 const XYZ_contract_address = "0x618679df9efcd19694bb1daa8d00718eacfa2883";
+const USDC_SLP_contract_address = "0xf1e34d19f63b69eaa70952f2f64f735849959833";
 
 const governance_staking_dao_contract_adress =
   "0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C";
@@ -36,6 +38,9 @@ const yield_farm_swingby_contract_address =
 const yield_farm_xyz_contract_address =
   "0x2b89b42a95676dc74013ece6c07a760df5709c5c";
 
+const yield_farm_usdc_lp_contract_address =
+  "0x41099b337F8435579dea46C7840b730ca87Fd35A";
+
 let standard_contract;
 let governance_staking_contract;
 let governance_rewards_contract;
@@ -43,6 +48,7 @@ let yield_staking_contract;
 let yield_unclaimed_bond_contract;
 let yield_unclaimed_swingby_contract;
 let yield_unclaimed_xyz_contract;
+let yield_unclaimed_usdc_lp_contract;
 
 async function init() {
   standard_contract = new web3.eth.Contract(
@@ -72,6 +78,10 @@ async function init() {
   yield_unclaimed_xyz_contract = new web3.eth.Contract(
     yieldfarmtoken_xyz_abi,
     yield_farm_xyz_contract_address
+  );
+  yield_unclaimed_usdc_lp_contract = new web3.eth.Contract(
+    yieldfarmtoken_usdc_lp_abi,
+    yield_farm_usdc_lp_contract_address
   );
 }
 
@@ -188,9 +198,10 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
     const secondBatch = res.slice(currentEpoch);
 
     for (let i = 0; i < currentEpoch; i++) {
-      pending_farm +=
-        ((totalDistributedAmount / numberOfEpochs) * firstBatch[i]) /
-        secondBatch[i];
+      if (secondBatch[i] != 0)
+        pending_farm +=
+          ((totalDistributedAmount / numberOfEpochs) * firstBatch[i]) /
+          secondBatch[i];
     }
   });
 
@@ -205,6 +216,7 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
     }
   });
   if (pending_farm < 0) pending_farm = 0;
+
   return pending_farm;
 }
 
@@ -236,6 +248,14 @@ export async function getFarmingUnclaimedTokens(addr) {
     yield_unclaimed_xyz_contract,
     XYZ_contract_address,
     "YieldFarmXYZHarvest"
+  );
+
+  total_pending_farm += await getFarmingUnclaimedTokensForYieldFarm(
+    addr,
+    currentEpoch,
+    yield_unclaimed_usdc_lp_contract,
+    USDC_SLP_contract_address,
+    "YieldFarmSLPUSDCHarvest"
   );
 
   return total_pending_farm;
@@ -289,9 +309,18 @@ export async function getAllHolders() {
     "STANDARDTokenApproval",
     "GovernanceStakingDeposit",
     "YieldFarmStakingDeposit",
+    "YieldFarmSLPUSDCHarvest",
   ];
 
-  let dataOriginColumn = ["user", "user", "user", "spender", "user", "user"];
+  let dataOriginColumn = [
+    "user",
+    "user",
+    "user",
+    "spender",
+    "user",
+    "user",
+    "user",
+  ];
 
   let data, query, count, cnt;
 
