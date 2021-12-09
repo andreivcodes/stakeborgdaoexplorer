@@ -360,6 +360,10 @@ export async function getAllHoldersData(setEntriesLoaded, setEntriesTotal) {
   let data = [];
   let holders = await getAllHolders(setEntriesTotal);
 
+  holders = holders.filter(function (item) {
+    return item !== "0xba319f6f6ac8f45e556918a0c9ecdde64335265c";
+  });
+
   let promiseList = [];
 
   for (let holder of holders) {
