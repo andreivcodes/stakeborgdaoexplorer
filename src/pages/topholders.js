@@ -16,6 +16,7 @@ import {
   useColorModeValue,
   Text,
   Skeleton,
+  Progress,
 } from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
@@ -174,6 +175,7 @@ function Topholders() {
         <Text fontSize={24} fontWeight={900}>
           Do not refresh!
         </Text>
+        <Progress hasStripe value={(entriesLoaded / entriesTotal) * 100} />
         <Text fontSize={16} fontWeight={700}>
           Loaded {entriesLoaded} of {entriesTotal}
         </Text>
