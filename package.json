@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws/web3-http-provider": "^1.0.1",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.2",
     "@emotion/react": "^11.7.0",
@@ -13,7 +12,6 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@walletconnect/web3-provider": "^1.6.6",
-    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "magic-snowflakes": "^6.0.0",
     "moralis": "^0.0.149",

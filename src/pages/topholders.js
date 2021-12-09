@@ -156,9 +156,14 @@ function Topholders() {
     []
   );
   const [holdersData, setHoldersData] = useState([]);
+  const [entriesTotal, setEntriesTotal] = useState(0);
+  const [entriesLoaded, setEntriesLoaded] = useState(0);
+
   useEffect(() => {
     async function fetchData() {
-      setHoldersData(await getAllHoldersData());
+      setHoldersData(
+        await getAllHoldersData(setEntriesLoaded, setEntriesTotal)
+      );
     }
     fetchData().catch((error) => alert(error.message));
   }, []);
@@ -175,6 +180,9 @@ function Topholders() {
         <Text>Since there is no caching, the response time can be slow.</Text>
         <Text fontSize={24} fontWeight={900}>
           Do not refresh!
+        </Text>
+        <Text fontSize={16} fontWeight={700}>
+          Loaded {entriesLoaded} of {entriesTotal}
         </Text>
         <Box
           boxShadow="base"

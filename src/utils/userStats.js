@@ -7,11 +7,12 @@ import yieldfarmtoken_xyz_abi from "./../abi/yieldfarmtoken_xyz.json";
 import yieldfarmtoken_usdc_lp_abi from "./../abi/yieldfarmtoken_usdc_lp.json";
 import yieldstaking_abi from "./../abi/yieldstaking.json";
 import Web3 from "web3";
+import Topholders from "../pages/topholders";
 
 const Moralis = require("moralis");
 
 const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_INFURA)
+  new Web3.providers.HttpProvider(process.env.REACT_APP_CHAINSTACK)
 );
 
 const standard_contract_address = "0xda0c94c73d127ee191955fb46bacd7ff999b2bcd";
@@ -267,6 +268,7 @@ export async function getAirdopUnclaimedTokens(addr) {
 
 export async function getUserTokens(addr) {
   await init();
+  let _addr = addr;
   let _wallet = Number((await getWalletTokens(addr)) / 1000000000000000000);
   let _governanceStaking = Number(
     (await getGovernanceStakedTokens(addr)) / 1000000000000000000
@@ -283,6 +285,7 @@ export async function getUserTokens(addr) {
   );
 
   let user = {
+    address: _addr,
     wallet: _wallet.toFixed(2),
     governanceStaking: _governanceStaking.toFixed(2),
     governanceUnclaimed: _governanceUnclaimed.toFixed(2),
@@ -299,7 +302,7 @@ export async function getUserTokens(addr) {
   return user;
 }
 
-export async function getAllHolders() {
+export async function getAllHolders(setEntriesTotal) {
   let allUsers = [];
 
   let dataOrigins = [
@@ -345,30 +348,59 @@ export async function getAllHolders() {
             });
           }
         });
+      setEntriesTotal(allUsers.length);
       cnt += 100;
     }
   }
   return allUsers;
 }
 
-export async function getAllHoldersData() {
+export async function getAllHoldersData(setEntriesLoaded, setEntriesTotal) {
   await init();
   let data = [];
-  let holders = await getAllHolders();
+  let holders = await getAllHolders(setEntriesTotal);
 
-  await Promise.all(
-    holders.map(async (holder) => {
-      let holderData = await getUserTokens(holder);
-      data.push({
-        address: holder,
-        wallet: holderData.wallet,
-        governanceStaking: holderData.governanceStaking,
-        governanceUnclaimed: holderData.governanceUnclaimed,
-        farmingUnclaimed: holderData.farmingUnclaimed,
-        airdropUnclaimed: holderData.airdropUnclaimed,
-        total: holderData.total,
+  let promiseList = [];
+
+  for (let holder of holders) {
+    promiseList.push(
+      new PendingPromise((resolve, rej) => {
+        resolve(getUserTokens(holder));
+      })
+    );
+  }
+
+  let promsieIndex = 0;
+
+  let batchSize = 10;
+
+  while (promiseList.length > promsieIndex) {
+    await promiseList
+      .slice(promsieIndex, promsieIndex + batchSize)
+      .map(async (promise) => {
+        data.push(await promise.execute());
       });
-    })
-  );
+    await sleep(2500);
+    console.log(promsieIndex);
+    promsieIndex += batchSize;
+
+    setEntriesTotal(promiseList.length);
+    setEntriesLoaded(promsieIndex);
+  }
+
   return data;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+class PendingPromise {
+  constructor(args) {
+    this.args = args;
+  }
+
+  execute() {
+    return new Promise(this.args);
+  }
 }
