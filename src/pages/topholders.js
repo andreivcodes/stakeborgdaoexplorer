@@ -143,10 +143,6 @@ function Topholders() {
             accessor: "farmingUnclaimed",
           },
           {
-            Header: "Airdrop Unclaimed",
-            accessor: "airdropUnclaimed",
-          },
-          {
             Header: "Total",
             accessor: "total",
           },
