@@ -204,7 +204,7 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
       });
     }
   });
-
+  if (pending_farm < 0) pending_farm = 0;
   return pending_farm;
 }
 
