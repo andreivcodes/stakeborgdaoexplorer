@@ -213,14 +213,14 @@ function Topholders() {
           This page uses on-chain data fetched directly from an Ethereum node
         </Text>
         <Text>Since there is no caching, the response time can be slow.</Text>
-        <Text fontSize={24} fontWeight={900}>
+        <Text fontSize={24} fontWeight={900} mt="1rem">
           Do not refresh!
         </Text>
         <Progress hasStripe value={(entriesLoaded / entriesTotal) * 100} />
         <Text fontSize={16} fontWeight={700}>
           Loaded {entriesLoaded} of {entriesTotal}
         </Text>
-        <SimpleGrid columns={{ sm: 1, md: 3, lg: 6 }}>
+        <SimpleGrid columns={{ sm: 1, md: 3, lg: 6 }} mt="1rem">
           <GridItem>
             <Stat>
               <Flex
@@ -345,7 +345,7 @@ function Topholders() {
                 flexDirection="column"
                 h="50vh"
               >
-                <Text>Benford's Law of totals</Text>
+                <Text>Benford's Law for totals</Text>
 
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart
@@ -356,14 +356,22 @@ function Topholders() {
                       top: 5,
                       right: 20,
                       left: -25,
-                      bottom: 5,
+                      bottom: 10,
                     }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis tick={false} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke={useColorModeValue("grey", "lightgrey")}
+                    />
+                    <XAxis
+                      dataKey="name"
+                      stroke={useColorModeValue("grey", "lightgrey")}
+                    />
+                    <YAxis
+                      tick={false}
+                      stroke={useColorModeValue("grey", "lightgrey")}
+                    />
                     <Tooltip />
-                    <Legend />
                     <Bar
                       dataKey="benford"
                       fill="#8884d8"
@@ -419,25 +427,34 @@ function Topholders() {
                       bottom: 25,
                     }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="tokens">
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke={useColorModeValue("grey", "lightgrey")}
+                    />
+                    <XAxis
+                      dataKey="tokens"
+                      stroke={useColorModeValue("grey", "lightgrey")}
+                    >
                       <Label
                         value="Number of tokens"
                         position="bottom"
                         style={{
                           textAnchor: "middle",
-                          fill: useColorModeValue("darkgrey", "lightgrey"),
+                          fill: useColorModeValue("grey", "lightgrey"),
                         }}
                       />
                     </XAxis>
-                    <YAxis dataKey="holders">
+                    <YAxis
+                      dataKey="holders"
+                      stroke={useColorModeValue("grey", "lightgrey")}
+                    >
                       <Label
                         value="Number of holders"
                         angle={270}
                         position="left"
                         style={{
                           textAnchor: "middle",
-                          fill: useColorModeValue("darkgrey", "lightgrey"),
+                          fill: useColorModeValue("grey", "lightgrey"),
                         }}
                       />
                     </YAxis>
@@ -526,11 +543,14 @@ function Graphs(data = []) {
 
   this.getBenfordProbabilities = () => {
     let data = [];
+    let index = 1;
     for (let pos in benfordProbabilities) {
       data.push({
+        name: index,
         benford: benfordProbabilities[pos],
         actual: this.digits[pos].percentage,
       });
+      index++;
     }
     console.log(data);
     return data;
@@ -553,6 +573,7 @@ function Graphs(data = []) {
     }
 
     let data = [];
+
     for (let pos in obj) {
       data.push({ tokens: pos, holders: obj[pos] });
     }
