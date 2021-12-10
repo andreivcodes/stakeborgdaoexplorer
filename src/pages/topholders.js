@@ -20,7 +20,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  Grid,
+  SimpleGrid,
   GridItem,
 } from "@chakra-ui/react";
 import {
@@ -41,19 +41,6 @@ import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 
 import { getAllHoldersData } from "./../utils/userStats";
-
-const benfordProbabilities = {
-  0: 0,
-  1: 0.301,
-  2: 0.176,
-  3: 0.125,
-  4: 0.097,
-  5: 0.079,
-  6: 0.067,
-  7: 0.058,
-  8: 0.051,
-  9: 0.046,
-};
 
 function CustomTable({ columns, data }) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -233,18 +220,12 @@ function Topholders() {
         <Text fontSize={16} fontWeight={700}>
           Loaded {entriesLoaded} of {entriesTotal}
         </Text>
-        {/* <StatGroup> */}
-        <Grid
-          templateRows="repeat(2, auto)"
-          templateColumns="repeat(6, 1fr)"
-          alignItems="stretch"
-          mt="2rem"
-        >
-          <GridItem row={1} col={1}>
+        <SimpleGrid columns={{ sm: 1, md: 3, lg: 6 }}>
+          <GridItem>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -257,11 +238,11 @@ function Topholders() {
               </Flex>
             </Stat>
           </GridItem>
-          <GridItem row={1} col={2}>
+          <GridItem>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -274,11 +255,11 @@ function Topholders() {
               </Flex>
             </Stat>
           </GridItem>
-          <GridItem row={1} col={3}>
+          <GridItem>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -291,11 +272,11 @@ function Topholders() {
               </Flex>
             </Stat>
           </GridItem>
-          <GridItem row={1} col={4}>
+          <GridItem>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -308,11 +289,11 @@ function Topholders() {
               </Flex>
             </Stat>
           </GridItem>
-          <GridItem row={1} col={5}>
+          <GridItem>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -325,11 +306,11 @@ function Topholders() {
               </Flex>
             </Stat>
           </GridItem>
-          <GridItem row={1} col={6}>
+          <GridItem>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -344,11 +325,13 @@ function Topholders() {
               </Flex>
             </Stat>
           </GridItem>
-          <GridItem row={2} col={1}>
+        </SimpleGrid>
+        <SimpleGrid columns={{ sm: 1, lg: 2 }}>
+          <Box>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -374,20 +357,40 @@ function Topholders() {
                     <YAxis tick={false} />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="benford" fill="#8884d8" legendType="none" />
-                    <Line type="monotone" dataKey="benford" stroke="#8884d8" />
-                    <Bar dataKey="actual" fill="#82ca9d" legendType="none" />
-                    <Line type="monotone" dataKey="actual" stroke="#82ca9d" />
+                    <Bar
+                      dataKey="benford"
+                      fill="#8884d8"
+                      legendType="none"
+                      tooltipType="none"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="benford"
+                      stroke="#8884d8"
+                      strokeWidth={2}
+                    />
+                    <Bar
+                      dataKey="actual"
+                      fill="#82ca9d"
+                      legendType="none"
+                      tooltipType="none"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="actual"
+                      stroke="#82ca9d"
+                      strokeWidth={2}
+                    />
                   </ComposedChart>
                 </ResponsiveContainer>
               </Flex>
             </Stat>
-          </GridItem>
-          <GridItem row={2} colSpan={5}>
+          </Box>
+          <Box>
             <Stat>
               <Flex
+                m="1"
                 boxShadow="base"
-                m="2"
                 borderWidth="1px"
                 borderRadius="lg"
                 bg={useColorModeValue("gray.50", "gray.900")}
@@ -435,15 +438,14 @@ function Topholders() {
                       type="monotone"
                       dataKey="holders"
                       stroke="#82ca9d"
-                      activeDot={{ r: 8 }}
+                      strokeWidth={2}
                     />
                   </LineChart>
                 </ResponsiveContainer>
               </Flex>
             </Stat>
-          </GridItem>
-        </Grid>
-        {/*  </StatGroup> */}
+          </Box>
+        </SimpleGrid>
 
         <Box
           boxShadow="base"
@@ -537,10 +539,7 @@ function Graphs(data = []) {
       // if it exists, add 1 to the value
       if (obj[element] !== undefined) {
         obj[element] += 1;
-      }
-
-      // if it does not exist, add 1 to setup future elements
-      else {
+      } else {
         obj[element] = 1;
       }
     }

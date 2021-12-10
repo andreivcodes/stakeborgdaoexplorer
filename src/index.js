@@ -9,25 +9,14 @@ import Fees from "./pages/fees";
 import Address from "./pages/address";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import Snowflakes from "magic-snowflakes";
 import { MoralisProvider } from "react-moralis";
 
 //import SurpriseSanta from "surprise-santa";
 
-const snowflakes = new Snowflakes({
-  color: "#a4e1f4",
-  count: 10,
-  maxSize: 25,
-  minOpacity: 0.1,
-  maxOpacity: 0.75,
-  rotation: true,
-  zIndex: -100,
-});
-
 const APP_ID = process.env.REACT_APP_MORALIS_APP;
 const SERVER_URL = process.env.REACT_APP_MORALIS_SERVER;
 const MASTER = process.env.REACT_APP_MORALIS_MASTER;
-snowflakes.start();
+//snowflakes.start();
 ReactDOM.render(
   <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL} masterKey={MASTER}>
     <ChakraProvider>
