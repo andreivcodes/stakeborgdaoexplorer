@@ -374,9 +374,9 @@ function Topholders() {
                     <YAxis tick={false} />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="benford" fill="#8884d8" />
+                    <Bar dataKey="benford" fill="#8884d8" legendType="none" />
                     <Line type="monotone" dataKey="benford" stroke="#8884d8" />
-                    <Bar dataKey="actual" fill="#82ca9d" />
+                    <Bar dataKey="actual" fill="#82ca9d" legendType="none" />
                     <Line type="monotone" dataKey="actual" stroke="#82ca9d" />
                   </ComposedChart>
                 </ResponsiveContainer>

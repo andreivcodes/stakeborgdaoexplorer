@@ -132,7 +132,7 @@ export default function Header() {
               }}
             >
               <Input
-                placeholder="0xdeadbeef"
+                placeholder="Search for an address here..."
                 maxW="30vw"
                 w="30vw"
                 value={value}
