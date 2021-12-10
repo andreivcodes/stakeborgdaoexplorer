@@ -225,6 +225,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
@@ -242,6 +243,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
@@ -259,6 +261,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
@@ -276,6 +279,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
@@ -293,6 +297,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
@@ -310,6 +315,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
@@ -331,6 +337,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
@@ -390,6 +397,7 @@ function Topholders() {
             <Stat>
               <Flex
                 m="1"
+                p="1"
                 boxShadow="base"
                 borderWidth="1px"
                 borderRadius="lg"
