@@ -1,1 +1,6 @@
 openethereum --jsonrpc-hosts all --jsonrpc-port=8555  --jsonrpc-interface=all --jsonrpc-apis web3,eth,net --jsonrpc-cors=all --chain mainnet --warp-barrier 13754282 --no-ancient-blocks --tracing=off --no-ws --no-ipc --no-secretstore
+
+
+
+sudo add-apt-repository -y ppa:ethereum/ethereum
+geth  --mainnet --syncmode snap --cache=2048 --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain '*'

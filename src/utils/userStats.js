@@ -7,7 +7,6 @@ import yieldfarmtoken_xyz_abi from "./../abi/yieldfarmtoken_xyz.json";
 import yieldfarmtoken_usdc_lp_abi from "./../abi/yieldfarmtoken_usdc_lp.json";
 import yieldstaking_abi from "./../abi/yieldstaking.json";
 import Web3 from "web3";
-import Topholders from "../pages/topholders";
 
 const Moralis = require("moralis");
 

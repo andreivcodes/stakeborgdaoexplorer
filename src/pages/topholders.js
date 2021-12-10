@@ -17,8 +17,11 @@ import {
   Text,
   Skeleton,
   Progress,
-  StatGroup,
   Stat,
+  StatLabel,
+  StatNumber,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import {
   LineChart,
@@ -29,7 +32,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  BarChart,
+  ComposedChart,
   Bar,
   Label,
 } from "recharts";
@@ -182,10 +185,28 @@ function Topholders() {
   const [benfordTotal, setBenfordTotal] = useState(null);
   const [distribution, setDistribution] = useState([]);
 
+  const [totalWallets, setTotalWallets] = useState(0);
+  const [totalGovernanceStaked, setTotalGovernanceStaked] = useState(0);
+  const [totalGovernanceUnclaimed, setTotalGovernanceUnclaimed] = useState(0);
+  const [totalFarmingUnclaimed, setTotalFarmingUnclaied] = useState(0);
+  const [totalTotal, setTotalTotal] = useState(0);
+
   useEffect(() => {
     async function fetchData() {
       let data = await getAllHoldersData(setEntriesLoaded, setEntriesTotal);
       setHoldersData(data);
+
+      setTotalWallets(data.reduce((a, b) => a + (Number(b["wallet"]) || 0), 0));
+      setTotalGovernanceStaked(
+        data.reduce((a, b) => a + (Number(b["governanceStaking"]) || 0), 0)
+      );
+      setTotalGovernanceUnclaimed(
+        data.reduce((a, b) => a + (Number(b["governanceUnclaimed"]) || 0), 0)
+      );
+      setTotalFarmingUnclaied(
+        data.reduce((a, b) => a + (Number(b["farmingUnclaimed"]) || 0), 0)
+      );
+      setTotalTotal(data.reduce((a, b) => a + (Number(b["total"]) || 0), 0));
 
       let totals = data.map((a) => Math.round(Number(a.total)));
       const graphs = new Graphs(totals);
@@ -212,103 +233,217 @@ function Topholders() {
         <Text fontSize={16} fontWeight={700}>
           Loaded {entriesLoaded} of {entriesTotal}
         </Text>
-        <StatGroup>
-          <Stat>
-            <Flex
-              boxShadow="base"
-              m="2"
-              borderWidth="1px"
-              borderRadius="lg"
-              bg={useColorModeValue("gray.50", "gray.900")}
-              flexDirection="column"
-              h="50vh"
-              w="20vw"
-            >
-              <Text>Benford's Law of totals</Text>
+        {/* <StatGroup> */}
+        <Grid
+          templateRows="repeat(2, auto)"
+          templateColumns="repeat(6, 1fr)"
+          alignItems="stretch"
+          mt="2rem"
+        >
+          <GridItem row={1} col={1}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+              >
+                <StatLabel>Total in wallets</StatLabel>
+                <StatNumber>
+                  {new Intl.NumberFormat().format(totalWallets)}
+                </StatNumber>
+              </Flex>
+            </Stat>
+          </GridItem>
+          <GridItem row={1} col={2}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+              >
+                <StatLabel>Total staked in governance</StatLabel>
+                <StatNumber>
+                  {new Intl.NumberFormat().format(totalGovernanceStaked)}
+                </StatNumber>
+              </Flex>
+            </Stat>
+          </GridItem>
+          <GridItem row={1} col={3}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+              >
+                <StatLabel>Total unclaimed in governance</StatLabel>
+                <StatNumber>
+                  {new Intl.NumberFormat().format(totalGovernanceUnclaimed)}
+                </StatNumber>
+              </Flex>
+            </Stat>
+          </GridItem>
+          <GridItem row={1} col={4}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+              >
+                <StatLabel>Total unclaimed in farming</StatLabel>
+                <StatNumber>
+                  {new Intl.NumberFormat().format(totalFarmingUnclaimed)}
+                </StatNumber>
+              </Flex>
+            </Stat>
+          </GridItem>
+          <GridItem row={1} col={5}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+              >
+                <StatLabel>Total tokens</StatLabel>
+                <StatNumber>
+                  {new Intl.NumberFormat().format(totalTotal)}
+                </StatNumber>
+              </Flex>
+            </Stat>
+          </GridItem>
+          <GridItem row={1} col={6}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+              >
+                <StatLabel>Total staked / Total tokens</StatLabel>
+                <StatNumber>
+                  {new Intl.NumberFormat().format(
+                    totalGovernanceStaked / totalTotal
+                  )}
+                </StatNumber>
+              </Flex>
+            </Stat>
+          </GridItem>
+          <GridItem row={2} col={1}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+                h="50vh"
+              >
+                <Text>Benford's Law of totals</Text>
 
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  width={500}
-                  height={300}
-                  data={benfordTotal}
-                  margin={{
-                    top: 5,
-                    right: 20,
-                    left: -25,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis tick={false} />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="benford" fill="#8884d8" />
-                  <Bar dataKey="actual" fill="#82ca9d" />
-                </BarChart>
-              </ResponsiveContainer>
-            </Flex>
-          </Stat>
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart
+                    width={500}
+                    height={300}
+                    data={benfordTotal}
+                    margin={{
+                      top: 5,
+                      right: 20,
+                      left: -25,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis tick={false} />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="benford" fill="#8884d8" />
+                    <Line type="monotone" dataKey="benford" stroke="#8884d8" />
+                    <Bar dataKey="actual" fill="#82ca9d" />
+                    <Line type="monotone" dataKey="actual" stroke="#82ca9d" />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </Flex>
+            </Stat>
+          </GridItem>
+          <GridItem row={2} colSpan={5}>
+            <Stat>
+              <Flex
+                boxShadow="base"
+                m="2"
+                borderWidth="1px"
+                borderRadius="lg"
+                bg={useColorModeValue("gray.50", "gray.900")}
+                flexDirection="column"
+                h="50vh"
+              >
+                <Text>Distribution</Text>
 
-          <Stat>
-            <Flex
-              boxShadow="base"
-              m="2"
-              borderWidth="1px"
-              borderRadius="lg"
-              bg={useColorModeValue("gray.50", "gray.900")}
-              flexDirection="column"
-              h="50vh"
-              w="65vw"
-            >
-              <Text>Distribution</Text>
-
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  width={500}
-                  height={300}
-                  data={distribution}
-                  margin={{
-                    top: 5,
-                    right: 20,
-                    left: 20,
-                    bottom: 25,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="tokens">
-                    <Label
-                      value="Number of tokens"
-                      position="bottom"
-                      style={{
-                        textAnchor: "middle",
-                        fill: useColorModeValue("darkgrey", "lightgrey"),
-                      }}
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    width={500}
+                    height={300}
+                    data={distribution}
+                    margin={{
+                      top: 5,
+                      right: 20,
+                      left: 20,
+                      bottom: 25,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="tokens">
+                      <Label
+                        value="Number of tokens"
+                        position="bottom"
+                        style={{
+                          textAnchor: "middle",
+                          fill: useColorModeValue("darkgrey", "lightgrey"),
+                        }}
+                      />
+                    </XAxis>
+                    <YAxis dataKey="holders">
+                      <Label
+                        value="Number of holders"
+                        angle={270}
+                        position="left"
+                        style={{
+                          textAnchor: "middle",
+                          fill: useColorModeValue("darkgrey", "lightgrey"),
+                        }}
+                      />
+                    </YAxis>
+                    <Tooltip />
+                    <Line
+                      type="monotone"
+                      dataKey="holders"
+                      stroke="#82ca9d"
+                      activeDot={{ r: 8 }}
                     />
-                  </XAxis>
-                  <YAxis dataKey="holders">
-                    <Label
-                      value="Number of holders"
-                      angle={270}
-                      position="left"
-                      style={{
-                        textAnchor: "middle",
-                        fill: useColorModeValue("darkgrey", "lightgrey"),
-                      }}
-                    />
-                  </YAxis>
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="holders"
-                    stroke="#82ca9d"
-                    activeDot={{ r: 8 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </Flex>
-          </Stat>
-        </StatGroup>
+                  </LineChart>
+                </ResponsiveContainer>
+              </Flex>
+            </Stat>
+          </GridItem>
+        </Grid>
+        {/*  </StatGroup> */}
 
         <Box
           boxShadow="base"
