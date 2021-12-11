@@ -80,7 +80,8 @@ function Governance() {
               />
 
               <StatNumber mt="1rem">
-                {new Intl.NumberFormat().format(calcualatedWAY)}
+                {new Intl.NumberFormat().format(calcualatedWAY)} is your weekly
+                reward
               </StatNumber>
             </Stat>
           </Box>
