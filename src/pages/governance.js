@@ -80,8 +80,8 @@ function Governance() {
               />
 
               <StatNumber mt="1rem">
-                {new Intl.NumberFormat().format(calcualatedWAY)} $STANDARD is
-                your weekly reward
+                Your weekly reward is{" "}
+                {new Intl.NumberFormat().format(calcualatedWAY)} $STANDARD
               </StatNumber>
             </Stat>
           </Box>
