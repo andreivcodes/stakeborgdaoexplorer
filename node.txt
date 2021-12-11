@@ -3,4 +3,8 @@ openethereum --jsonrpc-hosts all --jsonrpc-port=8555  --jsonrpc-interface=all --
 
 
 sudo add-apt-repository -y ppa:ethereum/ethereum
-geth  --mainnet --syncmode snap --cache=2048 --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain '*'
+geth  --mainnet --syncmode snap --cache=2048 --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain '*'  --txlookuplimit 100000
+
+
+sudo add-apt-repository -y ppa:ethereum/ethereum
+geth  --mainnet --syncmode snap --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain '*' --cache=32000

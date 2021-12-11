@@ -198,7 +198,7 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
     const secondBatch = res.slice(currentEpoch);
 
     for (let i = 0; i < currentEpoch; i++) {
-      if (secondBatch[i] != 0)
+      if (secondBatch[i] !== 0)
         pending_farm +=
           ((totalDistributedAmount / numberOfEpochs) * firstBatch[i]) /
           secondBatch[i];
@@ -376,7 +376,7 @@ export async function getAllHoldersData(setEntriesLoaded, setEntriesTotal) {
 
   let promsieIndex = 0;
 
-  let batchSize = 10;
+  let batchSize = 50;
 
   while (promiseList.length > promsieIndex) {
     await promiseList

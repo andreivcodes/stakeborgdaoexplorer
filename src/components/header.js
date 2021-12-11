@@ -93,6 +93,19 @@ export default function Header() {
                   textDecoration: "none",
                   bg: useColorModeValue("gray.200", "gray.700"),
                 }}
+                href={"#/governance"}
+              >
+                Governance <Badge colorScheme="green">New</Badge>
+              </Link>
+
+              <Link
+                px={2}
+                py={1}
+                rounded={"md"}
+                _hover={{
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
+                }}
                 //href={"/liquiditypools"}
               >
                 Liquidity Pools <Badge colorScheme="red">Coming soon</Badge>
@@ -109,18 +122,6 @@ export default function Header() {
                 //href={"/farmingpools"}
               >
                 Farming Pools <Badge colorScheme="red">Coming soon</Badge>
-              </Link>
-              <Link
-                px={2}
-                py={1}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: useColorModeValue("gray.200", "gray.700"),
-                }}
-                //href={"/farmingpools"}
-              >
-                Governance <Badge colorScheme="red">Coming soon</Badge>
               </Link>
             </HStack>
           </HStack>
@@ -158,16 +159,15 @@ export default function Header() {
                 Gas fees estimation
                 <Badge colorScheme="green">New</Badge>
               </Link>
-
+              <Link href={"#/governance"}>
+                Governance <Badge colorScheme="green">New</Badge>
+              </Link>
               <Link /* href={"#/liquiditypools"} */>
                 Liquidity Pools <Badge colorScheme="red">Coming soon</Badge>
               </Link>
 
               <Link /* href={"#/farmingpools"} */>
                 Farming Pools <Badge colorScheme="red">Coming soon</Badge>
-              </Link>
-              <Link /* href={"#/farmingpools"} */>
-                Governance <Badge colorScheme="red">Coming soon</Badge>
               </Link>
             </Stack>
           </Box>

@@ -7,6 +7,7 @@ import Liquiditypools from "./pages/liquiditypools";
 import Farmingpools from "./pages/farmingpools";
 import Fees from "./pages/fees";
 import Address from "./pages/address";
+import Governance from "./pages/governance";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { MoralisProvider } from "react-moralis";
@@ -28,6 +29,7 @@ ReactDOM.render(
           <Route path="/topholders" element={<Topholders />} />
           <Route path="/liquiditypools" element={<Liquiditypools />} />
           <Route path="/farmingpools" element={<Farmingpools />} />
+          <Route path="/governance" element={<Governance />} />
           <Route path="/fees" element={<Fees />} />
         </Routes>
       </HashRouter>
