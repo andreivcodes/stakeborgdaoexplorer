@@ -48,7 +48,10 @@ export default function Fees() {
           }}
         />
 
-        <Text m="1rem">These estimates simulate real transactions.</Text>
+        <Text m="1rem">
+          These estimates simulate real transactions. Your address is needed in
+          order to simulate the transactions.
+        </Text>
 
         <Grid alignItems="stretch" mt="2rem">
           <GridItem m="1">
