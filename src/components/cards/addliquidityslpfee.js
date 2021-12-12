@@ -18,7 +18,10 @@ export default function AddLiquiditySLPFee(props) {
     >
       <Box m="3">
         <Stat>
-          <StatLabel fontSize="m">Add Liquidity in SLP process fee</StatLabel>
+          <StatLabel fontSize="m">
+            Add Liquidity in SLP process fee - Constant data! Too difficult to
+            simulate
+          </StatLabel>
           <StatNumber>
             {new Intl.NumberFormat().format(
               (191461 * props.gasPrice * props.ethPrice) / 1000000000
