@@ -48,11 +48,7 @@ export default function Fees() {
           }}
         />
 
-        <Text m="1rem">
-          These estimates simulate real transactions. This means that some of
-          the results might be 0 in case proper conditions are not met (for
-          example you have a 0 balance but want to simulate staking deposit).
-        </Text>
+        <Text m="1rem">These estimates simulate real transactions.</Text>
 
         <Grid alignItems="stretch" mt="2rem">
           <GridItem m="1">
