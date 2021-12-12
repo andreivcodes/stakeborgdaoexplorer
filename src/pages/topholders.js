@@ -245,8 +245,7 @@ function Topholders() {
         // Prevent Rechart events while the mouse is over the tooltip
         onMouseMove={(e) => e.stopPropagation()}
         style={{
-          background: "white",
-          padding: "2em",
+          background: "grey",
           borderRadius: "4px",
           boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
         }}
