@@ -34,6 +34,9 @@ import {
   ComposedChart,
   Bar,
   Label,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
 
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
@@ -180,6 +183,9 @@ function Topholders() {
   const [totalFarmingUnclaimed, setTotalFarmingUnclaied] = useState(0);
   const [totalTotal, setTotalTotal] = useState(0);
 
+  const [chartTotals, setChartTotals] = useState([]);
+  const [showTooltip, setShowTooltip] = React.useState(false);
+
   useEffect(() => {
     async function fetchData() {
       let data = await getAllHoldersData(
@@ -189,6 +195,17 @@ function Topholders() {
         setRequestsTotal
       );
       setHoldersData(data);
+
+      let tmpChartData = [];
+      data.map((val) =>
+        tmpChartData.push({ address: val.address, total: Number(val.total) })
+      );
+
+      tmpChartData.sort(function (a, b) {
+        return a.total - b.total;
+      });
+
+      setChartTotals(tmpChartData);
 
       setTotalWallets(data.reduce((a, b) => a + (Number(b["wallet"]) || 0), 0));
       setTotalGovernanceStaked(
@@ -211,6 +228,33 @@ function Topholders() {
   }, []);
 
   const data = React.useMemo(() => holdersData, [holdersData]);
+
+  const Tip = ({ setShowTooltip, ...rest }) => {
+    const [payload, setPayload] = React.useState(rest.payload);
+
+    // When the payload has data (area hovered in the chart), add it to the state
+    // so we can use it to show and hide the tooltip at our expense
+    React.useEffect(() => {
+      rest.payload.length && setPayload(rest.payload);
+    }, [rest.payload]);
+
+    return payload.length ? (
+      <div
+        // Tooltip hides when leaving the tooltip itself
+        onMouseLeave={() => setShowTooltip(false)}
+        // Prevent Rechart events while the mouse is over the tooltip
+        onMouseMove={(e) => e.stopPropagation()}
+        style={{
+          background: "white",
+          padding: "2em",
+          borderRadius: "4px",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
+        }}
+      >
+        {`${payload[0].payload.address}: ${payload[0].value}`}
+      </div>
+    ) : null;
+  };
 
   return (
     <div className="App">
@@ -343,6 +387,75 @@ function Topholders() {
             </Stat>
           </GridItem>
         </SimpleGrid>
+        <Box>
+          <Stat>
+            <Flex
+              m="1"
+              p="1"
+              boxShadow="base"
+              borderWidth="1px"
+              borderRadius="lg"
+              bg={useColorModeValue("gray.50", "gray.900")}
+              flexDirection="column"
+              h="50vh"
+            >
+              <Text>Distribution</Text>
+
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  width={500}
+                  height={300}
+                  data={distribution}
+                  margin={{
+                    top: 5,
+                    right: 20,
+                    left: 20,
+                    bottom: 25,
+                  }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke={useColorModeValue("grey", "lightgrey")}
+                  />
+                  <XAxis
+                    dataKey="tokens"
+                    stroke={useColorModeValue("grey", "lightgrey")}
+                  >
+                    <Label
+                      value="Number of tokens"
+                      position="bottom"
+                      style={{
+                        textAnchor: "middle",
+                        fill: useColorModeValue("grey", "lightgrey"),
+                      }}
+                    />
+                  </XAxis>
+                  <YAxis
+                    dataKey="holders"
+                    stroke={useColorModeValue("grey", "lightgrey")}
+                  >
+                    <Label
+                      value="Number of holders"
+                      angle={270}
+                      position="left"
+                      style={{
+                        textAnchor: "middle",
+                        fill: useColorModeValue("grey", "lightgrey"),
+                      }}
+                    />
+                  </YAxis>
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="holders"
+                    stroke="#82ca9d"
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </Flex>
+          </Stat>
+        </Box>
         <SimpleGrid columns={{ sm: 1, lg: 2 }}>
           <Box>
             <Stat>
@@ -412,6 +525,7 @@ function Topholders() {
               </Flex>
             </Stat>
           </Box>
+
           <Box>
             <Stat>
               <Flex
@@ -424,59 +538,37 @@ function Topholders() {
                 flexDirection="column"
                 h="50vh"
               >
-                <Text>Distribution</Text>
+                <Text>Distribution pie chart</Text>
 
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
+                  <PieChart
                     width={500}
                     height={300}
-                    data={distribution}
-                    margin={{
-                      top: 5,
-                      right: 20,
-                      left: 20,
-                      bottom: 25,
-                    }}
+                    onMouseLeave={() => setShowTooltip(false)}
                   >
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      stroke={useColorModeValue("grey", "lightgrey")}
-                    />
-                    <XAxis
-                      dataKey="tokens"
-                      stroke={useColorModeValue("grey", "lightgrey")}
-                    >
-                      <Label
-                        value="Number of tokens"
-                        position="bottom"
-                        style={{
-                          textAnchor: "middle",
-                          fill: useColorModeValue("grey", "lightgrey"),
+                    <Pie
+                      onMouseEnter={() => setShowTooltip(true)}
+                      data={chartTotals}
+                      dataKey="total"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={150}
+                      fill="#8884d8"
+                    ></Pie>
+                    {showTooltip && (
+                      <Tooltip
+                        // Anymation is a bit weird when the tooltip shows up after hidding
+                        isAnimationActive={false}
+                        // Send props down to get the payload
+                        content={<Tip setShowTooltip={setShowTooltip} />}
+                        // We need this to manage visibility ourselves
+                        wrapperStyle={{
+                          visibility: "visible",
+                          pointerEvents: "auto",
                         }}
                       />
-                    </XAxis>
-                    <YAxis
-                      dataKey="holders"
-                      stroke={useColorModeValue("grey", "lightgrey")}
-                    >
-                      <Label
-                        value="Number of holders"
-                        angle={270}
-                        position="left"
-                        style={{
-                          textAnchor: "middle",
-                          fill: useColorModeValue("grey", "lightgrey"),
-                        }}
-                      />
-                    </YAxis>
-                    <Tooltip />
-                    <Line
-                      type="monotone"
-                      dataKey="holders"
-                      stroke="#82ca9d"
-                      strokeWidth={2}
-                    />
-                  </LineChart>
+                    )}
+                  </PieChart>
                 </ResponsiveContainer>
               </Flex>
             </Stat>
@@ -563,7 +655,6 @@ function Graphs(data = []) {
       });
       index++;
     }
-    console.log(data);
     return data;
   };
 
@@ -588,9 +679,6 @@ function Graphs(data = []) {
     for (let pos in obj) {
       data.push({ tokens: pos, holders: obj[pos] });
     }
-
-    console.log(data);
-
     return data;
   };
 }

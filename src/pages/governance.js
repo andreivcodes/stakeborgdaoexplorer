@@ -52,8 +52,6 @@ function Governance() {
   }, []);
 
   function calculate(input) {
-    console.log(input);
-    console.log((input / poolSize) * 22400);
     setCalculatedWAY(Number((input / poolSize) * 22400));
   }
 
