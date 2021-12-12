@@ -2,10 +2,13 @@ import "./../App.css";
 import Header from "./../components/header";
 import Footer from "./../components/footer";
 import { Box, Container, Grid, GridItem, Text, Input } from "@chakra-ui/react";
-import StakingFee from "../components/cards/stakingfee";
+
+import FarmingClaimFee from "./../components/cards/fees/farmingclaimfee";
+import AddLiquiditySLPFee from "./../components/cards/fees/addliquidityslpfee";
+import StakingFee from "./../components/cards/fees/stakingfee";
+
 import { useEffect, useState } from "react";
-import FarmingClaimFee from "../components/cards/farmingclaimfee";
-import AddLiquiditySLPFee from "../components/cards/addliquidityslpfee";
+
 export default function Fees() {
   const [ethPrice, setEthPrice] = useState(0);
   const [gasPrice, setGasPrice] = useState(0);

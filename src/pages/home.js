@@ -1,12 +1,12 @@
 import "./../App.css";
 import Header from "./../components/header";
 import Footer from "./../components/footer";
-import PriceCard from "../components/cards/pricecard";
-import VolumeCard from "../components/cards/volumecard";
-import MarketcapCard from "../components/cards/mkcapcard";
-import CirculatingCard from "../components/cards/circulatingcard";
-import FarmsTVLCard from "../components/cards/farmstvlcard";
-import LPTVLCard from "../components/cards/lptvlcard";
+import PriceCard from "../components/cards/home/pricecard";
+import VolumeCard from "../components/cards/home/volumecard";
+import MarketcapCard from "../components/cards/home/mkcapcard";
+import CirculatingCard from "../components/cards/home/circulatingcard";
+import FarmsTVLCard from "../components/cards/home/farmstvlcard";
+import LPTVLCard from "../components/cards/home/lptvlcard";
 import { Box, Container, Grid, GridItem, Text } from "@chakra-ui/react";
 
 function Home() {

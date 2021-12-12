@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import farms_contract_abi from "./../../abi/farms.json";
+import farms_contract_abi from "./../../../abi/farms.json";
 import Web3 from "web3";
 
 const web3 = new Web3(

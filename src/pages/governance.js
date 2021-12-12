@@ -1,24 +1,14 @@
 import "./../App.css";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import PriceCard from "../components/cards/pricecard";
-import VolumeCard from "../components/cards/volumecard";
-import MarketcapCard from "../components/cards/mkcapcard";
-import CirculatingCard from "../components/cards/circulatingcard";
-import FarmsTVLCard from "../components/cards/farmstvlcard";
-import LPTVLCard from "../components/cards/lptvlcard";
 import {
   Box,
   Container,
-  Grid,
-  GridItem,
-  Text,
   useColorModeValue,
   Stat,
   StatLabel,
   StatNumber,
   Input,
-  Button,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import governance_staking_abi from "./../abi/governance_staking.json";

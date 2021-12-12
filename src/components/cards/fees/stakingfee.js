@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
-import sushiswap_abi from "./../../abi/sushiswap.json";
-import standard_abi from "./../../abi/standard_token.json";
-import governance_staking_abi from "./../../abi/governance_staking.json";
+import sushiswap_abi from "./../../../abi/sushiswap.json";
+import standard_abi from "./../../../abi/standard_token.json";
+import governance_staking_abi from "./../../../abi/governance_staking.json";
 
 const sushi_contract_address = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 const standard_contract_address = "0xda0c94c73d127ee191955fb46bacd7ff999b2bcd";

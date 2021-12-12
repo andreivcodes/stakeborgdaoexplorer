@@ -6,10 +6,10 @@ import {
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
-import yieldfarmtoken_bond_abi from "./../../abi/yieldfarmtoken_bond.json";
-import yieldfarmtoken_swingby_abi from "./../../abi/yieldfarmtoken_swingby.json";
-import yieldfarmtoken_xyz_abi from "./../../abi/yieldfarmtoken_xyz.json";
-import yieldfarmtoken_usdc_lp_abi from "./../../abi/yieldfarmtoken_usdc_lp.json";
+import yieldfarmtoken_bond_abi from "../../../abi/yieldfarmtoken_bond.json";
+import yieldfarmtoken_swingby_abi from "../../../abi/yieldfarmtoken_swingby.json";
+import yieldfarmtoken_xyz_abi from "../../../abi/yieldfarmtoken_xyz.json";
+import yieldfarmtoken_usdc_lp_abi from "../../../abi/yieldfarmtoken_usdc_lp.json";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 

@@ -2,172 +2,33 @@ import "./../App.css";
 import Header from "./../components/header";
 import Footer from "./../components/footer";
 import React from "react";
-import { useTable, useSortBy } from "react-table";
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Flex,
   Container,
   Box,
   useColorModeValue,
   Text,
-  Skeleton,
   Progress,
-  Stat,
-  StatLabel,
-  StatNumber,
   SimpleGrid,
   GridItem,
 } from "@chakra-ui/react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  ComposedChart,
-  Bar,
-  Label,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
 
-import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 
 import { getAllHoldersData } from "./../utils/userStats";
 
-function CustomTable({ columns, data }) {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data,
-      },
-      useSortBy
-    );
+import CustomTable from "./../components/cards/topholders/holderstable";
+import HoldersPieDistribution from "./../components/cards/topholders/holderspiedistribution";
+import BenfordChart from "../components/cards/topholders/holdersbenford";
+import DistributionChart from "../components/cards/topholders/holdersdistribution";
+import Distributions from "../utils/distributions";
+import TotalInWallets from "../components/cards/topholders/totalinwallets";
+import TotalGovernanceStacked from "../components/cards/topholders/totalgovernancestaked";
+import TotalGovernanceUnclaimed from "../components/cards/topholders/totalgovernanceunclaimed";
+import TotalFarmingUnclaimed from "../components/cards/topholders/totalfarmingunclaimed";
+import TotalTokens from "../components/cards/topholders/totaltokens";
+import TotalStakeRatio from "../components/cards/topholders/totalstakedratio";
 
-  return (
-    <>
-      <Table {...getTableProps()}>
-        <Thead>
-          {headerGroups.map((headerGroup) => (
-            <Tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                // Add the sorting props to control sorting. For this example
-                // we can add them into the header props
-                <Th
-                  userSelect="none"
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  <Flex alignItems="center">
-                    {column.render("Header")}
-                    {/* Add a sort direction indicator */}
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <ChevronDownIcon ml={1} w={4} h={4} />
-                      ) : (
-                        <ChevronUpIcon ml={1} w={4} h={4} />
-                      )
-                    ) : (
-                      ""
-                    )}
-                  </Flex>
-                </Th>
-              ))}
-            </Tr>
-          ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {rows.length > 0 ? (
-            rows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <Tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
-                    );
-                  })}
-                </Tr>
-              );
-            })
-          ) : (
-            <Tr>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-            </Tr>
-          )}
-        </Tbody>
-      </Table>
-      <br />
-    </>
-  );
-}
-
-function Topholders() {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Holder",
-        columns: [
-          {
-            Header: "Address",
-            accessor: "address",
-          },
-        ],
-      },
-      {
-        Header: "Holdings",
-        columns: [
-          {
-            Header: "Wallet",
-            accessor: "wallet",
-          },
-          {
-            Header: "Governance Staking",
-            accessor: "governanceStaking",
-          },
-          {
-            Header: "Governance Unclaimed",
-            accessor: "governanceUnclaimed",
-          },
-          {
-            Header: "Farming Unclaimed",
-            accessor: "farmingUnclaimed",
-          },
-          {
-            Header: "Total",
-            accessor: "total",
-          },
-        ],
-      },
-    ],
-    []
-  );
+export default function Topholders() {
   const [holdersData, setHoldersData] = useState([]);
   const [entriesTotal, setEntriesTotal] = useState(0);
   const [entriesLoaded, setEntriesLoaded] = useState(0);
@@ -184,7 +45,6 @@ function Topholders() {
   const [totalTotal, setTotalTotal] = useState(0);
 
   const [chartTotals, setChartTotals] = useState([]);
-  const [showTooltip, setShowTooltip] = React.useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -220,40 +80,14 @@ function Topholders() {
       setTotalTotal(data.reduce((a, b) => a + (Number(b["total"]) || 0), 0));
 
       let totals = data.map((a) => Math.round(Number(a.total)));
-      const graphs = new Graphs(totals);
-      setBenfordTotal(graphs.getBenfordProbabilities());
-      setDistribution(graphs.getDistribution());
+      const distributionSanitizedData = new Distributions(totals);
+      setBenfordTotal(distributionSanitizedData.getBenfordProbabilities());
+      setDistribution(distributionSanitizedData.getDistribution());
     }
     fetchData().catch((error) => alert(error.message));
   }, []);
 
   const data = React.useMemo(() => holdersData, [holdersData]);
-
-  const Tip = ({ setShowTooltip, ...rest }) => {
-    const [payload, setPayload] = React.useState(rest.payload);
-
-    // When the payload has data (area hovered in the chart), add it to the state
-    // so we can use it to show and hide the tooltip at our expense
-    React.useEffect(() => {
-      rest.payload.length && setPayload(rest.payload);
-    }, [rest.payload]);
-
-    return payload.length ? (
-      <div
-        // Tooltip hides when leaving the tooltip itself
-        onMouseLeave={() => setShowTooltip(false)}
-        // Prevent Rechart events while the mouse is over the tooltip
-        onMouseMove={(e) => e.stopPropagation()}
-        style={{
-          background: "grey",
-          borderRadius: "4px",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
-        }}
-      >
-        {`${payload[0].payload.address}: ${payload[0].value}`}
-      </div>
-    ) : null;
-  };
 
   return (
     <div className="App">
@@ -276,408 +110,36 @@ function Topholders() {
         </Text>
         <SimpleGrid columns={{ sm: 1, md: 3, lg: 6 }} mt="1rem">
           <GridItem>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-              >
-                <StatLabel>Total in wallets</StatLabel>
-                <StatNumber>
-                  {new Intl.NumberFormat().format(totalWallets)}
-                </StatNumber>
-              </Flex>
-            </Stat>
+            <TotalInWallets data={totalWallets} />
           </GridItem>
           <GridItem>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-              >
-                <StatLabel>Total staked in governance</StatLabel>
-                <StatNumber>
-                  {new Intl.NumberFormat().format(totalGovernanceStaked)}
-                </StatNumber>
-              </Flex>
-            </Stat>
+            <TotalGovernanceStacked data={totalGovernanceStaked} />
           </GridItem>
           <GridItem>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-              >
-                <StatLabel>Total unclaimed in governance</StatLabel>
-                <StatNumber>
-                  {new Intl.NumberFormat().format(totalGovernanceUnclaimed)}
-                </StatNumber>
-              </Flex>
-            </Stat>
+            <TotalGovernanceUnclaimed data={totalGovernanceUnclaimed} />
           </GridItem>
           <GridItem>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-              >
-                <StatLabel>Total unclaimed in farming</StatLabel>
-                <StatNumber>
-                  {new Intl.NumberFormat().format(totalFarmingUnclaimed)}
-                </StatNumber>
-              </Flex>
-            </Stat>
+            <TotalFarmingUnclaimed data={totalFarmingUnclaimed} />
           </GridItem>
           <GridItem>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-              >
-                <StatLabel>Total tokens</StatLabel>
-                <StatNumber>
-                  {new Intl.NumberFormat().format(totalTotal)}
-                </StatNumber>
-              </Flex>
-            </Stat>
+            <TotalTokens data={totalTotal} />
           </GridItem>
           <GridItem>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-              >
-                <StatLabel>Total staked / Total tokens</StatLabel>
-                <StatNumber>
-                  {new Intl.NumberFormat().format(
-                    totalGovernanceStaked / totalTotal
-                  )}
-                </StatNumber>
-              </Flex>
-            </Stat>
+            <TotalStakeRatio
+              datagov={totalGovernanceStaked}
+              datatotal={totalTotal}
+            />
           </GridItem>
         </SimpleGrid>
-        <Box>
-          <Stat>
-            <Flex
-              m="1"
-              p="1"
-              boxShadow="base"
-              borderWidth="1px"
-              borderRadius="lg"
-              bg={useColorModeValue("gray.50", "gray.900")}
-              flexDirection="column"
-              h="50vh"
-            >
-              <Text>Distribution</Text>
-
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  width={500}
-                  height={300}
-                  data={distribution}
-                  margin={{
-                    top: 5,
-                    right: 20,
-                    left: 20,
-                    bottom: 25,
-                  }}
-                >
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke={useColorModeValue("grey", "lightgrey")}
-                  />
-                  <XAxis
-                    dataKey="tokens"
-                    stroke={useColorModeValue("grey", "lightgrey")}
-                  >
-                    <Label
-                      value="Number of tokens"
-                      position="bottom"
-                      style={{
-                        textAnchor: "middle",
-                        fill: useColorModeValue("grey", "lightgrey"),
-                      }}
-                    />
-                  </XAxis>
-                  <YAxis
-                    dataKey="holders"
-                    stroke={useColorModeValue("grey", "lightgrey")}
-                  >
-                    <Label
-                      value="Number of holders"
-                      angle={270}
-                      position="left"
-                      style={{
-                        textAnchor: "middle",
-                        fill: useColorModeValue("grey", "lightgrey"),
-                      }}
-                    />
-                  </YAxis>
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="holders"
-                    stroke="#82ca9d"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </Flex>
-          </Stat>
-        </Box>
+        <DistributionChart data={distribution} />
         <SimpleGrid columns={{ sm: 1, lg: 2 }}>
-          <Box>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-                h="50vh"
-              >
-                <Text>Benford's Law for totals</Text>
-
-                <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart
-                    width={500}
-                    height={300}
-                    data={benfordTotal}
-                    margin={{
-                      top: 5,
-                      right: 20,
-                      left: -25,
-                      bottom: 10,
-                    }}
-                  >
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      stroke={useColorModeValue("grey", "lightgrey")}
-                    />
-                    <XAxis
-                      dataKey="name"
-                      stroke={useColorModeValue("grey", "lightgrey")}
-                    />
-                    <YAxis
-                      tick={false}
-                      stroke={useColorModeValue("grey", "lightgrey")}
-                    />
-                    <Tooltip />
-                    <Bar
-                      dataKey="benford"
-                      fill="#8884d8"
-                      legendType="none"
-                      tooltipType="none"
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="benford"
-                      stroke="#8884d8"
-                      strokeWidth={2}
-                    />
-                    <Bar
-                      dataKey="actual"
-                      fill="#82ca9d"
-                      legendType="none"
-                      tooltipType="none"
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="actual"
-                      stroke="#82ca9d"
-                      strokeWidth={2}
-                    />
-                  </ComposedChart>
-                </ResponsiveContainer>
-              </Flex>
-            </Stat>
-          </Box>
-
-          <Box>
-            <Stat>
-              <Flex
-                m="1"
-                p="1"
-                boxShadow="base"
-                borderWidth="1px"
-                borderRadius="lg"
-                bg={useColorModeValue("gray.50", "gray.900")}
-                flexDirection="column"
-                h="50vh"
-              >
-                <Text>Distribution pie chart</Text>
-
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart
-                    width={500}
-                    height={300}
-                    onMouseLeave={() => setShowTooltip(false)}
-                  >
-                    <Pie
-                      onMouseEnter={() => setShowTooltip(true)}
-                      data={chartTotals}
-                      dataKey="total"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={150}
-                      fill="#8884d8"
-                    ></Pie>
-                    {showTooltip && (
-                      <Tooltip
-                        // Anymation is a bit weird when the tooltip shows up after hidding
-                        isAnimationActive={false}
-                        // Send props down to get the payload
-                        content={<Tip setShowTooltip={setShowTooltip} />}
-                        // We need this to manage visibility ourselves
-                        wrapperStyle={{
-                          visibility: "visible",
-                          pointerEvents: "auto",
-                        }}
-                      />
-                    )}
-                  </PieChart>
-                </ResponsiveContainer>
-              </Flex>
-            </Stat>
-          </Box>
+          <BenfordChart data={benfordTotal} />
+          <HoldersPieDistribution data={chartTotals} />
         </SimpleGrid>
 
-        <Box
-          boxShadow="base"
-          mt="1rem"
-          w="100%"
-          borderWidth="1px"
-          borderRadius="lg"
-          bg={useColorModeValue("gray.50", "gray.900")}
-        >
-          <CustomTable columns={columns} data={data} />
-        </Box>
+        <CustomTable data={data} />
       </Container>
       <Footer />
     </div>
   );
-}
-
-export default Topholders;
-
-/**
- * A JavaScript basic implementation of the Benford Law
- * @param data an integer array to be used on algorithm
- *
- * #### Usage
- * const citiesPopulation = [12252023, 6718903, 3015268, …, 765]
- * const benford = new Benford(citiesPopulation)
- * benford.printAsTable()
- */
-
-function Graphs(data = []) {
-  const benfordProbabilities = {
-    1: 0.301,
-    2: 0.176,
-    3: 0.125,
-    4: 0.097,
-    5: 0.079,
-    6: 0.067,
-    7: 0.058,
-    8: 0.051,
-    9: 0.046,
-  };
-  const initialDigits = {
-    1: { count: 0 },
-    2: { count: 0 },
-    3: { count: 0 },
-    4: { count: 0 },
-    5: { count: 0 },
-    6: { count: 0 },
-    7: { count: 0 },
-    8: { count: 0 },
-    9: { count: 0 },
-  };
-
-  const sanitized = data.filter((e) => e > 0);
-  this.sanitizedInput = {
-    data: sanitized,
-    size: sanitized.length,
-  };
-
-  this.digits = sanitized.reduce((acc, number) => {
-    const digit = +`${number}`.charAt(0);
-    const count = acc[digit].count + 1;
-    const percentage = count / sanitized.length;
-    const deviation = percentage - benfordProbabilities[digit];
-
-    acc[digit] = { count, percentage, deviation };
-
-    return acc;
-  }, initialDigits);
-
-  this.getBenfordProbabilities = () => {
-    let data = [];
-    let index = 1;
-    for (let pos in benfordProbabilities) {
-      data.push({
-        name: index,
-        benford: benfordProbabilities[pos],
-        actual: this.digits[pos].percentage,
-      });
-      index++;
-    }
-    return data;
-  };
-
-  this.getDistribution = () => {
-    let obj = {};
-
-    for (let i = 0; i < this.sanitizedInput.data.length; i++) {
-      let element = this.sanitizedInput.data[i];
-
-      element = Math.ceil(element / 10) * 10;
-
-      // if it exists, add 1 to the value
-      if (obj[element] !== undefined) {
-        obj[element] += 1;
-      } else {
-        obj[element] = 1;
-      }
-    }
-
-    let data = [];
-
-    for (let pos in obj) {
-      data.push({ tokens: pos, holders: obj[pos] });
-    }
-    return data;
-  };
 }
