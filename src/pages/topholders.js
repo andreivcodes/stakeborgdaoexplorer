@@ -168,6 +168,9 @@ function Topholders() {
   const [holdersData, setHoldersData] = useState([]);
   const [entriesTotal, setEntriesTotal] = useState(0);
   const [entriesLoaded, setEntriesLoaded] = useState(0);
+  const [requestsLoaded, setRequestsLoaded] = useState(0);
+  const [requestsTotal, setRequestsTotal] = useState(0);
+
   const [benfordTotal, setBenfordTotal] = useState(null);
   const [distribution, setDistribution] = useState([]);
 
@@ -179,7 +182,12 @@ function Topholders() {
 
   useEffect(() => {
     async function fetchData() {
-      let data = await getAllHoldersData(setEntriesLoaded, setEntriesTotal);
+      let data = await getAllHoldersData(
+        setEntriesLoaded,
+        setEntriesTotal,
+        setRequestsLoaded,
+        setRequestsTotal
+      );
       setHoldersData(data);
 
       setTotalWallets(data.reduce((a, b) => a + (Number(b["wallet"]) || 0), 0));
@@ -214,6 +222,10 @@ function Topholders() {
         <Text>Since there is no caching, the response time can be slow.</Text>
         <Text fontSize={24} fontWeight={900} mt="1rem">
           Do not refresh!
+        </Text>
+        <Progress hasStripe value={(requestsLoaded / requestsTotal) * 100} />
+        <Text fontSize={16} fontWeight={700}>
+          Requests sent {requestsLoaded} of {requestsTotal}
         </Text>
         <Progress hasStripe value={(entriesLoaded / entriesTotal) * 100} />
         <Text fontSize={16} fontWeight={700}>

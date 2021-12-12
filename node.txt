@@ -7,4 +7,4 @@ geth  --mainnet --syncmode snap --cache=2048 --http --http.addr 0.0.0.0 --http.p
 
 
 sudo add-apt-repository -y ppa:ethereum/ethereum
-geth  --mainnet --syncmode snap --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain '*' --cache=32000
+geth  --mainnet --syncmode snap --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain 'http://localhost:3000, http://explorer.stakeborgdao.xyz, http://app.stakeborgdao.com' --cache=32000

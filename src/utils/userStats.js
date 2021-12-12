@@ -11,7 +11,7 @@ import Web3 from "web3";
 const Moralis = require("moralis");
 
 const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_CHAINSTACK)
+  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
 );
 
 const standard_contract_address = "0xda0c94c73d127ee191955fb46bacd7ff999b2bcd";
@@ -198,15 +198,16 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
     const secondBatch = res.slice(currentEpoch);
 
     for (let i = 0; i < currentEpoch; i++) {
-      if (secondBatch[i] !== 0)
+      if (secondBatch[i] != 0) {
         pending_farm +=
           ((totalDistributedAmount / numberOfEpochs) * firstBatch[i]) /
           secondBatch[i];
+      }
     }
   });
 
-  const harvestedBond = Moralis.Object.extend(db);
-  const query = new Moralis.Query(harvestedBond);
+  const harvested = Moralis.Object.extend(db);
+  const query = new Moralis.Query(harvested);
   query.equalTo("user", addr.toLowerCase());
   await query.find().then(function (events) {
     if (events.length) {
@@ -215,6 +216,7 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
       });
     }
   });
+
   if (pending_farm < 0) pending_farm = 0;
 
   return pending_farm;
@@ -301,7 +303,7 @@ export async function getUserTokens(addr) {
   return user;
 }
 
-export async function getAllHolders(setEntriesTotal) {
+export async function getAllHolders(setEntriesTotal, setRequestsTotal) {
   let allUsers = [];
 
   let dataOrigins = [
@@ -348,50 +350,51 @@ export async function getAllHolders(setEntriesTotal) {
           }
         });
       setEntriesTotal(allUsers.length);
+      setRequestsTotal(allUsers.length);
       cnt += 100;
     }
   }
   return allUsers;
 }
 
-export async function getAllHoldersData(setEntriesLoaded, setEntriesTotal) {
+export async function getAllHoldersData(
+  setEntriesLoaded,
+  setEntriesTotal,
+  setRequestsLoaded,
+  setRequestsTotal
+) {
   await init();
   let data = [];
-  let holders = await getAllHolders(setEntriesTotal);
+  let holders = await getAllHolders(setEntriesTotal, setRequestsTotal);
 
   holders = holders.filter(function (item) {
     //this is a smart contract which we don't care about
     return item !== "0xba319f6f6ac8f45e556918a0c9ecdde64335265c";
   });
+  setEntriesTotal(holders.length);
+  setRequestsTotal(holders.length);
 
-  let promiseList = [];
-
-  for (let holder of holders) {
-    promiseList.push(
-      new PendingPromise((resolve, rej) => {
-        resolve(getUserTokens(holder));
-      })
-    );
-  }
-
-  let promsieIndex = 0;
-
-  let batchSize = 50;
-
-  while (promiseList.length > promsieIndex) {
-    await promiseList
-      .slice(promsieIndex, promsieIndex + batchSize)
-      .map(async (promise) => {
-        data.push(await promise.execute());
+  let currentIndexLoaded = 0;
+  let currentIndexRequested = 0;
+  await Promise.all(
+    holders.map(async (holder) => {
+      setRequestsLoaded(currentIndexRequested);
+      currentIndexRequested++;
+      let holderData = await getUserTokens(holder);
+      data.push({
+        address: holder,
+        wallet: holderData.wallet,
+        governanceStaking: holderData.governanceStaking,
+        governanceUnclaimed: holderData.governanceUnclaimed,
+        farmingUnclaimed: holderData.farmingUnclaimed,
+        airdropUnclaimed: holderData.airdropUnclaimed,
+        total: holderData.total,
       });
-    await sleep(2500);
-    console.log(promsieIndex);
-    promsieIndex += batchSize;
 
-    setEntriesTotal(promiseList.length);
-    setEntriesLoaded(promsieIndex);
-  }
-
+      setEntriesLoaded(currentIndexLoaded);
+      currentIndexLoaded++;
+    })
+  );
   return data;
 }
 

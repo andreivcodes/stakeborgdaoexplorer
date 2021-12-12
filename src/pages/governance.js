@@ -25,7 +25,7 @@ import governance_staking_abi from "./../abi/governance_staking.json";
 import Web3 from "web3";
 
 const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_CHAINSTACK)
+  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
 );
 
 const governance_staking_dao_contract_adress =
