@@ -38,7 +38,7 @@ let governance_staking_contract = new web3.eth.Contract(
 
 function Governance() {
   const [calcualatedWAY, setCalculatedWAY] = useState(0);
-  const [poolSize, setPoolSize] = useState(0);
+  const [input, setInput] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -46,14 +46,12 @@ function Governance() {
         await governance_staking_contract.methods.stakeborgTokenStaked
           .call()
           .call();
-      setPoolSize(govTotalStaked / 1000000000000000000);
+      setCalculatedWAY(
+        Number((input / govTotalStaked) * 1000000000000000000 * 22400)
+      );
     }
     fetchData();
-  }, []);
-
-  function calculate(input) {
-    setCalculatedWAY(Number((input / poolSize) * 22400));
-  }
+  }, [input]);
 
   return (
     <Box className="App">
@@ -73,7 +71,7 @@ function Governance() {
                 mt="1rem"
                 placeholder="How much standard are you staking?"
                 onChange={(evt) => {
-                  calculate(evt.target.value);
+                  setInput(evt.target.value);
                 }}
               />
 
