@@ -51,9 +51,12 @@ export default function Fees() {
           }}
         />
 
-        <Text mt="1rem">These estimates can simulate real transactions.</Text>
+        <Text mt="1rem">
+          These estimates can simulate real transactions. Simulated results are
+          more precise than estimated results!
+        </Text>
         <Text fontWeight={600}>
-          For a better estimate please enter your address in the field above.
+          For a better simulation please enter your address in the field above.
         </Text>
 
         <Grid alignItems="stretch" mt="2rem">

@@ -52,6 +52,11 @@ export default function FarmingClaimFee(props) {
   const [xyzFee, setXyzFee] = useState(0);
   const [swingbyFee, setSwingbyFee] = useState(0);
 
+  const [usdcLPfeeSim, setUSDCLPFeeSim] = useState(false);
+  const [bondFeeSim, setBondFeeSim] = useState(false);
+  const [xyzFeeSim, setXyzFeeSim] = useState(false);
+  const [swingbyFeeSim, setSwingbyFeeSim] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       let address = props.address;
@@ -61,29 +66,49 @@ export default function FarmingClaimFee(props) {
       yield_unclaimed_bond_contract.methods
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
-          if (err) setBondFee(160000);
-          else setBondFee(gas);
+          if (err) {
+            setBondFee(160000);
+            setBondFeeSim(false);
+          } else {
+            setBondFee(gas);
+            setBondFeeSim(true);
+          }
         });
 
       yield_unclaimed_swingby_contract.methods
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
-          if (err) setSwingbyFee(160000);
-          else setSwingbyFee(gas);
+          if (err) {
+            setSwingbyFee(160000);
+            setSwingbyFeeSim(false);
+          } else {
+            setSwingbyFee(gas);
+            setSwingbyFeeSim(true);
+          }
         });
 
       yield_unclaimed_xyz_contract.methods
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
-          if (err) setXyzFee(160000);
-          else setXyzFee(gas);
+          if (err) {
+            setXyzFee(160000);
+            setXyzFeeSim(false);
+          } else {
+            setXyzFee(gas);
+            setXyzFeeSim(true);
+          }
         });
 
       yield_unclaimed_usdc_lp_contract.methods
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
-          if (err) setUSDCLPFee(160000);
-          else setUSDCLPFee(gas);
+          if (err) {
+            setUSDCLPFee(160000);
+            setUSDCLPFeeSim(false);
+          } else {
+            setUSDCLPFee(gas);
+            setUSDCLPFeeSim(true);
+          }
         });
     }
     fetchData();
@@ -103,8 +128,9 @@ export default function FarmingClaimFee(props) {
           <StatNumber>
             {new Intl.NumberFormat().format(
               (usdcLPfee * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            $
+            )}
+            {" $"}
+            {usdcLPfeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>USDC farm</StatHelpText>
 
@@ -112,7 +138,8 @@ export default function FarmingClaimFee(props) {
             {new Intl.NumberFormat().format(
               (bondFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
-            $
+            {" $"}
+            {bondFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>BOND farm</StatHelpText>
 
@@ -120,7 +147,8 @@ export default function FarmingClaimFee(props) {
             {new Intl.NumberFormat().format(
               (xyzFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
-            $
+            {" $"}
+            {xyzFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>XYZ farm</StatHelpText>
 
@@ -128,7 +156,8 @@ export default function FarmingClaimFee(props) {
             {new Intl.NumberFormat().format(
               (swingbyFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
-            $
+            {" $"}
+            {swingbyFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>SWINGBY farm</StatHelpText>
         </Stat>

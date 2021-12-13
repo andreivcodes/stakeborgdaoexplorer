@@ -42,6 +42,10 @@ export default function StakingFee(props) {
   const [allowDepositFee, setAllowDepositFee] = useState(0);
   const [depositFee, setDepositFee] = useState(0);
 
+  const [swapFeeSim, setSwapFeeSim] = useState(false);
+  const [allowDepositFeeSim, setAllowDepositFeeSim] = useState(false);
+  const [depositFeeSim, setDepositFeeSim] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       var now = Math.round(new Date().getTime() / 1000) + 1000;
@@ -63,23 +67,38 @@ export default function StakingFee(props) {
         .estimateGas(
           { from: address, value: "1000000000" },
           function (err, gas) {
-            if (err) setSwapFee(190000);
-            else setSwapFee(gas);
+            if (err) {
+              setSwapFee(190000);
+              setSwapFeeSim(false);
+            } else {
+              setSwapFee(gas);
+              setSwapFeeSim(true);
+            }
           }
         );
 
       await standard_contract.methods
         .approve("0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C", 100)
         .estimateGas({ from: address }, function (err, gas) {
-          if (err) setAllowDepositFee(46506);
-          else setAllowDepositFee(gas);
+          if (err) {
+            setAllowDepositFee(46506);
+            setAllowDepositFeeSim(false);
+          } else {
+            setAllowDepositFee(gas);
+            setAllowDepositFeeSim(true);
+          }
         });
 
       await governance_staking_contract.methods
         .deposit(1)
         .estimateGas({ from: address }, function (err, gas) {
-          if (err) setDepositFee(295000);
-          else setDepositFee(gas);
+          if (err) {
+            setDepositFee(295000);
+            setDepositFeeSim(false);
+          } else {
+            setDepositFee(gas);
+            setDepositFeeSim(true);
+          }
         });
     }
     fetchData();
@@ -98,22 +117,25 @@ export default function StakingFee(props) {
           <StatNumber>
             {new Intl.NumberFormat().format(
               (swapFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            $
+            )}
+            {" $"}
+            {swapFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>Swap ETH to STANDARD</StatHelpText>
           <StatNumber>
             {new Intl.NumberFormat().format(
               (allowDepositFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            $
+            )}
+            {" $"}
+            {allowDepositFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>Allow Deposit STANDARD in Governance</StatHelpText>
           <StatNumber>
             {new Intl.NumberFormat().format(
               (depositFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
-            $
+            {" $"}
+            {depositFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>Deposit STANDARD in Governance</StatHelpText>
 
