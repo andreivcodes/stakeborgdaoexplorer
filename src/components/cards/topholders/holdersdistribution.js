@@ -1,5 +1,12 @@
-import React from "react";
-import { Flex, Box, useColorModeValue, Text, Stat } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+  Flex,
+  Box,
+  useColorModeValue,
+  Text,
+  Stat,
+  Switch,
+} from "@chakra-ui/react";
 import {
   LineChart,
   Line,
@@ -9,9 +16,28 @@ import {
   Tooltip,
   ResponsiveContainer,
   Label,
+  ReferenceLine,
 } from "recharts";
 
 export default function DistributionChart(props) {
+  const [average, setAverage] = useState(0);
+  const [log, setLog] = useState(false);
+  useEffect(() => {
+    if (props.fullData.length > 0) {
+      var total = 0;
+      for (var i = 0; i < props.fullData.length; i++) {
+        total += Number(props.fullData[i].total);
+      }
+      var avg = total / props.fullData.length;
+
+      setAverage(Number(avg.toFixed(0)));
+    }
+  }, [props.fullData, props.data]);
+
+  const toggleLog = () => {
+    setLog(!log);
+  };
+
   return (
     <Box>
       <Stat>
@@ -25,7 +51,9 @@ export default function DistributionChart(props) {
           flexDirection="column"
           h="50vh"
         >
-          <Text>Distribution</Text>
+          <Text>Distribution {log ? " logarithmic" : " linear"}</Text>
+
+          <Switch size="md" onChange={toggleLog} />
 
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -44,8 +72,11 @@ export default function DistributionChart(props) {
                 stroke={useColorModeValue("grey", "lightgrey")}
               />
               <XAxis
+                type="number"
+                domain={["auto", "auto"]}
                 dataKey="tokens"
                 stroke={useColorModeValue("grey", "lightgrey")}
+                scale={log ? "log" : "linear"}
               >
                 <Label
                   value="Number of tokens"
@@ -71,11 +102,13 @@ export default function DistributionChart(props) {
                 />
               </YAxis>
               <Tooltip />
+              <ReferenceLine x={average} stroke="red" label="Average" />
               <Line
                 type="monotone"
                 dataKey="holders"
                 stroke="#82ca9d"
                 strokeWidth={2}
+                dot={false}
               />
             </LineChart>
           </ResponsiveContainer>

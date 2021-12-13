@@ -61,9 +61,11 @@ export default function Topholders() {
         tmpChartData.push({ address: val.address, total: Number(val.total) })
       );
 
-      tmpChartData.sort(function (a, b) {
-        return a.total - b.total;
-      });
+      tmpChartData
+        .sort(function (a, b) {
+          return a.total - b.total;
+        })
+        .reverse();
 
       setChartTotals(tmpChartData);
 
@@ -131,7 +133,7 @@ export default function Topholders() {
             />
           </GridItem>
         </SimpleGrid>
-        <DistributionChart data={distribution} />
+        <DistributionChart data={distribution} fullData={holdersData} />
         <SimpleGrid columns={{ sm: 1, lg: 2 }}>
           <BenfordChart data={benfordTotal} />
           <HoldersPieDistribution data={chartTotals} />

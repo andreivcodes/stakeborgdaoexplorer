@@ -72,7 +72,7 @@ export default function Distributions(data = []) {
     let data = [];
 
     for (let pos in obj) {
-      data.push({ tokens: pos, holders: obj[pos] });
+      data.push({ tokens: parseInt(pos), holders: parseInt(obj[pos]) });
     }
     return data;
   };

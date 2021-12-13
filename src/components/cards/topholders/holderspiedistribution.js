@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Box, useColorModeValue, Text, Stat } from "@chakra-ui/react";
 import { Tooltip, ResponsiveContainer, PieChart, Pie } from "recharts";
 
@@ -29,6 +29,22 @@ const Tip = ({ setShowTooltip, ...rest }) => {
 };
 
 export default function HoldersPieDistribution(props) {
+  const [majority, setMajority] = useState(0);
+  useEffect(() => {
+    let total = props.data.reduce((a, b) => a + (Number(b["total"]) || 0), 0);
+
+    let majorityTotal = 0;
+    let majorityHolders = 0;
+    for (let i = 0; i < props.data.length; i++) {
+      console.log(props.data[i].total);
+      majorityTotal += props.data[i].total;
+      majorityHolders++;
+      if (majorityTotal > total / 2) break;
+    }
+
+    setMajority(majorityHolders);
+  }, [props.data]);
+
   const [showTooltip, setShowTooltip] = React.useState(false);
   return (
     <Box>
@@ -75,6 +91,7 @@ export default function HoldersPieDistribution(props) {
               )}
             </PieChart>
           </ResponsiveContainer>
+          <Text>Top {majority} hold over 50% of supply</Text>
         </Flex>
       </Stat>
     </Box>
