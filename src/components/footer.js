@@ -30,7 +30,7 @@ function Footer() {
     >
       <Grid templateRows="repeat(2,auto)" templateColumns="10vw auto 10vw">
         <GridItem row="1" colSpan="3">
-          <Text fontSize="sm">***REMOVED***</Text>
+          <Text fontSize="sm">0x636106e4Bd34195F4678af160762cc5157bEA7e8</Text>
         </GridItem>
         <GridItem row="2" column="1" alignSelf="end" justifySelf="start">
           <Flex>
