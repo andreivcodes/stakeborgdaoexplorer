@@ -36,7 +36,6 @@ export default function HoldersPieDistribution(props) {
     let majorityTotal = 0;
     let majorityHolders = 0;
     for (let i = 0; i < props.data.length; i++) {
-      console.log(props.data[i].total);
       majorityTotal += props.data[i].total;
       majorityHolders++;
       if (majorityTotal > total / 2) break;

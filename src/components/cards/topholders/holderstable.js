@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTable, useSortBy } from "react-table";
 import {
   Table,
@@ -15,7 +15,7 @@ import {
 
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
-export default function CustomTable({ data }) {
+export default function CustomTable(props) {
   const columns = React.useMemo(
     () => [
       {
@@ -50,17 +50,42 @@ export default function CustomTable({ data }) {
             Header: "Total",
             accessor: "total",
           },
+          {
+            Header: " % of Total",
+            accessor: "percentoftotal",
+          },
         ],
       },
     ],
     []
   );
 
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    let totaloverall = props.data.reduce(
+      (a, b) => a + (Number(b["total"]) || 0),
+      0
+    );
+
+    props.data.forEach((element) => {
+      element.percentoftotal = Number(
+        (Number(element.total) * 100) / totaloverall
+      );
+      element.percentoftotal = Number(element.percentoftotal.toFixed(3));
+      element.percentoftotal = element.percentoftotal.toString() + "%";
+    });
+
+    setTableData(props.data);
+
+    console.log(totaloverall);
+  }, [props.data]);
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
         columns,
-        data,
+        data: tableData,
       },
       useSortBy
     );
@@ -119,6 +144,9 @@ export default function CustomTable({ data }) {
             })
           ) : (
             <Tr>
+              <Td>
+                <Skeleton height="25px" width="5vw" />
+              </Td>
               <Td>
                 <Skeleton height="25px" width="5vw" />
               </Td>

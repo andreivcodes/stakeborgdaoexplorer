@@ -89,8 +89,6 @@ export default function Topholders() {
     fetchData().catch((error) => alert(error.message));
   }, []);
 
-  const data = React.useMemo(() => holdersData, [holdersData]);
-
   return (
     <div className="App">
       <Header />
@@ -139,7 +137,7 @@ export default function Topholders() {
           <HoldersPieDistribution data={chartTotals} />
         </SimpleGrid>
 
-        <CustomTable data={data} />
+        <CustomTable data={holdersData} />
       </Container>
       <Footer />
     </div>
