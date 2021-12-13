@@ -54,33 +54,37 @@ export default function FarmingClaimFee(props) {
 
   useEffect(() => {
     async function fetchData() {
-      if (props.address) {
-        setBondFee(
-          await yield_unclaimed_bond_contract.methods
-            .massHarvest()
-            .estimateGas({ from: props.address })
-        );
-        setSwingbyFee(
-          await yield_unclaimed_swingby_contract.methods
-            .massHarvest()
-            .estimateGas({ from: props.address })
-        );
-        setXyzFee(
-          await yield_unclaimed_xyz_contract.methods
-            .massHarvest()
-            .estimateGas({ from: props.address })
-        );
-        setUSDCLPFee(
-          await yield_unclaimed_usdc_lp_contract.methods
-            .massHarvest()
-            .estimateGas({ from: props.address })
-        );
-      } else {
-        setBondFee(0);
-        setSwingbyFee(0);
-        setXyzFee(0);
-        setUSDCLPFee(0);
-      }
+      let address = props.address;
+      if (!props.address)
+        address = "0x000000000000000000000000000000000000dEaD";
+
+      yield_unclaimed_bond_contract.methods
+        .massHarvest()
+        .estimateGas({ from: address }, function (err, gas) {
+          if (err) setBondFee(160000);
+          else setBondFee(gas);
+        });
+
+      yield_unclaimed_swingby_contract.methods
+        .massHarvest()
+        .estimateGas({ from: address }, function (err, gas) {
+          if (err) setSwingbyFee(160000);
+          else setSwingbyFee(gas);
+        });
+
+      yield_unclaimed_xyz_contract.methods
+        .massHarvest()
+        .estimateGas({ from: address }, function (err, gas) {
+          if (err) setXyzFee(160000);
+          else setXyzFee(gas);
+        });
+
+      yield_unclaimed_usdc_lp_contract.methods
+        .massHarvest()
+        .estimateGas({ from: address }, function (err, gas) {
+          if (err) setUSDCLPFee(160000);
+          else setUSDCLPFee(gas);
+        });
     }
     fetchData();
   }, [props.address]);

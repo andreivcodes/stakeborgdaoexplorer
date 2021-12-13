@@ -44,42 +44,43 @@ export default function StakingFee(props) {
 
   useEffect(() => {
     async function fetchData() {
-      if (props.address) {
-        var now = Math.round(new Date().getTime() / 1000) + 1000;
-        setSwapFee(0);
-        setAllowDepositFee(0);
-        setDepositFee(0);
-        setSwapFee(
-          await sushiswap_contract.methods
-            .swapExactETHForTokens(
-              "1",
-              [
-                "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-                "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-                "0xDA0c94c73D127eE191955FB46bACd7FF999b2bcd",
-              ],
-              props.address,
-              now
-            )
-            .estimateGas({ from: props.address, value: "1000000000" })
+      var now = Math.round(new Date().getTime() / 1000) + 1000;
+      let address = props.address;
+      if (!props.address)
+        address = "0x000000000000000000000000000000000000dEaD";
+
+      sushiswap_contract.methods
+        .swapExactETHForTokens(
+          "1",
+          [
+            "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "0xDA0c94c73D127eE191955FB46bACd7FF999b2bcd",
+          ],
+          address,
+          now
+        )
+        .estimateGas(
+          { from: address, value: "1000000000" },
+          function (err, gas) {
+            if (err) setSwapFee(190000);
+            else setSwapFee(gas);
+          }
         );
 
-        setAllowDepositFee(
-          await standard_contract.methods
-            .approve("0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C", 100)
-            .estimateGas({ from: props.address })
-        );
+      await standard_contract.methods
+        .approve("0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C", 100)
+        .estimateGas({ from: address }, function (err, gas) {
+          if (err) setAllowDepositFee(46506);
+          else setAllowDepositFee(gas);
+        });
 
-        setDepositFee(
-          await governance_staking_contract.methods
-            .deposit(1)
-            .estimateGas({ from: "0x3854af70a674187d46463a9d0927478b4a1ada8a" })
-        );
-      } else {
-        setSwapFee(0);
-        setAllowDepositFee(0);
-        setDepositFee(0);
-      }
+      await governance_staking_contract.methods
+        .deposit(1)
+        .estimateGas({ from: address }, function (err, gas) {
+          if (err) setDepositFee(295000);
+          else setDepositFee(gas);
+        });
     }
     fetchData();
   }, [props.address]);
