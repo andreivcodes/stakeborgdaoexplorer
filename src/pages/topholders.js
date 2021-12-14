@@ -2,19 +2,9 @@ import "./../App.css";
 import Header from "./../components/header";
 import Footer from "./../components/footer";
 import React from "react";
-import {
-  Container,
-  Box,
-  useColorModeValue,
-  Text,
-  Progress,
-  SimpleGrid,
-  GridItem,
-} from "@chakra-ui/react";
+import { Container, Text, SimpleGrid, GridItem } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
-
-import { getAllHoldersData } from "./../utils/userStats";
 
 import CustomTable from "./../components/cards/topholders/holderstable";
 import HoldersPieDistribution from "./../components/cards/topholders/holderspiedistribution";
@@ -31,10 +21,6 @@ import * as Realm from "realm-web";
 
 export default function Topholders() {
   const [holdersData, setHoldersData] = useState([]);
-  const [entriesTotal, setEntriesTotal] = useState(0);
-  const [entriesLoaded, setEntriesLoaded] = useState(0);
-  const [requestsLoaded, setRequestsLoaded] = useState(0);
-  const [requestsTotal, setRequestsTotal] = useState(0);
 
   const [benfordTotal, setBenfordTotal] = useState(null);
   const [distribution, setDistribution] = useState([]);

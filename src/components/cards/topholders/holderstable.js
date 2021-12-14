@@ -77,8 +77,6 @@ export default function CustomTable(props) {
     });
 
     setTableData(props.data);
-
-    console.log(totaloverall);
   }, [props.data]);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
