@@ -53,27 +53,20 @@ export default function Topholders() {
 
   useEffect(() => {
     async function fetchData() {
-      const user = await app.logIn(Realm.Credentials.anonymous());
+      await app.logIn(Realm.Credentials.anonymous());
       const client = app.currentUser.mongoClient("mongodb-atlas");
-      const dbdata = client.db("stakeborgdao-explorer").collection("snapshot");
+      let dbresult = await client
+        .db("stakeborgdao-explorer")
+        .collection("snapshot")
+        .find({}, { sort: { snapshot: -1 }, limit: 1 });
 
-      let datadb = await dbdata.find(); //.limit(1).sort({ $natural: -1 }).data;
+      let dbdata = dbresult[0];
 
-      let lastSnapshot = 0;
-      let snapshotIndex = 0;
-      for (let i = 0; i < datadb.length; i++) {
-        if (Number(datadb[i].snapshot) > lastSnapshot) {
-          lastSnapshot = Number(datadb[i].snapshot);
-          snapshotIndex = i;
-        }
-      }
+      setHoldersData(dbdata.data);
 
-      let data = datadb[snapshotIndex].data;
-      setHoldersData(data);
+      let data = dbdata.data;
 
-      setSnapshot(
-        new Date(Number(datadb[snapshotIndex].snapshot)).toLocaleString()
-      );
+      setSnapshot(new Date(dbdata.snapshot).toLocaleString());
 
       let tmpChartData = [];
       data.map((val) =>
