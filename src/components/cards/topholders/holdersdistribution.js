@@ -102,7 +102,16 @@ export default function DistributionChart(props) {
                 />
               </YAxis>
               <Tooltip />
-              <ReferenceLine x={average} stroke="red" label="Average" />
+              <ReferenceLine
+                x={average}
+                stroke="red"
+                label={{
+                  value: "Average",
+                  fill: useColorModeValue("grey", "lightgrey"),
+                  dx: 30,
+                  dy: -50,
+                }}
+              />
               <Line
                 type="monotone"
                 dataKey="holders"
