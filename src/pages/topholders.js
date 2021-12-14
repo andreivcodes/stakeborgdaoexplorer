@@ -27,6 +27,7 @@ import TotalGovernanceUnclaimed from "../components/cards/topholders/totalgovern
 import TotalFarmingUnclaimed from "../components/cards/topholders/totalfarmingunclaimed";
 import TotalTokens from "../components/cards/topholders/totaltokens";
 import TotalStakeRatio from "../components/cards/topholders/totalstakedratio";
+import * as Realm from "realm-web";
 
 export default function Topholders() {
   const [holdersData, setHoldersData] = useState([]);
@@ -46,15 +47,33 @@ export default function Topholders() {
 
   const [chartTotals, setChartTotals] = useState([]);
 
+  const app = new Realm.App({ id: process.env.REACT_APP_REALM_APP_ID });
+
+  const [snapshot, setSnapshot] = useState("");
+
   useEffect(() => {
     async function fetchData() {
-      let data = await getAllHoldersData(
-        setEntriesLoaded,
-        setEntriesTotal,
-        setRequestsLoaded,
-        setRequestsTotal
-      );
+      const user = await app.logIn(Realm.Credentials.anonymous());
+      const client = app.currentUser.mongoClient("mongodb-atlas");
+      const dbdata = client.db("stakeborgdao-explorer").collection("snapshot");
+
+      let datadb = await dbdata.find(); //.limit(1).sort({ $natural: -1 }).data;
+
+      let lastSnapshot = 0;
+      let snapshotIndex = 0;
+      for (let i = 0; i < datadb.length; i++) {
+        if (Number(datadb[i].snapshot) > lastSnapshot) {
+          lastSnapshot = Number(datadb[i].snapshot);
+          snapshotIndex = i;
+        }
+      }
+
+      let data = datadb[snapshotIndex].data;
       setHoldersData(data);
+
+      setSnapshot(
+        new Date(Number(datadb[snapshotIndex].snapshot)).toLocaleString()
+      );
 
       let tmpChartData = [];
       data.map((val) =>
@@ -93,21 +112,8 @@ export default function Topholders() {
     <div className="App">
       <Header />
       <Container className="pageContainer" maxW="90vw">
-        <Text>
-          This page uses on-chain data fetched directly from an Ethereum node
-        </Text>
-        <Text>Since there is no caching, the response time can be slow.</Text>
-        <Text fontSize={24} fontWeight={900} mt="1rem">
-          Do not refresh!
-        </Text>
-        <Progress hasStripe value={(requestsLoaded / requestsTotal) * 100} />
-        <Text fontSize={16} fontWeight={700}>
-          Requests sent {requestsLoaded} of {requestsTotal}
-        </Text>
-        <Progress hasStripe value={(entriesLoaded / entriesTotal) * 100} />
-        <Text fontSize={16} fontWeight={700}>
-          Loaded {entriesLoaded} of {entriesTotal}
-        </Text>
+        <Text>Last data refresh on {snapshot}</Text>
+
         <SimpleGrid columns={{ sm: 1, md: 3, lg: 6 }} mt="1rem">
           <GridItem>
             <TotalInWallets data={totalWallets} />
