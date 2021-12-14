@@ -7,10 +7,4 @@ geth  --mainnet --syncmode snap --cache=2048 --http --http.addr 0.0.0.0 --http.p
 
 
 sudo add-apt-repository -y ppa:ethereum/ethereum
-geth  --mainnet --syncmode snap --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain '127.0.0.1' --cache=32000
-
-
-curl -X POST 136.243.45.47:8556 \
---data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' \
--H 'Content-Type: application/json'
-
+geth  --mainnet --syncmode snap --http --http.addr 0.0.0.0 --http.port 8555 --http.api eth,net,web3 --http.corsdomain '*' --cache=32000
