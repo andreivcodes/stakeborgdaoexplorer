@@ -101,7 +101,11 @@ export default function DistributionChart(props) {
                   }}
                 />
               </YAxis>
-              <Tooltip />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: useColorModeValue("lightgrey", "grey"),
+                }}
+              />
               <ReferenceLine
                 x={average}
                 stroke="red"
