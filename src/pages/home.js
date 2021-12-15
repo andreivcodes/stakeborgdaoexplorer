@@ -8,7 +8,7 @@ import CirculatingCard from "../components/cards/home/circulatingcard";
 import FarmsTVLCard from "../components/cards/home/farmstvlcard";
 import LPTVLCard from "../components/cards/home/lptvlcard";
 import { Box, Container, Grid, GridItem, Text } from "@chakra-ui/react";
-import ILSITotalSupply from "../components/cards/home/ilsitotalsupply";
+import ILSI from "../components/cards/home/ilsi";
 
 function Home() {
   return (
@@ -41,7 +41,7 @@ function Home() {
             <LPTVLCard />
           </GridItem>
           <GridItem row={5} colSpan={2} m="1">
-            <ILSITotalSupply />
+            <ILSI />
           </GridItem>
         </Grid>
       </Container>
