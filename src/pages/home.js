@@ -8,6 +8,7 @@ import CirculatingCard from "../components/cards/home/circulatingcard";
 import FarmsTVLCard from "../components/cards/home/farmstvlcard";
 import LPTVLCard from "../components/cards/home/lptvlcard";
 import { Box, Container, Grid, GridItem, Text } from "@chakra-ui/react";
+import ILSITotalSupply from "../components/cards/home/ilsitotalsupply";
 
 function Home() {
   return (
@@ -16,7 +17,7 @@ function Home() {
       <Container className="pageContainer" maxW="50rem">
         <Text fontSize="3xl">Statistics for the $STANDARD token</Text>
         <Grid
-          templateRows="repeat(4, auto)"
+          templateRows="repeat(5, auto)"
           templateColumns="repeat(2, 1fr)"
           alignItems="stretch"
           mt="2rem"
@@ -38,6 +39,9 @@ function Home() {
           </GridItem>
           <GridItem row={4} colSpan={2} m="1">
             <LPTVLCard />
+          </GridItem>
+          <GridItem row={5} colSpan={2} m="1">
+            <ILSITotalSupply />
           </GridItem>
         </Grid>
       </Container>
