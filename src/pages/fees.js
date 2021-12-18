@@ -1,7 +1,18 @@
 import "./../App.css";
 import Header from "./../components/header";
 import Footer from "./../components/footer";
-import { Box, Container, Grid, GridItem, Text, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Grid,
+  GridItem,
+  Text,
+  Input,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+} from "@chakra-ui/react";
 
 import FarmingClaimFee from "./../components/cards/fees/farmingclaimfee";
 import AddLiquiditySLPFee from "./../components/cards/fees/addliquidityslpfee";
@@ -50,7 +61,6 @@ export default function Fees() {
             setAddress(evt.target.value);
           }}
         />
-
         <Text mt="1rem">
           These estimates can simulate real transactions. Simulated results are
           more precise than estimated results!
@@ -58,7 +68,25 @@ export default function Fees() {
         <Text fontWeight={600}>
           For a better simulation please enter your address in the field above.
         </Text>
-
+        <Text fontWeight={600}>
+          You can also set the gas price manually using the slider below
+        </Text>
+        {gasPrice ? (
+          <Slider
+            aria-label="slider-ex-1"
+            min={10}
+            max={150}
+            defaultValue={gasPrice}
+            onChangeEnd={(val) => setGasPrice(val)}
+            mt="1rem"
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        ) : null}
+        {gasPrice} gwei
         <Grid alignItems="stretch" mt="2rem">
           <GridItem m="1">
             <FarmingClaimFee
