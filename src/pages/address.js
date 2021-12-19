@@ -162,8 +162,7 @@ function Address() {
                       in ILSI LP farm
                     </StatHelpText>
                   </div>
-                ) : null}{" "}
-                STANDARD
+                ) : null}
               </StatNumber>
               <StatLabel mt="2">
                 ⌛ ✈️ Airdrop unclaimed rewards ✈️ ⌛
