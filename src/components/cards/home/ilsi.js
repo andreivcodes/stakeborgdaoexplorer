@@ -1,7 +1,6 @@
 import {
   Stat,
   StatGroup,
-  StatLabel,
   StatNumber,
   StatHelpText,
   Box,
