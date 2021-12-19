@@ -98,7 +98,7 @@ export default function Header() {
                 Governance <Badge colorScheme="green">New</Badge>
               </Link>
 
-              <Link
+              {/*  <Link
                 px={2}
                 py={1}
                 rounded={"md"}
@@ -122,7 +122,7 @@ export default function Header() {
                 //href={"/farmingpools"}
               >
                 Farming Pools <Badge colorScheme="red">Coming soon</Badge>
-              </Link>
+              </Link> */}
             </HStack>
           </HStack>
 
@@ -162,13 +162,19 @@ export default function Header() {
               <Link href={"#/governance"}>
                 Governance <Badge colorScheme="green">New</Badge>
               </Link>
-              <Link /* href={"#/liquiditypools"} */>
+
+              {/* <Link
+              //  href={"#/liquiditypools"} 
+              >
                 Liquidity Pools <Badge colorScheme="red">Coming soon</Badge>
               </Link>
 
-              <Link /* href={"#/farmingpools"} */>
+              <Link
+              //  href={"#/farmingpools"} 
+              >
                 Farming Pools <Badge colorScheme="red">Coming soon</Badge>
               </Link>
+               */}
             </Stack>
           </Box>
         ) : null}
