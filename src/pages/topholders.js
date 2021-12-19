@@ -65,6 +65,8 @@ export default function Topholders() {
         })
         .reverse();
 
+      console.log(tmpChartData);
+
       setChartTotals(tmpChartData);
 
       setTotalWallets(data.reduce((a, b) => a + (Number(b["wallet"]) || 0), 0));
@@ -90,7 +92,7 @@ export default function Topholders() {
   return (
     <div className="App">
       <Header />
-      <Container className="pageContainer" maxW="90vw">
+      <Container className="pageContainer" maxW="98vw">
         <Text>Last data refresh on {snapshot}</Text>
 
         <SimpleGrid columns={{ sm: 1, md: 3, lg: 6 }} mt="1rem">

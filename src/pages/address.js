@@ -22,6 +22,16 @@ function Address() {
   const [governanceStaking, setGovernanceStaking] = useState(null);
   const [governanceUnclaimed, setGovernanceUnclaimed] = useState(null);
   const [farmingUnclaimed, setFarmingUnclaimed] = useState(null);
+
+  const [farmingUnclaimed_bond, setFarmingUnclaimed_bond] = useState(null);
+  const [farmingUnclaimed_swingby, setFarmingUnclaimed_swingby] =
+    useState(null);
+  const [farmingUnclaimed_xyz, setFarmingUnclaimed_xyz] = useState(null);
+  const [farmingUnclaimed_lp_usdc, setFarmingUnclaimed_lp_usdc] =
+    useState(null);
+  const [farmingUnclaimed_lp_ilsi, setFarmingUnclaimed_lp_ilsi] =
+    useState(null);
+
   const [airdropUnclaimed, setAirdropUnclaimed] = useState(null);
   const [total, setTotal] = useState(null);
 
@@ -51,6 +61,13 @@ function Address() {
       setGovernanceStakingLoaded(true);
       setGovernanceUnclaimed(user.governanceUnclaimed);
       setGovernanceUnclaimedLoaded(true);
+
+      setFarmingUnclaimed_bond(user.farmingUnclaimed_bond);
+      setFarmingUnclaimed_swingby(user.farmingUnclaimed_swingby);
+      setFarmingUnclaimed_xyz(user.farmingUnclaimed_xyz);
+      setFarmingUnclaimed_lp_usdc(user.farmingUnclaimed_lp_usdc);
+      setFarmingUnclaimed_lp_ilsi(user.farmingUnclaimed_lp_ilsi);
+
       setFarmingUnclaimed(user.farmingUnclaimed);
       setFarmingUnclaimedLoaded(true);
       setAirdropUnclaimed(user.airdropUnclaimed);
@@ -121,6 +138,31 @@ function Address() {
                     <Skeleton height="25px" width="20vw" />
                   </Center>
                 )}{" "}
+                STANDARD
+                {farmingUnclaimedLoaded ? (
+                  <div>
+                    <StatHelpText>
+                      {new Intl.NumberFormat().format(farmingUnclaimed_bond)} in
+                      BOND farm
+                    </StatHelpText>
+                    <StatHelpText>
+                      {new Intl.NumberFormat().format(farmingUnclaimed_swingby)}{" "}
+                      in SWINGBY farm
+                    </StatHelpText>
+                    <StatHelpText>
+                      {new Intl.NumberFormat().format(farmingUnclaimed_xyz)} in
+                      XYZ farm
+                    </StatHelpText>
+                    <StatHelpText>
+                      {new Intl.NumberFormat().format(farmingUnclaimed_lp_usdc)}{" "}
+                      in USDC LP farm
+                    </StatHelpText>
+                    <StatHelpText>
+                      {new Intl.NumberFormat().format(farmingUnclaimed_lp_ilsi)}{" "}
+                      in ILSI LP farm
+                    </StatHelpText>
+                  </div>
+                ) : null}{" "}
                 STANDARD
               </StatNumber>
               <StatLabel mt="2">

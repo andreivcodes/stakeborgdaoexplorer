@@ -43,7 +43,27 @@ export default function CustomTable(props) {
             accessor: "governanceUnclaimed",
           },
           {
-            Header: "Farming Unclaimed",
+            Header: "BOND Farming Unclaimed",
+            accessor: "farmingUnclaimed_bond",
+          },
+          {
+            Header: "SWINGBY Farming Unclaimed",
+            accessor: "farmingUnclaimed_swingby",
+          },
+          {
+            Header: "XYZ Farming Unclaimed",
+            accessor: "farmingUnclaimed_xyz",
+          },
+          {
+            Header: "LP USDC Farming Unclaimed",
+            accessor: "farmingUnclaimed_lp_usdc",
+          },
+          {
+            Header: "LP ILSI Farming Unclaimed",
+            accessor: "farmingUnclaimed_lp_ilsi",
+          },
+          {
+            Header: "Total Farming Unclaimed",
             accessor: "farmingUnclaimed",
           },
           {
@@ -92,12 +112,11 @@ export default function CustomTable(props) {
     <Box
       boxShadow="base"
       mt="1rem"
-      w="100%"
       borderWidth="1px"
       borderRadius="lg"
       bg={useColorModeValue("gray.50", "gray.900")}
     >
-      <Table {...getTableProps()}>
+      <Table {...getTableProps()} size="sm">
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -142,6 +161,21 @@ export default function CustomTable(props) {
             })
           ) : (
             <Tr>
+              <Td>
+                <Skeleton height="25px" width="5vw" />
+              </Td>
+              <Td>
+                <Skeleton height="25px" width="5vw" />
+              </Td>
+              <Td>
+                <Skeleton height="25px" width="5vw" />
+              </Td>
+              <Td>
+                <Skeleton height="25px" width="5vw" />
+              </Td>
+              <Td>
+                <Skeleton height="25px" width="5vw" />
+              </Td>
               <Td>
                 <Skeleton height="25px" width="5vw" />
               </Td>
