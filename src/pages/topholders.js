@@ -2,7 +2,13 @@ import "./../App.css";
 import Header from "./../components/header";
 import Footer from "./../components/footer";
 import React from "react";
-import { Container, Text, SimpleGrid, GridItem } from "@chakra-ui/react";
+import {
+  Container,
+  Text,
+  SimpleGrid,
+  GridItem,
+  Checkbox,
+} from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
 
@@ -21,6 +27,7 @@ import * as Realm from "realm-web";
 
 export default function Topholders() {
   const [holdersData, setHoldersData] = useState([]);
+  const [showLabels, setShowLabels] = useState(false);
 
   const [benfordTotal, setBenfordTotal] = useState(null);
   const [distribution, setDistribution] = useState([]);
@@ -126,7 +133,15 @@ export default function Topholders() {
           <HoldersPieDistribution data={chartTotals} />
         </SimpleGrid>
 
-        <CustomTable data={holdersData} />
+        <Checkbox
+          mt="1rem"
+          isChecked={showLabels}
+          onChange={(e) => setShowLabels(e.target.checked)}
+        >
+          Show address labels
+        </Checkbox>
+
+        <CustomTable data={holdersData} labels={showLabels} />
       </Container>
       <Footer />
     </div>

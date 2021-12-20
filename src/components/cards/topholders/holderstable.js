@@ -162,20 +162,24 @@ export default function CustomTable(props) {
                       <Td {...cell.getCellProps()}>
                         {cell.render("Cell")}
                         {dev_list.includes(row.values.address) &&
+                        props.labels &&
                         cell.column.Header == "Address" ? (
                           <Badge colorScheme="green">Developer Address</Badge>
                         ) : null}
                         {dev_friend_list.includes(row.values.address) &&
+                        props.labels &&
                         cell.column.Header == "Address" ? (
                           <Badge colorScheme="orange">Developer Contact</Badge>
                         ) : null}
                         {mtd_list.includes(row.values.address) &&
+                        props.labels &&
                         cell.column.Header == "Address" ? (
                           <Badge colorScheme="blue">
                             Methodologist Address
                           </Badge>
                         ) : null}
                         {mtd_friend_list.includes(row.values.address) &&
+                        props.labels &&
                         cell.column.Header == "Address" ? (
                           <Badge colorScheme="cyan">
                             Methodologist Contact
