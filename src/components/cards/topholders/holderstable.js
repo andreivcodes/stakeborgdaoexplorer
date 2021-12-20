@@ -11,9 +11,15 @@ import {
   Skeleton,
   Box,
   useColorModeValue,
+  Badge,
 } from "@chakra-ui/react";
-
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import {
+  dev_list,
+  mtd_list,
+  dev_friend_list,
+  mtd_friend_list,
+} from "./../../../utils/known_addresses";
 
 export default function CustomTable(props) {
   const columns = React.useMemo(
@@ -153,7 +159,29 @@ export default function CustomTable(props) {
                 <Tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
+                      <Td {...cell.getCellProps()}>
+                        {cell.render("Cell")}
+                        {dev_list.includes(row.values.address) &&
+                        cell.column.Header == "Address" ? (
+                          <Badge colorScheme="green">Developer Address</Badge>
+                        ) : null}
+                        {dev_friend_list.includes(row.values.address) &&
+                        cell.column.Header == "Address" ? (
+                          <Badge colorScheme="orange">Developer Contact</Badge>
+                        ) : null}
+                        {mtd_list.includes(row.values.address) &&
+                        cell.column.Header == "Address" ? (
+                          <Badge colorScheme="blue">
+                            Methodologist Address
+                          </Badge>
+                        ) : null}
+                        {mtd_friend_list.includes(row.values.address) &&
+                        cell.column.Header == "Address" ? (
+                          <Badge colorScheme="cyan">
+                            Methodologist Contact
+                          </Badge>
+                        ) : null}
+                      </Td>
                     );
                   })}
                 </Tr>

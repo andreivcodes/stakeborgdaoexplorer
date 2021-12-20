@@ -51,7 +51,7 @@ export default function Topholders() {
       let data = dbdata.data;
 
       for (const element of data) {
-        if (element.ens) element.address = element.ens;
+        //  if (element.ens) element.address = element.ens;
       }
 
       setHoldersData(data);
@@ -68,8 +68,6 @@ export default function Topholders() {
           return a.total - b.total;
         })
         .reverse();
-
-      console.log(tmpChartData);
 
       setChartTotals(tmpChartData);
 

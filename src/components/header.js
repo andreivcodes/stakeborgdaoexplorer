@@ -152,7 +152,7 @@ export default function Header() {
               <Link href={"#/"}>Home</Link>
 
               <Link href={"#/topholders"}>
-                Top Holders<Badge colorScheme="green">New</Badge>
+                Top Holders <Badge colorScheme="green">New</Badge>
               </Link>
 
               <Link href={"#/fees"}>
