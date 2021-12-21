@@ -130,7 +130,6 @@ export default function FarmingClaimFee(props) {
               (usdcLPfee * props.gasPrice * props.ethPrice) / 1000000000
             )}
             {" $"}
-            {usdcLPfeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>USDC farm</StatHelpText>
 
@@ -139,7 +138,6 @@ export default function FarmingClaimFee(props) {
               (bondFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
             {" $"}
-            {bondFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>BOND farm</StatHelpText>
 
@@ -148,7 +146,6 @@ export default function FarmingClaimFee(props) {
               (xyzFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
             {" $"}
-            {xyzFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>XYZ farm</StatHelpText>
 
@@ -157,7 +154,6 @@ export default function FarmingClaimFee(props) {
               (swingbyFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
             {" $"}
-            {swingbyFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>SWINGBY farm</StatHelpText>
         </Stat>

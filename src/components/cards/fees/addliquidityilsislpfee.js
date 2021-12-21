@@ -19,41 +19,27 @@ export default function AddLiquiditySLPFee(props) {
       <Box m="3">
         <Stat>
           <StatLabel fontSize="m">
-            Add Liquidity in SLP process fee - Constant data! Too difficult to
-            simulate
+            Add Liquidity in ILSI LP process fee
           </StatLabel>
           <StatNumber>
             {new Intl.NumberFormat().format(
-              (191461 * props.gasPrice * props.ethPrice) / 1000000000
+              (120200 * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
             $
           </StatNumber>
-          <StatHelpText>Swap ETH to STANDARD</StatHelpText>
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (226052 * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            $
-          </StatNumber>
-          <StatHelpText>Swap ETH to USDC</StatHelpText>
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (46506 * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            $
-          </StatNumber>
-          <StatHelpText>Allow STANDARD in LP</StatHelpText>
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (60311 * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            $
-          </StatNumber>
-          <StatHelpText>Allow USDC in LP</StatHelpText>
+          <StatHelpText>Swap ETH to ILSI</StatHelpText>
 
           <StatNumber>
             {new Intl.NumberFormat().format(
-              (181572 * props.gasPrice * props.ethPrice) / 1000000000
+              (46700 * props.gasPrice * props.ethPrice) / 1000000000
+            )}{" "}
+            $
+          </StatNumber>
+          <StatHelpText>Allow ILSI in LP</StatHelpText>
+
+          <StatNumber>
+            {new Intl.NumberFormat().format(
+              (170400 * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
             $
           </StatNumber>
@@ -77,7 +63,7 @@ export default function AddLiquiditySLPFee(props) {
           <Divider />
           <StatNumber>
             {new Intl.NumberFormat().format(
-              ((191461 + 226052 + 46506 + 60311 + 181572 + 46454 + 204227) *
+              ((120200 + 46700 + 170400 + 46454 + 204227) *
                 props.gasPrice *
                 props.ethPrice) /
                 1000000000

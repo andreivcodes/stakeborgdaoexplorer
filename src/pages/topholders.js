@@ -57,10 +57,6 @@ export default function Topholders() {
 
       let data = dbdata.data;
 
-      for (const element of data) {
-        //  if (element.ens) element.address = element.ens;
-      }
-
       setHoldersData(data);
 
       setSnapshot(new Date(dbdata.snapshot).toLocaleString());

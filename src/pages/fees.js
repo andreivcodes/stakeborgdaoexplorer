@@ -15,7 +15,8 @@ import {
 } from "@chakra-ui/react";
 
 import FarmingClaimFee from "./../components/cards/fees/farmingclaimfee";
-import AddLiquiditySLPFee from "./../components/cards/fees/addliquidityslpfee";
+import AddLiquidityUSDCSLPFee from "./../components/cards/fees/addliquidityusdcslpfee";
+import AddLiquidityILSISLPFee from "./../components/cards/fees/addliquidityilsislpfee";
 import StakingFee from "./../components/cards/fees/stakingfee";
 
 import { useEffect, useState } from "react";
@@ -88,28 +89,34 @@ export default function Fees() {
         ) : null}
         {gasPrice} gwei
         <Grid alignItems="stretch" mt="2rem">
-          <GridItem m="1">
+          <GridItem m="1" gridColumn={1}>
             <FarmingClaimFee
               ethPrice={ethPrice}
               gasPrice={gasPrice}
               address={address}
             />
           </GridItem>
-          <GridItem m="1">
+          <GridItem m="1" gridColumn={2}>
             <StakingFee
               ethPrice={ethPrice}
               gasPrice={gasPrice}
               address={address}
             />
           </GridItem>
-          <GridItem m="1">
-            <AddLiquiditySLPFee
+          <GridItem m="1" gridColumn={3}>
+            <AddLiquidityUSDCSLPFee
               ethPrice={ethPrice}
               gasPrice={gasPrice}
               address={address}
             />
           </GridItem>
-          <GridItem m="1"></GridItem>
+          <GridItem m="1" gridColumn={4}>
+            <AddLiquidityILSISLPFee
+              ethPrice={ethPrice}
+              gasPrice={gasPrice}
+              address={address}
+            />
+          </GridItem>
           <GridItem m="1"></GridItem>
           <GridItem m="1"></GridItem>
         </Grid>

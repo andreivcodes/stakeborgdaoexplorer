@@ -119,7 +119,6 @@ export default function StakingFee(props) {
               (swapFee * props.gasPrice * props.ethPrice) / 1000000000
             )}
             {" $"}
-            {swapFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>Swap ETH to STANDARD</StatHelpText>
           <StatNumber>
@@ -127,7 +126,6 @@ export default function StakingFee(props) {
               (allowDepositFee * props.gasPrice * props.ethPrice) / 1000000000
             )}
             {" $"}
-            {allowDepositFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>Allow Deposit STANDARD in Governance</StatHelpText>
           <StatNumber>
@@ -135,7 +133,6 @@ export default function StakingFee(props) {
               (depositFee * props.gasPrice * props.ethPrice) / 1000000000
             )}{" "}
             {" $"}
-            {depositFeeSim ? " simulated" : " estimated"}
           </StatNumber>
           <StatHelpText>Deposit STANDARD in Governance</StatHelpText>
 
