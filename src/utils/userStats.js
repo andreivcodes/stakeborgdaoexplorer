@@ -157,6 +157,7 @@ export async function getGovernanceUnclaimedTokens(addr) {
 }
 export async function getFarmingUnclaimedTokensForYieldFarm(
   addr,
+  startingEpoch,
   currentEpoch,
   yieldContract,
   tokenContract,
@@ -172,7 +173,7 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
 
   const batch = new web3.BatchRequest();
   let promises = [];
-  for (let epoch = 1; epoch <= currentEpoch; epoch++) {
+  for (let epoch = startingEpoch; epoch <= currentEpoch; epoch++) {
     promises.push(
       // eslint-disable-next-line no-loop-func
       new Promise((resolve, rej) => {
@@ -186,7 +187,7 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
       })
     );
   }
-  for (let epoch = 1; epoch <= currentEpoch; epoch++) {
+  for (let epoch = startingEpoch; epoch <= currentEpoch; epoch++) {
     promises.push(
       // eslint-disable-next-line no-loop-func
       new Promise((resolve, rej) => {
@@ -204,10 +205,10 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
   batch.execute();
 
   await Promise.all(promises).then((res) => {
-    const firstBatch = res.slice(0, currentEpoch);
-    const secondBatch = res.slice(currentEpoch);
+    const firstBatch = res.slice(0, currentEpoch - startingEpoch + 1);
+    const secondBatch = res.slice(currentEpoch - startingEpoch + 1);
 
-    for (let i = 0; i < currentEpoch; i++) {
+    for (let i = 0; i < firstBatch.length; i++) {
       if (secondBatch[i] != 0) {
         pending_farm +=
           ((totalDistributedAmount / numberOfEpochs) * firstBatch[i]) /
@@ -242,6 +243,7 @@ export async function getFarmingUnclaimedTokens(addr) {
 
   let bond_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
+    1,
     currentEpoch,
     yield_unclaimed_bond_contract,
     BOND_contract_address,
@@ -250,6 +252,7 @@ export async function getFarmingUnclaimedTokens(addr) {
 
   let swingy_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
+    1,
     currentEpoch,
     yield_unclaimed_swingby_contract,
     SWINGBY_contract_address,
@@ -258,6 +261,7 @@ export async function getFarmingUnclaimedTokens(addr) {
 
   let xyz_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
+    1,
     currentEpoch,
     yield_unclaimed_xyz_contract,
     XYZ_contract_address,
@@ -266,6 +270,7 @@ export async function getFarmingUnclaimedTokens(addr) {
 
   let lp_usdc_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
+    2,
     currentEpoch,
     yield_unclaimed_usdc_lp_contract,
     USDC_SLP_contract_address,
@@ -274,6 +279,7 @@ export async function getFarmingUnclaimedTokens(addr) {
 
   let lp_ilsi_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
+    8,
     currentEpoch,
     yield_unclaimed_ilsi_lp_contract,
     ILSI_SLP_contract_address,

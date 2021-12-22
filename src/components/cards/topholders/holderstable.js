@@ -14,12 +14,6 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import {
-  dev_list,
-  mtd_list,
-  dev_friend_list,
-  mtd_friend_list,
-} from "./../../../utils/known_addresses";
 
 export default function CustomTable(props) {
   const columns = React.useMemo(
