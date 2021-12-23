@@ -163,31 +163,36 @@ export default function FarmingClaimFee(props) {
 
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas1}</Text>.
-            <Text fontSize="sm">{gas1dec}</Text> $
+            <Text fontSize="sm">{gas1dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>BOND farm</StatHelpText>
 
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas2}</Text>.
-            <Text fontSize="sm">{gas2dec}</Text> $
+            <Text fontSize="sm">{gas2dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>SWINGBY farm</StatHelpText>
 
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas3}</Text>.
-            <Text fontSize="sm">{gas3dec}</Text> $
+            <Text fontSize="sm">{gas3dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>XYZ farm</StatHelpText>
 
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas4}</Text>.
-            <Text fontSize="sm">{gas4dec}</Text> $
+            <Text fontSize="sm">{gas4dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>USDC LP farm</StatHelpText>
 
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas5}</Text>.
-            <Text fontSize="sm">{gas5dec}</Text> $
+            <Text fontSize="sm">{gas5dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>ILSI LP farm</StatHelpText>
         </Stat>

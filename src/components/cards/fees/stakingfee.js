@@ -142,24 +142,28 @@ export default function StakingFee(props) {
           <StatLabel fontSize="m">Staking process fee</StatLabel>
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas1}</Text>.
-            <Text fontSize="sm">{gas1dec}</Text> $
+            <Text fontSize="sm">{gas1dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>Swap ETH to STANDARD</StatHelpText>
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas2}</Text>.
-            <Text fontSize="sm">{gas2dec}</Text> $
+            <Text fontSize="sm">{gas2dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>Allow Deposit STANDARD in Governance</StatHelpText>
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas3}</Text>.
-            <Text fontSize="sm">{gas3dec}</Text> $
+            <Text fontSize="sm">{gas3dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>Deposit STANDARD in Governance</StatHelpText>
 
           <Divider />
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas4}</Text>.
-            <Text fontSize="sm">{gas4dec}</Text> $
+            <Text fontSize="sm">{gas4dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatLabel>Total</StatLabel>
         </Stat>

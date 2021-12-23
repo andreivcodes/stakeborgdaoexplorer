@@ -71,36 +71,42 @@ export default function AddLiquiditySLPFee(props) {
           </StatLabel>
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas1}</Text>.
-            <Text fontSize="sm">{gas1dec}</Text> $
+            <Text fontSize="sm">{gas1dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>Swap ETH to ILSI</StatHelpText>
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas2}</Text>.
-            <Text fontSize="sm">{gas2dec}</Text> $
+            <Text fontSize="sm">{gas2dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
 
           <StatHelpText>Allow ILSI in LP</StatHelpText>
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas3}</Text>.
-            <Text fontSize="sm">{gas3dec}</Text> $
+            <Text fontSize="sm">{gas3dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>Add Liquidity</StatHelpText>
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas4}</Text>.
-            <Text fontSize="sm">{gas4dec}</Text> $
+            <Text fontSize="sm">{gas4dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatHelpText>Allow SLP in yield farm</StatHelpText>
 
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas5}</Text>.
-            <Text fontSize="sm">{gas5dec}</Text> $
+            <Text fontSize="sm">{gas5dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
 
           <StatHelpText>Add SLP in yield farm</StatHelpText>
           <Divider />
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas6}</Text>.
-            <Text fontSize="sm">{gas6dec}</Text> $
+            <Text fontSize="sm">{gas6dec}</Text>
+            <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
 
           <StatLabel>Total</StatLabel>
