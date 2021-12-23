@@ -69,7 +69,7 @@ export default function Header() {
                 }}
                 href={"#/topholders"}
               >
-                Top Holders<Badge colorScheme="green">New</Badge>
+                Top Holders <Badge colorScheme="green">New</Badge>
               </Link>
 
               <Link

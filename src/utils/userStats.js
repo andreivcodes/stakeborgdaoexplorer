@@ -208,6 +208,9 @@ export async function getFarmingUnclaimedTokensForYieldFarm(
     const firstBatch = res.slice(0, res.length / 2);
     const secondBatch = res.slice(res.length / 2);
 
+    console.log(firstBatch);
+    console.log(secondBatch);
+
     for (let i = 0; i < firstBatch.length; i++) {
       if (secondBatch[i] != 0) {
         pending_farm +=
@@ -241,46 +244,51 @@ export async function getFarmingUnclaimedTokens(addr) {
     .getCurrentEpoch()
     .call();
 
+  console.log("BOND FARM:");
   let bond_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
     1,
-    10,
+    currentEpoch > 10 ? 10 : currentEpoch,
     yield_unclaimed_bond_contract,
     BOND_contract_address,
     "YieldFarmBONDHarvest"
   );
 
+  console.log("SWINGBY FARM:");
   let swingy_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
     1,
-    5,
+    currentEpoch > 5 ? 5 : currentEpoch,
     yield_unclaimed_swingby_contract,
     SWINGBY_contract_address,
     "YieldFarmSWINGBYHarvest"
   );
 
+  console.log("XYZ FARM:");
   let xyz_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
     1,
-    10,
+    currentEpoch > 10 ? 10 : currentEpoch,
     yield_unclaimed_xyz_contract,
     XYZ_contract_address,
     "YieldFarmXYZHarvest"
   );
 
+  console.log("USDC LP FARM:");
   let lp_usdc_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
     2,
-    currentEpoch > 2 + 125 ? 2 + 125 : currentEpoch,
+    currentEpoch > 126 ? 126 : currentEpoch,
     yield_unclaimed_usdc_lp_contract,
     USDC_SLP_contract_address,
     "YieldFarmSLPUSDCHarvest"
   );
 
+  console.log("ILSI LP FARM:");
   let lp_ilsi_pending_farm_yield = await getFarmingUnclaimedTokensForYieldFarm(
     addr,
     8,
-    currentEpoch > 8 + 8 ? 8 + 8 : currentEpoch,
+    currentEpoch > 16 ? 16 : currentEpoch,
     yield_unclaimed_ilsi_lp_contract,
     ILSI_SLP_contract_address,
     "YieldFarmSLPILSIHarvest"
