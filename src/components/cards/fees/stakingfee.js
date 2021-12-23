@@ -6,6 +6,8 @@ import {
   useColorModeValue,
   StatHelpText,
   Divider,
+  Flex,
+  Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
@@ -38,20 +40,25 @@ let governance_staking_contract = new web3.eth.Contract(
 );
 
 export default function StakingFee(props) {
-  const [swapFee, setSwapFee] = useState(0);
-  const [allowDepositFee, setAllowDepositFee] = useState(0);
-  const [depositFee, setDepositFee] = useState(0);
-
-  const [swapFeeSim, setSwapFeeSim] = useState(false);
-  const [allowDepositFeeSim, setAllowDepositFeeSim] = useState(false);
-  const [depositFeeSim, setDepositFeeSim] = useState(false);
+  const [gas1, setGas1] = useState(0);
+  const [gas2, setGas2] = useState(0);
+  const [gas3, setGas3] = useState(0);
+  const [gas4, setGas4] = useState(0);
+  const [gas1dec, setGas1dec] = useState("");
+  const [gas2dec, setGas2dec] = useState("");
+  const [gas3dec, setGas3dec] = useState("");
+  const [gas4dec, setGas4dec] = useState("");
 
   useEffect(() => {
     async function fetchData() {
+      if (!props.gasPrice || !props.ethPrice) return;
+
       var now = Math.round(new Date().getTime() / 1000) + 1000;
       let address = props.address;
       if (!props.address)
         address = "0x000000000000000000000000000000000000dEaD";
+
+      let gas4 = 0;
 
       sushiswap_contract.methods
         .swapExactETHForTokens(
@@ -68,12 +75,19 @@ export default function StakingFee(props) {
           { from: address, value: "1000000000" },
           function (err, gas) {
             if (err) {
-              setSwapFee(190000);
-              setSwapFeeSim(false);
+              let gas1 =
+                (190000 * props.gasPrice * props.ethPrice) / 1000000000;
+              gas4 = gas4 + gas1;
+              setGas1(Math.floor(gas1));
+              setGas1dec(gas1.toString().split(".")[1].slice(0, 2));
             } else {
-              setSwapFee(gas);
-              setSwapFeeSim(true);
+              let gas1 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+              gas4 = gas4 + gas1;
+              setGas1(Math.floor(gas1));
+              setGas1dec(gas1.toString().split(".")[1].slice(0, 2));
             }
+            setGas4(Math.floor(gas4));
+            setGas4dec(gas4.toString().split(".")[1].slice(0, 2));
           }
         );
 
@@ -81,28 +95,40 @@ export default function StakingFee(props) {
         .approve("0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C", 100)
         .estimateGas({ from: address }, function (err, gas) {
           if (err) {
-            setAllowDepositFee(46506);
-            setAllowDepositFeeSim(false);
+            let gas2 = (46506 * props.gasPrice * props.ethPrice) / 1000000000;
+            gas4 = gas4 + gas2;
+            setGas2(Math.floor(gas2));
+            setGas2dec(gas2.toString().split(".")[1].slice(0, 2));
           } else {
-            setAllowDepositFee(gas);
-            setAllowDepositFeeSim(true);
+            let gas2 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+            gas4 = gas4 + gas2;
+            setGas2(Math.floor(gas2));
+            setGas2dec(gas2.toString().split(".")[1].slice(0, 2));
           }
+          setGas4(Math.floor(gas4));
+          setGas4dec(gas4.toString().split(".")[1].slice(0, 2));
         });
 
       await governance_staking_contract.methods
         .deposit(1)
         .estimateGas({ from: address }, function (err, gas) {
           if (err) {
-            setDepositFee(295000);
-            setDepositFeeSim(false);
+            let gas3 = (295000 * props.gasPrice * props.ethPrice) / 1000000000;
+            gas4 = gas4 + gas3;
+            setGas3(Math.floor(gas3));
+            setGas3dec(gas3.toString().split(".")[1].slice(0, 2));
           } else {
-            setDepositFee(gas);
-            setDepositFeeSim(true);
+            let gas3 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+            gas4 = gas4 + gas3;
+            setGas3(Math.floor(gas3));
+            setGas3dec(gas3.toString().split(".")[1].slice(0, 2));
           }
+          setGas4(Math.floor(gas4));
+          setGas4dec(gas4.toString().split(".")[1].slice(0, 2));
         });
     }
     fetchData();
-  }, [props.address]);
+  }, [props]);
 
   return (
     <Box
@@ -114,38 +140,27 @@ export default function StakingFee(props) {
       <Box m="3">
         <Stat>
           <StatLabel fontSize="m">Staking process fee</StatLabel>
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (swapFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}
-            {" $"}
-          </StatNumber>
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas1}</Text>.
+            <Text fontSize="sm">{gas1dec}</Text> $
+          </Flex>
           <StatHelpText>Swap ETH to STANDARD</StatHelpText>
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (allowDepositFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}
-            {" $"}
-          </StatNumber>
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas2}</Text>.
+            <Text fontSize="sm">{gas2dec}</Text> $
+          </Flex>
           <StatHelpText>Allow Deposit STANDARD in Governance</StatHelpText>
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (depositFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            {" $"}
-          </StatNumber>
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas3}</Text>.
+            <Text fontSize="sm">{gas3dec}</Text> $
+          </Flex>
           <StatHelpText>Deposit STANDARD in Governance</StatHelpText>
 
           <Divider />
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              ((swapFee + allowDepositFee + depositFee) *
-                props.gasPrice *
-                props.ethPrice) /
-                1000000000
-            )}{" "}
-            $
-          </StatNumber>
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas4}</Text>.
+            <Text fontSize="sm">{gas4dec}</Text> $
+          </Flex>
           <StatLabel>Total</StatLabel>
         </Stat>
       </Box>

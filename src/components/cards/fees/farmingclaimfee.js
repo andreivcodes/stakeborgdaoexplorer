@@ -5,11 +5,14 @@ import {
   StatHelpText,
   Box,
   useColorModeValue,
+  Flex,
+  Text,
 } from "@chakra-ui/react";
 import yieldfarmtoken_bond_abi from "../../../abi/yieldfarmtoken_bond.json";
 import yieldfarmtoken_swingby_abi from "../../../abi/yieldfarmtoken_swingby.json";
 import yieldfarmtoken_xyz_abi from "../../../abi/yieldfarmtoken_xyz.json";
 import yieldfarmtoken_usdc_lp_abi from "../../../abi/yieldfarmtoken_usdc_lp.json";
+import yieldfarmtoken_ilsi_lp_abi from "../../../abi/yieldfarmtoken_ilsi_lp.json";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 
@@ -24,6 +27,9 @@ const yield_farm_xyz_contract_address =
 
 const yield_farm_usdc_lp_contract_address =
   "0x41099b337F8435579dea46C7840b730ca87Fd35A";
+
+const yield_farm_ilsi_lp_contract_address =
+  "0xc898c3c30a4f610ab7a524b61620b58168d0e0d1";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
@@ -46,19 +52,27 @@ let yield_unclaimed_usdc_lp_contract = new web3.eth.Contract(
   yield_farm_usdc_lp_contract_address
 );
 
-export default function FarmingClaimFee(props) {
-  const [usdcLPfee, setUSDCLPFee] = useState(0);
-  const [bondFee, setBondFee] = useState(0);
-  const [xyzFee, setXyzFee] = useState(0);
-  const [swingbyFee, setSwingbyFee] = useState(0);
+let yield_unclaimed_ilsi_lp_contract = new web3.eth.Contract(
+  yieldfarmtoken_ilsi_lp_abi,
+  yield_farm_ilsi_lp_contract_address
+);
 
-  const [usdcLPfeeSim, setUSDCLPFeeSim] = useState(false);
-  const [bondFeeSim, setBondFeeSim] = useState(false);
-  const [xyzFeeSim, setXyzFeeSim] = useState(false);
-  const [swingbyFeeSim, setSwingbyFeeSim] = useState(false);
+export default function FarmingClaimFee(props) {
+  const [gas1, setGas1] = useState(0);
+  const [gas2, setGas2] = useState(0);
+  const [gas3, setGas3] = useState(0);
+  const [gas4, setGas4] = useState(0);
+  const [gas5, setGas5] = useState(0);
+  const [gas1dec, setGas1dec] = useState("");
+  const [gas2dec, setGas2dec] = useState("");
+  const [gas3dec, setGas3dec] = useState("");
+  const [gas4dec, setGas4dec] = useState("");
+  const [gas5dec, setGas5dec] = useState("");
 
   useEffect(() => {
     async function fetchData() {
+      if (!props.gasPrice || !props.ethPrice) return;
+
       let address = props.address;
       if (!props.address)
         address = "0x000000000000000000000000000000000000dEaD";
@@ -67,11 +81,13 @@ export default function FarmingClaimFee(props) {
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
           if (err) {
-            setBondFee(160000);
-            setBondFeeSim(false);
+            let gas1 = (160000 * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas1(Math.floor(gas1));
+            setGas1dec(gas1.toString().split(".")[1].slice(0, 2));
           } else {
-            setBondFee(gas);
-            setBondFeeSim(true);
+            let gas1 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas1(Math.floor(gas1));
+            setGas1dec(gas1.toString().split(".")[1].slice(0, 2));
           }
         });
 
@@ -79,11 +95,13 @@ export default function FarmingClaimFee(props) {
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
           if (err) {
-            setSwingbyFee(160000);
-            setSwingbyFeeSim(false);
+            let gas2 = (160000 * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas2(Math.floor(gas2));
+            setGas2dec(gas2.toString().split(".")[1].slice(0, 2));
           } else {
-            setSwingbyFee(gas);
-            setSwingbyFeeSim(true);
+            let gas2 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas2(Math.floor(gas2));
+            setGas2dec(gas2.toString().split(".")[1].slice(0, 2));
           }
         });
 
@@ -91,11 +109,13 @@ export default function FarmingClaimFee(props) {
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
           if (err) {
-            setXyzFee(160000);
-            setXyzFeeSim(false);
+            let gas3 = (160000 * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas3(Math.floor(gas3));
+            setGas3dec(gas3.toString().split(".")[1].slice(0, 2));
           } else {
-            setXyzFee(gas);
-            setXyzFeeSim(true);
+            let gas3 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas3(Math.floor(gas3));
+            setGas3dec(gas3.toString().split(".")[1].slice(0, 2));
           }
         });
 
@@ -103,16 +123,32 @@ export default function FarmingClaimFee(props) {
         .massHarvest()
         .estimateGas({ from: address }, function (err, gas) {
           if (err) {
-            setUSDCLPFee(160000);
-            setUSDCLPFeeSim(false);
+            let gas4 = (160000 * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas4(Math.floor(gas4));
+            setGas4dec(gas4.toString().split(".")[1].slice(0, 2));
           } else {
-            setUSDCLPFee(gas);
-            setUSDCLPFeeSim(true);
+            let gas4 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas4(Math.floor(gas4));
+            setGas4dec(gas4.toString().split(".")[1].slice(0, 2));
+          }
+        });
+
+      yield_unclaimed_ilsi_lp_contract.methods
+        .massHarvest()
+        .estimateGas({ from: address }, function (err, gas) {
+          if (err) {
+            let gas5 = (160000 * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas5(Math.floor(gas5));
+            setGas5dec(gas5.toString().split(".")[1].slice(0, 2));
+          } else {
+            let gas5 = (gas * props.gasPrice * props.ethPrice) / 1000000000;
+            setGas5(Math.floor(gas5));
+            setGas5dec(gas5.toString().split(".")[1].slice(0, 2));
           }
         });
     }
     fetchData();
-  }, [props.address]);
+  }, [props]);
 
   return (
     <Box
@@ -125,37 +161,35 @@ export default function FarmingClaimFee(props) {
         <Stat>
           <StatLabel fontSize="m">Farming claim fee</StatLabel>
 
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (usdcLPfee * props.gasPrice * props.ethPrice) / 1000000000
-            )}
-            {" $"}
-          </StatNumber>
-          <StatHelpText>USDC farm</StatHelpText>
-
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (bondFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            {" $"}
-          </StatNumber>
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas1}</Text>.
+            <Text fontSize="sm">{gas1dec}</Text> $
+          </Flex>
           <StatHelpText>BOND farm</StatHelpText>
 
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (xyzFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            {" $"}
-          </StatNumber>
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas2}</Text>.
+            <Text fontSize="sm">{gas2dec}</Text> $
+          </Flex>
+          <StatHelpText>SWINGBY farm</StatHelpText>
+
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas3}</Text>.
+            <Text fontSize="sm">{gas3dec}</Text> $
+          </Flex>
           <StatHelpText>XYZ farm</StatHelpText>
 
-          <StatNumber>
-            {new Intl.NumberFormat().format(
-              (swingbyFee * props.gasPrice * props.ethPrice) / 1000000000
-            )}{" "}
-            {" $"}
-          </StatNumber>
-          <StatHelpText>SWINGBY farm</StatHelpText>
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas4}</Text>.
+            <Text fontSize="sm">{gas4dec}</Text> $
+          </Flex>
+          <StatHelpText>USDC LP farm</StatHelpText>
+
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Text fontSize="2xl">{gas5}</Text>.
+            <Text fontSize="sm">{gas5dec}</Text> $
+          </Flex>
+          <StatHelpText>ILSI LP farm</StatHelpText>
         </Stat>
       </Box>
     </Box>
