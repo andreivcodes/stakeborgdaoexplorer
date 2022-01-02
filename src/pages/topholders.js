@@ -8,6 +8,10 @@ import {
   SimpleGrid,
   GridItem,
   Checkbox,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
@@ -98,6 +102,15 @@ export default function Topholders() {
     <div className="App">
       <Header />
       <Container className="pageContainer" maxW="98vw">
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle mr={2}>Misleading data!</AlertTitle>
+          <AlertDescription>
+            There are several bugs in the explorer at the moment which might
+            lead to wrong data. I'm working on it.
+          </AlertDescription>
+        </Alert>
+
         <Text>Last data refresh on {snapshot}</Text>
 
         <SimpleGrid columns={{ sm: 1, md: 3, lg: 6 }} mt="1rem">
