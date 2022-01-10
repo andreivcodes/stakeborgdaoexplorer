@@ -122,13 +122,13 @@ export default function AddLiquidityUSDCSLPFee(props) {
             <Text fontSize="sm">{gas7dec}</Text>
             <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
+          <StatHelpText>Add SLP in yield farm</StatHelpText>
           <Divider />
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas8}</Text>.
             <Text fontSize="sm">{gas8dec}</Text>
             <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
-          <StatHelpText>Add SLP in yield farm</StatHelpText>
           <StatLabel>Total</StatLabel>
         </Stat>
       </Box>
