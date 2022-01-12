@@ -173,6 +173,7 @@ export default function FarmingClaimFee(props) {
 
           <Collapse startingHeight={5} in={show}>
             <Box>
+              <Divider mt="1rem" />
               <Box px="2">
                 <Flex alignItems={"center"} justifyContent={"center"}>
                   <Text fontSize="2xl">{gas1}</Text>.
@@ -181,7 +182,7 @@ export default function FarmingClaimFee(props) {
                 </Flex>
                 <StatHelpText>BOND farm</StatHelpText>
               </Box>
-
+              <Divider mt="1rem" />
               <Box px="2">
                 <Flex alignItems={"center"} justifyContent={"center"}>
                   <Text fontSize="2xl">{gas2}</Text>.
@@ -190,7 +191,7 @@ export default function FarmingClaimFee(props) {
                 </Flex>
                 <StatHelpText>SWINGBY farm</StatHelpText>
               </Box>
-
+              <Divider mt="1rem" />
               <Box px="2">
                 <Flex alignItems={"center"} justifyContent={"center"}>
                   <Text fontSize="2xl">{gas3}</Text>.
@@ -199,7 +200,7 @@ export default function FarmingClaimFee(props) {
                 </Flex>
                 <StatHelpText>XYZ farm</StatHelpText>
               </Box>
-
+              <Divider mt="1rem" />
               <Box px="2">
                 <Flex alignItems={"center"} justifyContent={"center"}>
                   <Text fontSize="2xl">{gas4}</Text>.
@@ -208,7 +209,7 @@ export default function FarmingClaimFee(props) {
                 </Flex>
                 <StatHelpText>USDC LP farm</StatHelpText>
               </Box>
-
+              <Divider mt="1rem" />
               <Box px="2">
                 <Flex alignItems={"center"} justifyContent={"center"}>
                   <Text fontSize="2xl">{gas5}</Text>.
