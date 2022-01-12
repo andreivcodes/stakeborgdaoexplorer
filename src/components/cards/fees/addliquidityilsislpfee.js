@@ -88,7 +88,7 @@ export default function AddLiquiditySLPFee(props) {
           </Button>
 
           <Collapse startingHeight={5} in={show}>
-            <Flex alignItems={"center"} justifyContent={"center"}>
+            <Flex alignItems={"center"} justifyContent={"center"} mt="1rem">
               <Text fontSize="xl">{gas1}</Text>.
               <Text fontSize="sm">{gas1dec}</Text>
               <Text fontSize="xl">&nbsp;$</Text>

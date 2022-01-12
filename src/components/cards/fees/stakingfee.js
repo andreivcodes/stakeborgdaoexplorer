@@ -161,7 +161,7 @@ export default function StakingFee(props) {
             </Button>
 
             <Collapse startingHeight={5} in={show}>
-              <Box px="2">
+              <Box px="2" mt="1rem">
                 <Flex alignItems={"center"} justifyContent={"center"}>
                   <Text fontSize="xl">{gas1}</Text>.
                   <Text fontSize="sm">{gas1dec}</Text>
