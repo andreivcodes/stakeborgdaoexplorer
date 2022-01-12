@@ -82,11 +82,11 @@ export default function BuyingFee(props) {
           <Box>
             <Box px="2">
               <Flex alignItems={"center"} justifyContent={"center"}>
-                <Text fontSize="xl">{gas1}</Text>.
+                <Text fontSize="2xl">{gas1}</Text>.
                 <Text fontSize="sm">{gas1dec}</Text>
-                <Text fontSize="xl">&nbsp;$</Text>
+                <Text fontSize="2xl">&nbsp;$</Text>
               </Flex>
-              <StatHelpText fontSize="sm">Swap ETH to STANDARD</StatHelpText>
+              <StatHelpText>Swap ETH to STANDARD</StatHelpText>
             </Box>
           </Box>
         </Stat>
