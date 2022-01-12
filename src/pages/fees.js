@@ -18,6 +18,7 @@ import FarmingClaimFee from "./../components/cards/fees/farmingclaimfee";
 import AddLiquidityUSDCSLPFee from "./../components/cards/fees/addliquidityusdcslpfee";
 import AddLiquidityILSISLPFee from "./../components/cards/fees/addliquidityilsislpfee";
 import StakingFee from "./../components/cards/fees/stakingfee";
+import BuyingFee from "./../components/cards/fees/buyingfee";
 
 import { useEffect, useState } from "react";
 
@@ -48,7 +49,7 @@ export default function Fees() {
   return (
     <Box className="App">
       <Header />
-      <Container className="pageContainer" maxW="50rem">
+      <Container className="pageContainer">
         <Text fontSize="xl">These are estimates! Treat them accordingly!</Text>
         <br />
         <Text fontSize="md">
@@ -88,37 +89,42 @@ export default function Fees() {
           </Slider>
         ) : null}
         {gasPrice} gwei
-        <Grid alignItems="stretch" mt="2rem">
-          <GridItem m="1" gridColumn={1}>
-            <FarmingClaimFee
+        <Grid mt="2rem">
+          <GridItem m="1" gridColumn={1} gridRow={1}>
+            <BuyingFee
               ethPrice={ethPrice}
               gasPrice={gasPrice}
               address={address}
             />
           </GridItem>
-          <GridItem m="1" gridColumn={2}>
+          <GridItem m="1" gridColumn={1} gridRow={2}>
             <StakingFee
               ethPrice={ethPrice}
               gasPrice={gasPrice}
               address={address}
             />
           </GridItem>
-          <GridItem m="1" gridColumn={3}>
+          <GridItem m="1" gridColumn={1} gridRow={3}>
             <AddLiquidityUSDCSLPFee
               ethPrice={ethPrice}
               gasPrice={gasPrice}
               address={address}
             />
           </GridItem>
-          <GridItem m="1" gridColumn={4}>
+          <GridItem m="1" gridColumn={1} gridRow={4}>
             <AddLiquidityILSISLPFee
               ethPrice={ethPrice}
               gasPrice={gasPrice}
               address={address}
             />
           </GridItem>
-          <GridItem m="1"></GridItem>
-          <GridItem m="1"></GridItem>
+          <GridItem m="1" gridColumn={1} gridRow={5}>
+            <FarmingClaimFee
+              ethPrice={ethPrice}
+              gasPrice={gasPrice}
+              address={address}
+            />
+          </GridItem>
         </Grid>
         <Text fontSize="md">
           These estimates assume you only hold Ethereum and have no allowed

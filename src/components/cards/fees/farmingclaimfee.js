@@ -1,12 +1,14 @@
 import {
   Stat,
   StatLabel,
-  StatNumber,
+  Collapse,
+  Button,
   StatHelpText,
   Box,
   useColorModeValue,
   Flex,
   Text,
+  Divider,
 } from "@chakra-ui/react";
 import yieldfarmtoken_bond_abi from "../../../abi/yieldfarmtoken_bond.json";
 import yieldfarmtoken_swingby_abi from "../../../abi/yieldfarmtoken_swingby.json";
@@ -58,6 +60,9 @@ let yield_unclaimed_ilsi_lp_contract = new web3.eth.Contract(
 );
 
 export default function FarmingClaimFee(props) {
+  const [show, setShow] = useState(false);
+  const handleToggle = () => setShow(!show);
+
   const [gas1, setGas1] = useState(0);
   const [gas2, setGas2] = useState(0);
   const [gas3, setGas3] = useState(0);
@@ -161,40 +166,59 @@ export default function FarmingClaimFee(props) {
         <Stat>
           <StatLabel fontSize="m">Farming claim fee</StatLabel>
 
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas1}</Text>.
-            <Text fontSize="sm">{gas1dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>BOND farm</StatHelpText>
+          <Divider mt="1rem" />
+          <Button size="sm" onClick={handleToggle} mt="1rem">
+            Show {show ? "Less" : "More"}
+          </Button>
 
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas2}</Text>.
-            <Text fontSize="sm">{gas2dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>SWINGBY farm</StatHelpText>
+          <Collapse startingHeight={5} in={show}>
+            <Box>
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="2xl">{gas1}</Text>.
+                  <Text fontSize="sm">{gas1dec}</Text>
+                  <Text fontSize="2xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText>BOND farm</StatHelpText>
+              </Box>
 
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas3}</Text>.
-            <Text fontSize="sm">{gas3dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>XYZ farm</StatHelpText>
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="2xl">{gas2}</Text>.
+                  <Text fontSize="sm">{gas2dec}</Text>
+                  <Text fontSize="2xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText>SWINGBY farm</StatHelpText>
+              </Box>
 
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas4}</Text>.
-            <Text fontSize="sm">{gas4dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>USDC LP farm</StatHelpText>
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="2xl">{gas3}</Text>.
+                  <Text fontSize="sm">{gas3dec}</Text>
+                  <Text fontSize="2xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText>XYZ farm</StatHelpText>
+              </Box>
 
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas5}</Text>.
-            <Text fontSize="sm">{gas5dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>ILSI LP farm</StatHelpText>
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="2xl">{gas4}</Text>.
+                  <Text fontSize="sm">{gas4dec}</Text>
+                  <Text fontSize="2xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText>USDC LP farm</StatHelpText>
+              </Box>
+
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="2xl">{gas5}</Text>.
+                  <Text fontSize="sm">{gas5dec}</Text>
+                  <Text fontSize="2xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText>ILSI LP farm</StatHelpText>
+              </Box>
+            </Box>
+          </Collapse>
         </Stat>
       </Box>
     </Box>

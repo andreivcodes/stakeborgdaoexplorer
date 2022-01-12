@@ -1,8 +1,9 @@
 import {
   Stat,
   StatLabel,
-  StatNumber,
   Box,
+  Collapse,
+  Button,
   useColorModeValue,
   StatHelpText,
   Divider,
@@ -12,6 +13,9 @@ import {
 import { useState, useEffect } from "react";
 
 export default function AddLiquidityUSDCSLPFee(props) {
+  const [show, setShow] = useState(false);
+  const handleToggle = () => setShow(!show);
+
   const [gas1, setGas1] = useState(0);
   const [gas2, setGas2] = useState(0);
   const [gas3, setGas3] = useState(0);
@@ -82,54 +86,61 @@ export default function AddLiquidityUSDCSLPFee(props) {
             Add Liquidity in USDC LP process fee
           </StatLabel>
           <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas1}</Text>.
-            <Text fontSize="sm">{gas1dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Swap ETH to STANDARD</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas2}</Text>.
-            <Text fontSize="sm">{gas2dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Swap ETH to USDC</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas3}</Text>.
-            <Text fontSize="sm">{gas3dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Allow STANDARD in LP</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas4}</Text>.
-            <Text fontSize="sm">{gas4dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Allow USDC in LP</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas5}</Text>.
-            <Text fontSize="sm">{gas5dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Add Liquidity</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas6}</Text>.
-            <Text fontSize="sm">{gas6dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Allow SLP in yield farm</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas7}</Text>.
-            <Text fontSize="sm">{gas7dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Add SLP in yield farm</StatHelpText>
-          <Divider />
-          <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas8}</Text>.
             <Text fontSize="sm">{gas8dec}</Text>
             <Text fontSize="2xl">&nbsp;$</Text>
           </Flex>
           <StatLabel>Total</StatLabel>
+
+          <Divider mt="1rem" />
+          <Button size="sm" onClick={handleToggle} mt="1rem">
+            Show {show ? "Less" : "More"}
+          </Button>
+
+          <Collapse startingHeight={5} in={show}>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas1}</Text>.
+              <Text fontSize="sm">{gas1dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Swap ETH to STANDARD</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas2}</Text>.
+              <Text fontSize="sm">{gas2dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Swap ETH to USDC</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas3}</Text>.
+              <Text fontSize="sm">{gas3dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Allow STANDARD in LP</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas4}</Text>.
+              <Text fontSize="sm">{gas4dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Allow USDC in LP</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas5}</Text>.
+              <Text fontSize="sm">{gas5dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Add Liquidity</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas6}</Text>.
+              <Text fontSize="sm">{gas6dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Allow SLP in yield farm</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas7}</Text>.
+              <Text fontSize="sm">{gas7dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Add SLP in yield farm</StatHelpText>
+          </Collapse>
         </Stat>
       </Box>
     </Box>

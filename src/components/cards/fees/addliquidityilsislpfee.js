@@ -1,8 +1,9 @@
 import {
   Stat,
   StatLabel,
-  StatNumber,
   Box,
+  Collapse,
+  Button,
   useColorModeValue,
   StatHelpText,
   Text,
@@ -12,6 +13,9 @@ import {
 import { useState, useEffect } from "react";
 
 export default function AddLiquiditySLPFee(props) {
+  const [show, setShow] = useState(false);
+  const handleToggle = () => setShow(!show);
+
   const [gas1, setGas1] = useState(0);
   const [gas2, setGas2] = useState(0);
   const [gas3, setGas3] = useState(0);
@@ -69,40 +73,7 @@ export default function AddLiquiditySLPFee(props) {
           <StatLabel fontSize="m">
             Add Liquidity in ILSI LP process fee
           </StatLabel>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas1}</Text>.
-            <Text fontSize="sm">{gas1dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Swap ETH to ILSI</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas2}</Text>.
-            <Text fontSize="sm">{gas2dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
 
-          <StatHelpText>Allow ILSI in LP</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas3}</Text>.
-            <Text fontSize="sm">{gas3dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Add Liquidity</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas4}</Text>.
-            <Text fontSize="sm">{gas4dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Allow SLP in yield farm</StatHelpText>
-
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas5}</Text>.
-            <Text fontSize="sm">{gas5dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-
-          <StatHelpText>Add SLP in yield farm</StatHelpText>
-          <Divider />
           <Flex alignItems={"center"} justifyContent={"center"}>
             <Text fontSize="2xl">{gas6}</Text>.
             <Text fontSize="sm">{gas6dec}</Text>
@@ -110,6 +81,44 @@ export default function AddLiquiditySLPFee(props) {
           </Flex>
 
           <StatLabel>Total</StatLabel>
+
+          <Divider mt="1rem" />
+          <Button size="sm" onClick={handleToggle} mt="1rem">
+            Show {show ? "Less" : "More"}
+          </Button>
+
+          <Collapse startingHeight={5} in={show}>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas1}</Text>.
+              <Text fontSize="sm">{gas1dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Swap ETH to ILSI</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas2}</Text>.
+              <Text fontSize="sm">{gas2dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Allow ILSI in LP</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas3}</Text>.
+              <Text fontSize="sm">{gas3dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm"> Add Liquidity</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas4}</Text>.
+              <Text fontSize="sm">{gas4dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Allow SLP in yield farm</StatHelpText>
+            <Flex alignItems={"center"} justifyContent={"center"}>
+              <Text fontSize="xl">{gas5}</Text>.
+              <Text fontSize="sm">{gas5dec}</Text>
+              <Text fontSize="xl">&nbsp;$</Text>
+            </Flex>
+            <StatHelpText fontSize="sm">Add SLP in yield farm</StatHelpText>
+          </Collapse>
         </Stat>
       </Box>
     </Box>

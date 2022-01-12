@@ -1,8 +1,9 @@
 import {
   Stat,
   StatLabel,
-  StatNumber,
   Box,
+  Collapse,
+  Button,
   useColorModeValue,
   StatHelpText,
   Divider,
@@ -40,6 +41,9 @@ let governance_staking_contract = new web3.eth.Contract(
 );
 
 export default function StakingFee(props) {
+  const [show, setShow] = useState(false);
+  const handleToggle = () => setShow(!show);
+
   const [gas1, setGas1] = useState(0);
   const [gas2, setGas2] = useState(0);
   const [gas3, setGas3] = useState(0);
@@ -140,32 +144,55 @@ export default function StakingFee(props) {
       <Box m="3">
         <Stat>
           <StatLabel fontSize="m">Staking process fee</StatLabel>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas1}</Text>.
-            <Text fontSize="sm">{gas1dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Swap ETH to STANDARD</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas2}</Text>.
-            <Text fontSize="sm">{gas2dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Allow Deposit STANDARD in Governance</StatHelpText>
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas3}</Text>.
-            <Text fontSize="sm">{gas3dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatHelpText>Deposit STANDARD in Governance</StatHelpText>
 
-          <Divider />
-          <Flex alignItems={"center"} justifyContent={"center"}>
-            <Text fontSize="2xl">{gas4}</Text>.
-            <Text fontSize="sm">{gas4dec}</Text>
-            <Text fontSize="2xl">&nbsp;$</Text>
-          </Flex>
-          <StatLabel>Total</StatLabel>
+          <Box>
+            <Box px="2">
+              <Flex alignItems={"center"} justifyContent={"center"}>
+                <Text fontSize="2xl">{gas4}</Text>.
+                <Text fontSize="sm">{gas4dec}</Text>
+                <Text fontSize="2xl">&nbsp;$</Text>
+              </Flex>
+              <StatLabel>Total</StatLabel>
+            </Box>
+
+            <Divider mt="1rem" />
+            <Button size="sm" onClick={handleToggle} mt="1rem">
+              Show {show ? "Less" : "More"}
+            </Button>
+
+            <Collapse startingHeight={5} in={show}>
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="xl">{gas1}</Text>.
+                  <Text fontSize="sm">{gas1dec}</Text>
+                  <Text fontSize="xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText fontSize="sm">Swap ETH to STANDARD</StatHelpText>
+              </Box>
+
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="xl">{gas2}</Text>.
+                  <Text fontSize="sm">{gas2dec}</Text>
+                  <Text fontSize="xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText fontSize="sm">
+                  Allow Deposit STANDARD in Governance
+                </StatHelpText>
+              </Box>
+
+              <Box px="2">
+                <Flex alignItems={"center"} justifyContent={"center"}>
+                  <Text fontSize="xl">{gas3}</Text>.
+                  <Text fontSize="sm">{gas3dec}</Text>
+                  <Text fontSize="xl">&nbsp;$</Text>
+                </Flex>
+                <StatHelpText fontSize="sm">
+                  Deposit STANDARD in Governance
+                </StatHelpText>
+              </Box>
+            </Collapse>
+          </Box>
         </Stat>
       </Box>
     </Box>
