@@ -5,7 +5,7 @@ import PriceCard from "../components/cards/home/pricecard";
 import VolumeCard from "../components/cards/home/volumecard";
 import MarketcapCard from "../components/cards/home/mkcapcard";
 import CirculatingCard from "../components/cards/home/circulatingcard";
-import FarmsTVLCard from "../components/cards/home/farmstvlcard";
+import APRCard from "../components/cards/home/aprcard";
 import LPTVLCard from "../components/cards/home/lptvlcard";
 import { Box, Container, Grid, GridItem, Text } from "@chakra-ui/react";
 import ILSI from "../components/cards/home/ilsi";
@@ -39,6 +39,10 @@ function Home() {
           <GridItem row={3} colSpan={2} m="1">
             <FarmsTVLCard />
           </GridItem> */}
+
+          <GridItem row={3} colSpan={2} m="1">
+            <APRCard />
+          </GridItem>
           <GridItem row={4} colSpan={2} m="1">
             <LPTVLCard />
           </GridItem>

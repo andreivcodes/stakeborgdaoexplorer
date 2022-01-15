@@ -41,7 +41,7 @@ export default function LPTVLCard() {
         .call();
       setTvlUsdcSLP((usdcValInUSDCSLP / 1000000) * 2);
 
-      const wethValInUSDCSLP = await wethContract.methods
+      const wethValInILSISLP = await wethContract.methods
         .balanceOf(ilsi_slp_contract_address)
         .call();
 
@@ -52,7 +52,7 @@ export default function LPTVLCard() {
       ).json();
 
       setTvlIlsiSLP(
-        ((ethPrice["market_data"]["current_price"]["usd"] * wethValInUSDCSLP) /
+        ((ethPrice["market_data"]["current_price"]["usd"] * wethValInILSISLP) /
           1000000000000000000) *
           2
       );
