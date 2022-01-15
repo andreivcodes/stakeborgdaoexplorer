@@ -34,9 +34,11 @@ function Home() {
           <GridItem row={2} col={2} m="1">
             <CirculatingCard />
           </GridItem>
+          {/*
+          Outdated, not needed anymore
           <GridItem row={3} colSpan={2} m="1">
             <FarmsTVLCard />
-          </GridItem>
+          </GridItem> */}
           <GridItem row={4} colSpan={2} m="1">
             <LPTVLCard />
           </GridItem>
