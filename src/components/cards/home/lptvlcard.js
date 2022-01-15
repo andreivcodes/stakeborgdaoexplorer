@@ -74,14 +74,14 @@ export default function LPTVLCard() {
             <StatLabel>USDC LP</StatLabel>
             <StatHelpText>total locked value</StatHelpText>
             <StatNumber>
-              {new Intl.NumberFormat().format(tvlUsdcSLP)} $
+              {new Intl.NumberFormat().format(tvlUsdcSLP.toFixed(2))} $
             </StatNumber>
           </Stat>
           <Stat>
             <StatLabel>ILSI LP</StatLabel>
             <StatHelpText>total locked value</StatHelpText>
             <StatNumber>
-              {new Intl.NumberFormat().format(tvlIlsiSLP)} $
+              {new Intl.NumberFormat().format(tvlIlsiSLP.toFixed(2))} $
             </StatNumber>
           </Stat>
         </StatGroup>

@@ -31,7 +31,9 @@ export default function CirculatingCard() {
       <Box m="3">
         <Stat>
           <StatLabel>Circulating Supply</StatLabel>
-          <StatNumber>{new Intl.NumberFormat().format(cirsupply)}</StatNumber>
+          <StatNumber>
+            {new Intl.NumberFormat().format(cirsupply.toFixed(2))}
+          </StatNumber>
           tokens
         </Stat>
       </Box>

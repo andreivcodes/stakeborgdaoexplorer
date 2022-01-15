@@ -84,19 +84,22 @@ export default function ILSI() {
           <Stat>
             <StatHelpText>ILSI Price</StatHelpText>
             <StatNumber>
-              {new Intl.NumberFormat().format(ilsiPrice)} $
+              {new Intl.NumberFormat().format(ilsiPrice.toFixed(2))} $
             </StatNumber>
           </Stat>
           <Stat>
             <StatHelpText>ILSI Total supply</StatHelpText>
             <StatNumber>
-              {new Intl.NumberFormat().format(ilsiTotalSupply)} ILSI
+              {new Intl.NumberFormat().format(ilsiTotalSupply.toFixed(2))} ILSI
             </StatNumber>
           </Stat>
           <Stat>
             <StatHelpText>ILSI Market Cap</StatHelpText>
             <StatNumber>
-              {new Intl.NumberFormat().format(ilsiTotalSupply * ilsiPrice)} $
+              {new Intl.NumberFormat().format(
+                (ilsiTotalSupply * ilsiPrice).toFixed(2)
+              )}{" "}
+              $
             </StatNumber>
           </Stat>
         </StatGroup>
