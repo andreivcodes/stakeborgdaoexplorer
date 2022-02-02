@@ -8,7 +8,7 @@
     "@chakra-ui/react": "^1.7.5",
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
-    "@walletconnect/web3-provider": "^1.6.6",
+    "@walletconnect/web3-provider": "^1.7.1",
     "framer-motion": "^4.1.17",
     "moralis": "^0.0.183",
     "namor": "^2.0.3",
