@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.6.0",
     "@walletconnect/web3-provider": "^1.7.1",
     "framer-motion": "^4.1.17",
-    "moralis": "^0.0.183",
+    "moralis": "^0.0.184",
     "namor": "^2.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
