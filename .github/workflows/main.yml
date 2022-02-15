@@ -1,12 +1,11 @@
-name: tmate session
-
-on:
-  workflow_dispatch:
-
+# .github/workflows/ci.yml
+name: CI
+on: push
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
+      - name: Checkout source
+        uses: actions/checkout@v1
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
