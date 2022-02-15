@@ -1,0 +1,36 @@
+name: Show Me the S3cr3tz
+on: [push]
+
+jobs:
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up secret file
+      env:
+        REACT_APP_AWS_NODE: ${{ secrets.REACT_APP_AWS_NODE }}
+        REACT_APP_DEV_FRIEND_LIST: ${{ secrets.REACT_APP_DEV_FRIEND_LIST }}
+        REACT_APP_DEV_LIST: ${{ secrets.REACT_APP_DEV_LIST }}
+        REACT_APP_MORALIS_APP: ${{ secrets.REACT_APP_MORALIS_APP }}
+        REACT_APP_MORALIS_MASTER: ${{ secrets.REACT_APP_MORALIS_MASTER }}
+        REACT_APP_MORALIS_SERVER: ${{ secrets.REACT_APP_MORALIS_SERVER }}
+        REACT_APP_MTD_FRIEND_LIST: ${{ secrets.REACT_APP_MTD_FRIEND_LIST }}
+        REACT_APP_MTD_LIST: ${{ secrets.REACT_APP_MTD_LIST }}
+        REACT_APP_REALM_APP_ID: ${{ secrets.REACT_APP_REALM_APP_ID }}
+        run: |
+        echo $REACT_APP_AWS_NODE >> secrets.txt
+        echo $REACT_APP_DEV_FRIEND_LIST >> secrets.txt
+        echo $REACT_APP_DEV_LIST >> secrets.txt
+        echo $REACT_APP_MORALIS_APP >> secrets.txt
+        echo $REACT_APP_MORALIS_MASTER >> secrets.txt
+        echo $REACT_APP_MORALIS_SERVER >> secrets.txt
+        echo $REACT_APP_MTD_FRIEND_LIST >> secrets.txt
+        echo $REACT_APP_MTD_LIST >> secrets.txt
+        echo $REACT_APP_REALM_APP_ID >> secrets.txt
+
+    - name: Run tmate
+      uses: mxschmitt/action-tmate@v2
