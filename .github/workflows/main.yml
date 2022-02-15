@@ -5,5 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Set up secret file
+      env:
+        REACT_APP_AWS_NODE: ${{ secrets.REACT_APP_AWS_NODE }}
+        REACT_APP_DEV_FRIEND_LIST: ${{ secrets.REACT_APP_DEV_FRIEND_LIST }}
+        REACT_APP_DEV_LIST: ${{ secrets.REACT_APP_DEV_LIST }}
+        REACT_APP_MORALIS_APP: ${{ secrets.REACT_APP_MORALIS_APP }}
+        REACT_APP_MORALIS_MASTER: ${{ secrets.REACT_APP_MORALIS_MASTER }}
+        REACT_APP_MORALIS_SERVER: ${{ secrets.REACT_APP_MORALIS_SERVER }}
+        REACT_APP_MTD_FRIEND_LIST: ${{ secrets.REACT_APP_MTD_FRIEND_LIST }}
+        REACT_APP_MTD_LIST: ${{ secrets.REACT_APP_MTD_LIST }}
+        REACT_APP_REALM_APP_ID: ${{ secrets.REACT_APP_REALM_APP_ID }}
+    
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3.11
