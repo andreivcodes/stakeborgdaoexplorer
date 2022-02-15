@@ -1,4 +1,4 @@
-name: CI
+name: secrets
 on: [push]
 jobs:
   build:
@@ -6,7 +6,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Set up secret file
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3.11
       env:
         REACT_APP_AWS_NODE: ${{ secrets.REACT_APP_AWS_NODE }}
         REACT_APP_DEV_FRIEND_LIST: ${{ secrets.REACT_APP_DEV_FRIEND_LIST }}
@@ -17,6 +18,3 @@ jobs:
         REACT_APP_MTD_FRIEND_LIST: ${{ secrets.REACT_APP_MTD_FRIEND_LIST }}
         REACT_APP_MTD_LIST: ${{ secrets.REACT_APP_MTD_LIST }}
         REACT_APP_REALM_APP_ID: ${{ secrets.REACT_APP_REALM_APP_ID }}
-    
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3.11
