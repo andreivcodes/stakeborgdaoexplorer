@@ -8,6 +8,7 @@ import Farmingpools from "./pages/farmingpools";
 import Fees from "./pages/fees";
 import Address from "./pages/address";
 import Governance from "./pages/governance";
+import ILSIStats from "./pages/ilsistats";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { MoralisProvider } from "react-moralis";
@@ -31,6 +32,7 @@ ReactDOM.render(
           <Route path="/farmingpools" element={<Farmingpools />} />
           <Route path="/governance" element={<Governance />} />
           <Route path="/fees" element={<Fees />} />
+          <Route path="/ilsistats" element={<ILSIStats />} />
         </Routes>
       </HashRouter>
     </ChakraProvider>

@@ -69,7 +69,7 @@ export default function Header() {
                 }}
                 href={"#/topholders"}
               >
-                Top Holders <Badge colorScheme="green">New</Badge>
+                Top Holders
               </Link>
 
               <Link
@@ -82,7 +82,7 @@ export default function Header() {
                 }}
                 href={"#/fees"}
               >
-                Gas fees estimation <Badge colorScheme="green">New</Badge>
+                Gas fees estimation
               </Link>
 
               <Link
@@ -95,7 +95,20 @@ export default function Header() {
                 }}
                 href={"#/governance"}
               >
-                Governance <Badge colorScheme="green">New</Badge>
+                Governance
+              </Link>
+
+              <Link
+                px={2}
+                py={1}
+                rounded={"md"}
+                _hover={{
+                  textDecoration: "none",
+                  bg: useColorModeValue("gray.200", "gray.700"),
+                }}
+                href={"#/ilsistats"}
+              >
+                ILSI Stats <Badge colorScheme="green">New</Badge>
               </Link>
 
               {/*  <Link
@@ -151,16 +164,14 @@ export default function Header() {
             <Stack as={"nav"} spacing={4}>
               <Link href={"#/"}>Home</Link>
 
-              <Link href={"#/topholders"}>
-                Top Holders <Badge colorScheme="green">New</Badge>
-              </Link>
+              <Link href={"#/topholders"}>Top Holders</Link>
 
-              <Link href={"#/fees"}>
-                Gas fees estimation
-                <Badge colorScheme="green">New</Badge>
-              </Link>
-              <Link href={"#/governance"}>
-                Governance <Badge colorScheme="green">New</Badge>
+              <Link href={"#/fees"}>Gas fees estimation</Link>
+
+              <Link href={"#/governance"}>Governance</Link>
+
+              <Link href={"#/ilsistats"}>
+                ILSI Stats <Badge colorScheme="green">New</Badge>
               </Link>
 
               {/* <Link
