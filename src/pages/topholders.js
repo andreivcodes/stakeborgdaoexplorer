@@ -45,12 +45,13 @@ export default function Topholders() {
   const [chartTotals, setChartTotals] = useState([]);
 
   const app = new Realm.App({ id: process.env.REACT_APP_REALM_APP_ID });
+  const credentials = Realm.Credentials.apiKey(process.env.REACT_APP_REALM_KEY);
 
   const [snapshot, setSnapshot] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      await app.logIn(Realm.Credentials.anonymous());
+      await app.logIn(credentials);
       const client = app.currentUser.mongoClient("mongodb-atlas");
       let dbresult = await client
         .db("stakeborgdao-explorer")
@@ -142,13 +143,13 @@ export default function Topholders() {
           <HoldersPieDistribution data={chartTotals} />
         </SimpleGrid>
 
-        <Checkbox
+        {/* <Checkbox
           mt="1rem"
           isChecked={showLabels}
           onChange={(e) => setShowLabels(e.target.checked)}
         >
           Show address labels
-        </Checkbox>
+        </Checkbox> */}
 
         <CustomTable data={holdersData} labels={showLabels} />
       </Container>

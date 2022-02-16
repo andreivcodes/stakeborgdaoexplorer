@@ -153,41 +153,7 @@ export default function CustomTable(props) {
                 <Tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <Td {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                        {JSON.parse(process.env.REACT_APP_DEV_LIST).includes(
-                          row.values.address
-                        ) &&
-                        props.labels &&
-                        cell.column.Header == "Address" ? (
-                          <Badge colorScheme="green">Developer Address</Badge>
-                        ) : null}
-                        {JSON.parse(
-                          process.env.REACT_APP_DEV_FRIEND_LIST
-                        ).includes(row.values.address) &&
-                        props.labels &&
-                        cell.column.Header == "Address" ? (
-                          <Badge colorScheme="orange">Developer Contact</Badge>
-                        ) : null}
-                        {JSON.parse(process.env.REACT_APP_MTD_LIST).includes(
-                          row.values.address
-                        ) &&
-                        props.labels &&
-                        cell.column.Header == "Address" ? (
-                          <Badge colorScheme="blue">
-                            Methodologist Address
-                          </Badge>
-                        ) : null}
-                        {JSON.parse(
-                          process.env.REACT_APP_MTD_FRIEND_LIST
-                        ).includes(row.values.address) &&
-                        props.labels &&
-                        cell.column.Header == "Address" ? (
-                          <Badge colorScheme="cyan">
-                            Methodologist Contact
-                          </Badge>
-                        ) : null}
-                      </Td>
+                      <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
                     );
                   })}
                 </Tr>
