@@ -3,13 +3,11 @@ import {
   StatGroup,
   StatLabel,
   StatNumber,
-  StatHelpText,
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import governance_staking_abi from "../../../abi/governance_staking.json";
-import farms_contract_abi from "../../../abi/farms.json";
 import usdc_contract_abi from "../../../abi/usdc.json";
 import weth_contract_abi from "../../../abi/weth.json";
 import Web3 from "web3";

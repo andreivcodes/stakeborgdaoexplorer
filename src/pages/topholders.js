@@ -7,7 +7,6 @@ import {
   Text,
   SimpleGrid,
   GridItem,
-  Checkbox,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -31,7 +30,6 @@ import * as Realm from "realm-web";
 
 export default function Topholders() {
   const [holdersData, setHoldersData] = useState([]);
-  const [showLabels, setShowLabels] = useState(false);
 
   const [benfordTotal, setBenfordTotal] = useState(null);
   const [distribution, setDistribution] = useState([]);
@@ -151,7 +149,7 @@ export default function Topholders() {
           Show address labels
         </Checkbox> */}
 
-        <CustomTable data={holdersData} labels={showLabels} />
+        <CustomTable data={holdersData} /*labels={showLabels}*/ />
       </Container>
       <Footer />
     </div>
