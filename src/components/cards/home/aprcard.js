@@ -88,7 +88,7 @@ export default function APRCardAPRCard() {
           2) /
         STANDARDPrice["market_data"]["current_price"]["usd"];
 
-      setILSIAPY((15000 / ILSITVLinSTANDARD) * 100 * 52.1429);
+      setILSIAPY((4000 / ILSITVLinSTANDARD) * 100 * 52.1429);
     }
     fetchData().catch((error) => alert(error.message));
   }, []);
