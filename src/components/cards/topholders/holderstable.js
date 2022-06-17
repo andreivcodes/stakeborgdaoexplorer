@@ -19,62 +19,28 @@ export default function CustomTable(props) {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Holder",
-        columns: [
-          {
-            Header: "Address",
-            accessor: "address",
-          },
-        ],
+        Header: "Address",
+        accessor: "address",
       },
       {
-        Header: "Holdings",
-        columns: [
-          {
-            Header: "Wallet",
-            accessor: "wallet",
-          },
-          {
-            Header: "Governance Staking",
-            accessor: "governanceStaking",
-          },
-          {
-            Header: "Governance Unclaimed",
-            accessor: "governanceUnclaimed",
-          },
-          {
-            Header: "BOND Farming Unclaimed",
-            accessor: "farmingUnclaimed_bond",
-          },
-          {
-            Header: "SWINGBY Farming Unclaimed",
-            accessor: "farmingUnclaimed_swingby",
-          },
-          {
-            Header: "XYZ Farming Unclaimed",
-            accessor: "farmingUnclaimed_xyz",
-          },
-          {
-            Header: "LP USDC Farming Unclaimed",
-            accessor: "farmingUnclaimed_lp_usdc",
-          },
-          {
-            Header: "LP ILSI Farming Unclaimed",
-            accessor: "farmingUnclaimed_lp_ilsi",
-          },
-          {
-            Header: "Total Farming Unclaimed",
-            accessor: "farmingUnclaimed",
-          },
-          {
-            Header: "Total",
-            accessor: "total",
-          },
-          {
-            Header: " % of Total",
-            accessor: "percentoftotal",
-          },
-        ],
+        Header: "Wallet",
+        accessor: "wallet",
+      },
+      {
+        Header: "Governance Staking",
+        accessor: "governanceStaking",
+      },
+      {
+        Header: "Governance Unclaimed",
+        accessor: "governanceUnclaimed",
+      },
+      {
+        Header: "Total",
+        accessor: "total",
+      },
+      {
+        Header: " % of Total",
+        accessor: "percentoftotal",
       },
     ],
     []
@@ -161,24 +127,6 @@ export default function CustomTable(props) {
             })
           ) : (
             <Tr>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
-              <Td>
-                <Skeleton height="25px" width="5vw" />
-              </Td>
               <Td>
                 <Skeleton height="25px" width="5vw" />
               </Td>

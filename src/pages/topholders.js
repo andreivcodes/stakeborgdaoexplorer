@@ -43,7 +43,7 @@ export default function Topholders() {
   const [chartTotals, setChartTotals] = useState([]);
 
   const app = new Realm.App({ id: process.env.REACT_APP_REALM_APP_ID });
-  const credentials = Realm.Credentials.apiKey(process.env.REACT_APP_REALM_KEY);
+  const credentials = Realm.Credentials.anonymous();
 
   const [snapshot, setSnapshot] = useState("");
 
