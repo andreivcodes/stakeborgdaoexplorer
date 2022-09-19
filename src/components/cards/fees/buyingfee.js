@@ -13,9 +13,7 @@ import sushiswap_abi from "../../../abi/sushiswap.json";
 
 const sushi_contract_address = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
-);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.NODE_RPC));
 
 let sushiswap_contract = new web3.eth.Contract(
   sushiswap_abi,

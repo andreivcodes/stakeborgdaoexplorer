@@ -11,9 +11,7 @@ import ilsi_contract_abi from "../../../abi/ilsi.json";
 import general_erc20_abi from "../../../abi/generalerc20.json";
 import Web3 from "web3";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
-);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.NODE_RPC));
 
 const ilsi_contract_address = "0x0acC0FEE1D86D2cD5AF372615bf59b298D50cd69";
 

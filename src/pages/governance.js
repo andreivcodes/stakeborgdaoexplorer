@@ -14,9 +14,7 @@ import { useEffect, useState } from "react";
 import governance_staking_abi from "./../abi/governance_staking.json";
 import Web3 from "web3";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
-);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.NODE_RPC));
 
 const governance_staking_dao_contract_adress =
   "0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C";

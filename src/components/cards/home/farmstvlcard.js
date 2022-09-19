@@ -11,9 +11,7 @@ import { useEffect, useState } from "react";
 import farms_contract_abi from "./../../../abi/farms.json";
 import Web3 from "web3";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
-);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.NODE_RPC));
 
 const farms_contract_address = "0x7F4FE6776a9617847485d43db0d3A9b734e459C5";
 

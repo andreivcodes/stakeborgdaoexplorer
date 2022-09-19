@@ -33,9 +33,7 @@ const yield_farm_usdc_lp_contract_address =
 const yield_farm_ilsi_lp_contract_address =
   "0xc898c3c30a4f610ab7a524b61620b58168d0e0d1";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
-);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.NODE_RPC));
 
 let yield_unclaimed_bond_contract = new web3.eth.Contract(
   yieldfarmtoken_bond_abi,

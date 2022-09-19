@@ -12,9 +12,7 @@ import usdc_contract_abi from "./../../../abi/usdc.json";
 import weth_contract_abi from "./../../../abi/weth.json";
 import Web3 from "web3";
 
-const web3 = new Web3(
-  new Web3.providers.HttpProvider(process.env.REACT_APP_AWS_NODE)
-);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.NODE_RPC));
 
 const usdc_slp_contract_address = "0xf1e34d19f63b69eaa70952f2f64f735849959833";
 const ilsi_slp_contract_address = "0x753f33c13fe44d41a8cc6ac202a6de6c53c58b6a";
