@@ -4,7 +4,6 @@ import {
   HStack,
   Link,
   useColorModeValue,
-  Input,
   Badge,
   Image,
   useDisclosure,
@@ -14,13 +13,9 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import lightLogo from "./../logo_light.png";
 import darkLogo from "./../logo_dark.png";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [value, setValue] = useState("");
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -57,19 +52,6 @@ export default function Header() {
                 href={"#/"}
               >
                 Home
-              </Link>
-
-              <Link
-                px={2}
-                py={1}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: useColorModeValue("gray.200", "gray.700"),
-                }}
-                href={"#/topholders"}
-              >
-                Top Holders
               </Link>
 
               <Link
@@ -138,33 +120,11 @@ export default function Header() {
               </Link> */}
             </HStack>
           </HStack>
-
-          <HStack>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                navigate("/address/" + value);
-              }}
-            >
-              <Input
-                placeholder="Search for an address here..."
-                maxW="30vw"
-                w="30vw"
-                value={value}
-                onChange={(e) => {
-                  setValue(e.currentTarget.value);
-                }}
-              />
-              <button type="submit"></button>
-            </form>
-          </HStack>
         </Flex>
         {isOpen ? (
           <Box pb={4} display={{ lg: "none" }}>
             <Stack as={"nav"} spacing={4}>
               <Link href={"#/"}>Home</Link>
-
-              <Link href={"#/topholders"}>Top Holders</Link>
 
               <Link href={"#/fees"}>Gas fees estimation</Link>
 

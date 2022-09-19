@@ -19,8 +19,6 @@ const web3 = new Web3(
 const governance_staking_dao_contract_adress =
   "0xbA319F6F6AC8F45E556918A0C9ECDDE64335265C";
 
-const farms_contract_address = "0x7F4FE6776a9617847485d43db0d3A9b734e459C5";
-
 const usdc_slp_contract_address = "0xf1e34d19f63b69eaa70952f2f64f735849959833";
 const ilsi_slp_contract_address = "0x753f33c13fe44d41a8cc6ac202a6de6c53c58b6a";
 const usdc_contract_address = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
